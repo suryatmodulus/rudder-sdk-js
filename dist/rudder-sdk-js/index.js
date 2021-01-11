@@ -2,9 +2,11 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.rudderanalytics = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
   function _typeof(obj) {
+    "@babel/helpers - typeof";
+
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof = function (obj) {
         return typeof obj;
@@ -74,13 +76,13 @@
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
-        ownKeys(source, true).forEach(function (key) {
+        ownKeys(Object(source), true).forEach(function (key) {
           _defineProperty(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys(source).forEach(function (key) {
+        ownKeys(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -90,23 +92,36 @@
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
 
   function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-      return arr2;
-    }
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
   function _iterableToArray(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
   }
 
   function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -3220,7 +3235,7 @@
     PRODUCT_REVIEWED: "Product Reviewed"
   }; // Enumeration for integrations supported
 
-  var CONFIG_URL = "https://api.rudderlabs.com/sourceConfig/?p=npm&v=1.0.13";
+  var CONFIG_URL = "https://api.rudderlabs.com/sourceConfig/?p=npm&v=1.0.12";
   var MAX_WAIT_FOR_INTEGRATION_LOAD = 10000;
   var INTEGRATION_LOAD_CHECK_INTERVAL = 1000;
   /* module.exports = {
@@ -3672,9 +3687,7 @@
     e.parentNode.insertBefore(js, e);
   };
 
-  var HubSpot =
-  /*#__PURE__*/
-  function () {
+  var HubSpot = /*#__PURE__*/function () {
     function HubSpot(config) {
       _classCallCheck(this, HubSpot);
 
@@ -4986,9 +4999,7 @@
     }
   }
 
-  var GA =
-  /*#__PURE__*/
-  function () {
+  var GA = /*#__PURE__*/function () {
     function GA(config) {
       _classCallCheck(this, GA);
 
@@ -5337,7 +5348,7 @@
                     price: item.properties.price,
                     position: self.getProductPosition(item, products)
                   };
-                  impressionObj = _objectSpread2({}, impressionObj, {}, self.metricsFunction(item.properties, self.dimensionsArray, self.metricsArray, self.contentGroupingsArray));
+                  impressionObj = _objectSpread2(_objectSpread2({}, impressionObj), self.metricsFunction(item.properties, self.dimensionsArray, self.metricsArray, self.contentGroupingsArray));
                   Object.keys(impressionObj).forEach(function (key) {
                     if (impressionObj[key] === undefined) delete impressionObj[key];
                   });
@@ -5490,7 +5501,7 @@
 
         window.ga("".concat(this.trackerName, "set"), resetCustomDimensions); // adds more properties to pageview which will be sent
 
-        pageview = _objectSpread2({}, pageview, {}, this.setCustomDimenionsAndMetrics(eventProperties));
+        pageview = _objectSpread2(_objectSpread2({}, pageview), this.setCustomDimenionsAndMetrics(eventProperties));
         var payload = {
           page: pagePath,
           title: pageTitle
@@ -5670,7 +5681,7 @@
 
         var coupon = props.coupon;
         if (coupon) product.coupon = coupon;
-        product = _objectSpread2({}, product, {}, this.metricsFunction(props, this.dimensionsArray, this.metricsArray, this.contentGroupingsArray));
+        product = _objectSpread2(_objectSpread2({}, product), this.metricsFunction(props, this.dimensionsArray, this.metricsArray, this.contentGroupingsArray));
         window.ga("".concat(this.trackerName, "ec:addProduct"), product);
       }
       /**
@@ -5747,9 +5758,7 @@
 
   var index$1 =  GA ;
 
-  var Hotjar =
-  /*#__PURE__*/
-  function () {
+  var Hotjar = /*#__PURE__*/function () {
     function Hotjar(config) {
       _classCallCheck(this, Hotjar);
 
@@ -5823,9 +5832,7 @@
 
   var index$2 =  Hotjar ;
 
-  var GoogleAds =
-  /*#__PURE__*/
-  function () {
+  var GoogleAds = /*#__PURE__*/function () {
     function GoogleAds(config) {
       _classCallCheck(this, GoogleAds);
 
@@ -5945,9 +5952,7 @@
 
   var index$3 =  GoogleAds ;
 
-  var VWO =
-  /*#__PURE__*/
-  function () {
+  var VWO = /*#__PURE__*/function () {
     function VWO(config, analytics) {
       _classCallCheck(this, VWO);
 
@@ -6107,9 +6112,7 @@
     return VWO;
   }();
 
-  var GoogleTagManager =
-  /*#__PURE__*/
-  function () {
+  var GoogleTagManager = /*#__PURE__*/function () {
     function GoogleTagManager(config) {
       _classCallCheck(this, GoogleTagManager);
 
@@ -6208,9 +6211,7 @@
   E-commerce support required for logPurchase support & other e-commerce events as track with productId changed
   */
 
-  var Braze =
-  /*#__PURE__*/
-  function () {
+  var Braze = /*#__PURE__*/function () {
     function Braze(config, analytics) {
       _classCallCheck(this, Braze);
 
@@ -6562,7 +6563,7 @@
         // Convert to byte array
         if (message.constructor == String) {
           if (options && options.encoding === 'binary') message = bin.stringToBytes(message);else message = utf8.stringToBytes(message);
-        } else if (isBuffer(message)) message = Array.prototype.slice.call(message, 0);else if (!Array.isArray(message)) message = message.toString(); // else, assume byte array already
+        } else if (isBuffer(message)) message = Array.prototype.slice.call(message, 0);else if (!Array.isArray(message) && message.constructor !== Uint8Array) message = message.toString(); // else, assume byte array already
 
         var m = crypt$1.bytesToWords(message),
             l = message.length * 8,
@@ -6695,9 +6696,7 @@
     })();
   });
 
-  var INTERCOM =
-  /*#__PURE__*/
-  function () {
+  var INTERCOM = /*#__PURE__*/function () {
     function INTERCOM(config) {
       _classCallCheck(this, INTERCOM);
 
@@ -6830,9 +6829,6 @@
               case "anonymousId":
                 rawPayload.user_id = value;
                 break;
-
-              default:
-                break;
             }
           }
         });
@@ -6873,9 +6869,7 @@
     return INTERCOM;
   }();
 
-  var Keen =
-  /*#__PURE__*/
-  function () {
+  var Keen = /*#__PURE__*/function () {
     function Keen(config) {
       _classCallCheck(this, Keen);
 
@@ -7218,9 +7212,7 @@
   var objCase_2 = objCase.replace;
   var objCase_3 = objCase.del;
 
-  var Kissmetrics =
-  /*#__PURE__*/
-  function () {
+  var Kissmetrics = /*#__PURE__*/function () {
     function Kissmetrics(config) {
       _classCallCheck(this, Kissmetrics);
 
@@ -7509,9 +7501,7 @@
     return Kissmetrics;
   }();
 
-  var CustomerIO =
-  /*#__PURE__*/
-  function () {
+  var CustomerIO = /*#__PURE__*/function () {
     function CustomerIO(config) {
       _classCallCheck(this, CustomerIO);
 
@@ -7644,9 +7634,7 @@
     callback(document.body);
   }
 
-  var Chartbeat =
-  /*#__PURE__*/
-  function () {
+  var Chartbeat = /*#__PURE__*/function () {
     function Chartbeat(config, analytics) {
       _classCallCheck(this, Chartbeat);
 
@@ -7819,9 +7807,7 @@
     return Chartbeat;
   }();
 
-  var Comscore =
-  /*#__PURE__*/
-  function () {
+  var Comscore = /*#__PURE__*/function () {
     function Comscore(config, analytics) {
       _classCallCheck(this, Comscore);
 
@@ -7977,9 +7963,7 @@
     return Comscore;
   }();
 
-  var FacebookPixel =
-  /*#__PURE__*/
-  function () {
+  var FacebookPixel = /*#__PURE__*/function () {
     function FacebookPixel(config) {
       _classCallCheck(this, FacebookPixel);
 
@@ -11941,14 +11925,14 @@
     (function () {
       // Detect the `define` function exposed by asynchronous module loaders. The
       // strict `define` check is necessary for compatibility with `r.js`.
-      var isLoader = typeof undefined === "function" && undefined.amd; // A set of types used to distinguish objects from primitives.
+      var isLoader = typeof undefined === "function" ; // A set of types used to distinguish objects from primitives.
 
       var objectTypes = {
         "function": true,
         "object": true
       }; // Detect the `exports` object exposed by CommonJS implementations.
 
-      var freeExports =  exports && !exports.nodeType && exports; // Use the `global` object exposed by Node (including Browserify via
+      var freeExports = objectTypes['object'] && exports && !exports.nodeType && exports; // Use the `global` object exposed by Node (including Browserify via
       // `insert-module-globals`), Narwhal, and Ringo as the default context,
       // and the `window` object in browsers. Rhino exports a `global` function
       // instead.
@@ -12973,130 +12957,6 @@
     }).call(commonjsGlobal);
   });
 
-  /**
-   * Helpers.
-   */
-  var s$1 = 1000;
-  var m$1 = s$1 * 60;
-  var h$1 = m$1 * 60;
-  var d$1 = h$1 * 24;
-  var y$1 = d$1 * 365.25;
-  /**
-   * Parse or format the given `val`.
-   *
-   * Options:
-   *
-   *  - `long` verbose formatting [false]
-   *
-   * @param {String|Number} val
-   * @param {Object} options
-   * @return {String|Number}
-   * @api public
-   */
-
-  var ms$1 = function ms(val, options) {
-    options = options || {};
-    if ('string' == typeof val) return parse$4(val);
-    return options["long"] ? _long$1(val) : _short$1(val);
-  };
-  /**
-   * Parse the given `str` and return milliseconds.
-   *
-   * @param {String} str
-   * @return {Number}
-   * @api private
-   */
-
-
-  function parse$4(str) {
-    str = '' + str;
-    if (str.length > 10000) return;
-    var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-    if (!match) return;
-    var n = parseFloat(match[1]);
-    var type = (match[2] || 'ms').toLowerCase();
-
-    switch (type) {
-      case 'years':
-      case 'year':
-      case 'yrs':
-      case 'yr':
-      case 'y':
-        return n * y$1;
-
-      case 'days':
-      case 'day':
-      case 'd':
-        return n * d$1;
-
-      case 'hours':
-      case 'hour':
-      case 'hrs':
-      case 'hr':
-      case 'h':
-        return n * h$1;
-
-      case 'minutes':
-      case 'minute':
-      case 'mins':
-      case 'min':
-      case 'm':
-        return n * m$1;
-
-      case 'seconds':
-      case 'second':
-      case 'secs':
-      case 'sec':
-      case 's':
-        return n * s$1;
-
-      case 'milliseconds':
-      case 'millisecond':
-      case 'msecs':
-      case 'msec':
-      case 'ms':
-        return n;
-    }
-  }
-  /**
-   * Short format for `ms`.
-   *
-   * @param {Number} ms
-   * @return {String}
-   * @api private
-   */
-
-
-  function _short$1(ms) {
-    if (ms >= d$1) return Math.round(ms / d$1) + 'd';
-    if (ms >= h$1) return Math.round(ms / h$1) + 'h';
-    if (ms >= m$1) return Math.round(ms / m$1) + 'm';
-    if (ms >= s$1) return Math.round(ms / s$1) + 's';
-    return ms + 'ms';
-  }
-  /**
-   * Long format for `ms`.
-   *
-   * @param {Number} ms
-   * @return {String}
-   * @api private
-   */
-
-
-  function _long$1(ms) {
-    return plural$1(ms, d$1, 'day') || plural$1(ms, h$1, 'hour') || plural$1(ms, m$1, 'minute') || plural$1(ms, s$1, 'second') || ms + ' ms';
-  }
-  /**
-   * Pluralization helper.
-   */
-
-
-  function plural$1(ms, n, name) {
-    if (ms < n) return;
-    if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
-    return Math.ceil(ms / n) + ' ' + name + 's';
-  }
-
   var debug_1$1 = createCommonjsModule(function (module, exports) {
     /**
      * This is the common logic for both the Node.js and web browser
@@ -13109,7 +12969,7 @@
     exports.disable = disable;
     exports.enable = enable;
     exports.enabled = enabled;
-    exports.humanize = ms$1;
+    exports.humanize = ms;
     /**
      * The currently active debug mode names, and names to skip.
      */
@@ -13520,7 +13380,7 @@
       return {};
     }
 
-    return parse$5(str);
+    return parse$4(str);
   }
   /**
    * Get cookie `name`.
@@ -13543,7 +13403,7 @@
    */
 
 
-  function parse$5(str) {
+  function parse$4(str) {
     var obj = {};
     var pairs = str.split(/ *; */);
     var pair;
@@ -13684,9 +13544,7 @@
    * An object utility to persist values in cookies
    */
 
-  var CookieLocal =
-  /*#__PURE__*/
-  function () {
+  var CookieLocal = /*#__PURE__*/function () {
     function CookieLocal(options) {
       _classCallCheck(this, CookieLocal);
 
@@ -13990,9 +13848,7 @@
    * An object utility to persist user and other values in localstorage
    */
 
-  var StoreLocal =
-  /*#__PURE__*/
-  function () {
+  var StoreLocal = /*#__PURE__*/function () {
     function StoreLocal(options) {
       _classCallCheck(this, StoreLocal);
 
@@ -14073,9 +13929,7 @@
    * An object that handles persisting key-val from Analytics
    */
 
-  var Storage =
-  /*#__PURE__*/
-  function () {
+  var Storage = /*#__PURE__*/function () {
     function Storage() {
       _classCallCheck(this, Storage);
 
@@ -14327,9 +14181,7 @@
     lotame_synch_time_key: "lt_synch_timestamp"
   };
 
-  var LotameStorage =
-  /*#__PURE__*/
-  function () {
+  var LotameStorage = /*#__PURE__*/function () {
     function LotameStorage() {
       _classCallCheck(this, LotameStorage);
 
@@ -14353,9 +14205,7 @@
 
   var lotameStorage = new LotameStorage();
 
-  var Lotame =
-  /*#__PURE__*/
-  function () {
+  var Lotame = /*#__PURE__*/function () {
     function Lotame(config, analytics) {
       var _this = this;
 
@@ -14420,7 +14270,7 @@
         if (this.dspUrlSettingsPixel && this.dspUrlSettingsPixel.length > 0) {
           var currentTime = Date.now();
           this.dspUrlSettingsPixel.forEach(function (urlSettings) {
-            var dspUrl = _this2.compileUrl(_objectSpread2({}, _this2.mappings, {
+            var dspUrl = _this2.compileUrl(_objectSpread2(_objectSpread2({}, _this2.mappings), {}, {
               userId: userId,
               random: currentTime
             }), urlSettings.dspUrlTemplate);
@@ -14435,7 +14285,7 @@
           var _currentTime = Date.now();
 
           this.dspUrlSettingsIframe.forEach(function (urlSettings) {
-            var dspUrl = _this2.compileUrl(_objectSpread2({}, _this2.mappings, {
+            var dspUrl = _this2.compileUrl(_objectSpread2(_objectSpread2({}, _this2.mappings), {}, {
               userId: userId,
               random: _currentTime
             }), urlSettings.dspUrlTemplate);
@@ -14487,7 +14337,7 @@
         if (this.bcpUrlSettingsPixel && this.bcpUrlSettingsPixel.length > 0) {
           var currentTime = Date.now();
           this.bcpUrlSettingsPixel.forEach(function (urlSettings) {
-            var bcpUrl = _this3.compileUrl(_objectSpread2({}, _this3.mappings, {
+            var bcpUrl = _this3.compileUrl(_objectSpread2(_objectSpread2({}, _this3.mappings), {}, {
               random: currentTime
             }), urlSettings.bcpUrlTemplate);
 
@@ -14501,7 +14351,7 @@
           var _currentTime2 = Date.now();
 
           this.bcpUrlSettingsIframe.forEach(function (urlSettings) {
-            var bcpUrl = _this3.compileUrl(_objectSpread2({}, _this3.mappings, {
+            var bcpUrl = _this3.compileUrl(_objectSpread2(_objectSpread2({}, _this3.mappings), {}, {
               random: _currentTime2
             }), urlSettings.bcpUrlTemplate);
 
@@ -14542,9 +14392,7 @@
     return Lotame;
   }();
 
-  var Optimizely =
-  /*#__PURE__*/
-  function () {
+  var Optimizely = /*#__PURE__*/function () {
     function Optimizely(config, analytics) {
       var _this = this;
 
@@ -14794,9 +14642,7 @@
     return Optimizely;
   }();
 
-  var Bugsnag =
-  /*#__PURE__*/
-  function () {
+  var Bugsnag = /*#__PURE__*/function () {
     function Bugsnag(config) {
       _classCallCheck(this, Bugsnag);
 
@@ -14859,13 +14705,13 @@
     for (var i = 0; i < string.length; i++) {
       var character = string[i];
 
-      if (isLastCharLower && /[Lpu\{\}]/.test(character)) {
+      if (isLastCharLower && /(?:[A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1C90-\u1CBA\u1CBD-\u1CBF\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AE\uA7B0-\uA7B4\uA7B6\uA7B8\uA7BA\uA7BC\uA7BE\uA7C2\uA7C4-\uA7C7\uA7C9\uA7F5\uFF21-\uFF3A]|\uD801[\uDC00-\uDC27\uDCB0-\uDCD3]|\uD803[\uDC80-\uDCB2]|\uD806[\uDCA0-\uDCBF]|\uD81B[\uDE40-\uDE5F]|\uD835[\uDC00-\uDC19\uDC34-\uDC4D\uDC68-\uDC81\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB5\uDCD0-\uDCE9\uDD04\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD38\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD6C-\uDD85\uDDA0-\uDDB9\uDDD4-\uDDED\uDE08-\uDE21\uDE3C-\uDE55\uDE70-\uDE89\uDEA8-\uDEC0\uDEE2-\uDEFA\uDF1C-\uDF34\uDF56-\uDF6E\uDF90-\uDFA8\uDFCA]|\uD83A[\uDD00-\uDD21])/.test(character)) {
         string = string.slice(0, i) + '-' + string.slice(i);
         isLastCharLower = false;
         isLastLastCharUpper = isLastCharUpper;
         isLastCharUpper = true;
         i++;
-      } else if (isLastCharUpper && isLastLastCharUpper && /[Llp\{\}]/.test(character)) {
+      } else if (isLastCharUpper && isLastLastCharUpper && /(?:[a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0560-\u0588\u10D0-\u10FA\u10FD-\u10FF\u13F8-\u13FD\u1C80-\u1C88\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7AF\uA7B5\uA7B7\uA7B9\uA7BB\uA7BD\uA7BF\uA7C3\uA7C8\uA7CA\uA7F6\uA7FA\uAB30-\uAB5A\uAB60-\uAB68\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A]|\uD801[\uDC28-\uDC4F\uDCD8-\uDCFB]|\uD803[\uDCC0-\uDCF2]|\uD806[\uDCC0-\uDCDF]|\uD81B[\uDE60-\uDE7F]|\uD835[\uDC1A-\uDC33\uDC4E-\uDC54\uDC56-\uDC67\uDC82-\uDC9B\uDCB6-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDCCF\uDCEA-\uDD03\uDD1E-\uDD37\uDD52-\uDD6B\uDD86-\uDD9F\uDDBA-\uDDD3\uDDEE-\uDE07\uDE22-\uDE3B\uDE56-\uDE6F\uDE8A-\uDEA5\uDEC2-\uDEDA\uDEDC-\uDEE1\uDEFC-\uDF14\uDF16-\uDF1B\uDF36-\uDF4E\uDF50-\uDF55\uDF70-\uDF88\uDF8A-\uDF8F\uDFAA-\uDFC2\uDFC4-\uDFC9\uDFCB]|\uD83A[\uDD22-\uDD43])/.test(character)) {
         string = string.slice(0, i - 1) + '-' + string.slice(i - 1);
         isLastLastCharUpper = isLastCharUpper;
         isLastCharUpper = false;
@@ -14885,9 +14731,9 @@
       throw new TypeError('Expected the input to be `string | string[]`');
     }
 
-    options = _objectSpread2({}, {
+    options = _objectSpread2(_objectSpread2({}, {
       pascalCase: false
-    }, {}, options);
+    }), options);
 
     var postProcess = function postProcess(x) {
       return options.pascalCase ? x.charAt(0).toLocaleUpperCase() + x.slice(1) : x;
@@ -14917,9 +14763,9 @@
       input = preserveCamelCase(input);
     }
 
-    input = input.replace(/^[_.\- ]+/, '').toLocaleLowerCase().replace(/[ \x2D\._]+([AN_ahlp\{\}]|$)/g, function (_, p1) {
+    input = input.replace(/^[_.\- ]+/, '').toLocaleLowerCase().replace(/[ \x2D\._]+((?:[0-9A-Z_a-z\xAA\xB2\xB3\xB5\xB9\xBA\xBC-\xBE\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0345\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05B0-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05EF-\u05F2\u0610-\u061A\u0620-\u0657\u0659-\u0669\u066E-\u06D3\u06D5-\u06DC\u06E1-\u06E8\u06ED-\u06FC\u06FF\u0710-\u073F\u074D-\u07B1\u07C0-\u07EA\u07F4\u07F5\u07FA\u0800-\u0817\u081A-\u082C\u0840-\u0858\u0860-\u086A\u08A0-\u08B4\u08B6-\u08C7\u08D4-\u08DF\u08E3-\u08E9\u08F0-\u093B\u093D-\u094C\u094E-\u0950\u0955-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD-\u09C4\u09C7\u09C8\u09CB\u09CC\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u09F4-\u09F9\u09FC\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3E-\u0A42\u0A47\u0A48\u0A4B\u0A4C\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD-\u0AC5\u0AC7-\u0AC9\u0ACB\u0ACC\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0AF9-\u0AFC\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D-\u0B44\u0B47\u0B48\u0B4B\u0B4C\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71-\u0B77\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCC\u0BD0\u0BD7\u0BE6-\u0BF2\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4C\u0C55\u0C56\u0C58-\u0C5A\u0C60-\u0C63\u0C66-\u0C6F\u0C78-\u0C7E\u0C80-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCC\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D00-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4C\u0D4E\u0D54-\u0D63\u0D66-\u0D78\u0D7A-\u0D7F\u0D81-\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E46\u0E4D\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F20-\u0F33\u0F40-\u0F47\u0F49-\u0F6C\u0F71-\u0F81\u0F88-\u0F97\u0F99-\u0FBC\u1000-\u1036\u1038\u103B-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1369-\u137C\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1713\u1720-\u1733\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17B3\u17B6-\u17C8\u17D7\u17DC\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1820-\u1878\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u1938\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19DA\u1A00-\u1A1B\u1A20-\u1A5E\u1A61-\u1A74\u1A80-\u1A89\u1A90-\u1A99\u1AA7\u1ABF\u1AC0\u1B00-\u1B33\u1B35-\u1B43\u1B45-\u1B4B\u1B50-\u1B59\u1B80-\u1BA9\u1BAC-\u1BE5\u1BE7-\u1BF1\u1C00-\u1C36\u1C40-\u1C49\u1C4D-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1DE7-\u1DF4\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2070\u2071\u2074-\u2079\u207F-\u2089\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2189\u2150-\u2182\u2460-\u249B\u24B6-\u24FF\u2776-\u2793\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2CFD\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u3192-\u3195\u31A0-\u31BF\u31F0-\u31FF\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\u3400-\u4DBF\u4E00-\u9FFC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66E\uA674-\uA67B\uA67F-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA7BF\uA7C2-\uA7CA\uA7F5-\uA805\uA807-\uA827\uA830-\uA835\uA840-\uA873\uA880-\uA8C3\uA8C5\uA8D0-\uA8D9\uA8F2-\uA8F7\uA8FB\uA8FD-\uA92A\uA930-\uA952\uA960-\uA97C\uA980-\uA9B2\uA9B4-\uA9BF\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAABE\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF5\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABEA\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD07-\uDD33\uDD40-\uDD78\uDD8A\uDD8B\uDE80-\uDE9C\uDEA0-\uDED0\uDEE1-\uDEFB\uDF00-\uDF23\uDF2D-\uDF4A\uDF50-\uDF7A\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC58-\uDC76\uDC79-\uDC9E\uDCA7-\uDCAF\uDCE0-\uDCF2\uDCF4\uDCF5\uDCFB-\uDD1B\uDD20-\uDD39\uDD80-\uDDB7\uDDBC-\uDDCF\uDDD2-\uDE03\uDE05\uDE06\uDE0C-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE40-\uDE48\uDE60-\uDE7E\uDE80-\uDE9F\uDEC0-\uDEC7\uDEC9-\uDEE4\uDEEB-\uDEEF\uDF00-\uDF35\uDF40-\uDF55\uDF58-\uDF72\uDF78-\uDF91\uDFA9-\uDFAF]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDCFA-\uDD27\uDD30-\uDD39\uDE60-\uDE7E\uDE80-\uDEA9\uDEAB\uDEAC\uDEB0\uDEB1\uDF00-\uDF27\uDF30-\uDF45\uDF51-\uDF54\uDFB0-\uDFCB\uDFE0-\uDFF6]|\uD804[\uDC00-\uDC45\uDC52-\uDC6F\uDC82-\uDCB8\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD00-\uDD32\uDD36-\uDD3F\uDD44-\uDD47\uDD50-\uDD72\uDD76\uDD80-\uDDBF\uDDC1-\uDDC4\uDDCE-\uDDDA\uDDDC\uDDE1-\uDDF4\uDE00-\uDE11\uDE13-\uDE34\uDE37\uDE3E\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEE8\uDEF0-\uDEF9\uDF00-\uDF03\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D-\uDF44\uDF47\uDF48\uDF4B\uDF4C\uDF50\uDF57\uDF5D-\uDF63]|\uD805[\uDC00-\uDC41\uDC43-\uDC45\uDC47-\uDC4A\uDC50-\uDC59\uDC5F-\uDC61\uDC80-\uDCC1\uDCC4\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDB5\uDDB8-\uDDBE\uDDD8-\uDDDD\uDE00-\uDE3E\uDE40\uDE44\uDE50-\uDE59\uDE80-\uDEB5\uDEB8\uDEC0-\uDEC9\uDF00-\uDF1A\uDF1D-\uDF2A\uDF30-\uDF3B]|\uD806[\uDC00-\uDC38\uDCA0-\uDCF2\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD35\uDD37\uDD38\uDD3B\uDD3C\uDD3F-\uDD42\uDD50-\uDD59\uDDA0-\uDDA7\uDDAA-\uDDD7\uDDDA-\uDDDF\uDDE1\uDDE3\uDDE4\uDE00-\uDE32\uDE35-\uDE3E\uDE50-\uDE97\uDE9D\uDEC0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC36\uDC38-\uDC3E\uDC40\uDC50-\uDC6C\uDC72-\uDC8F\uDC92-\uDCA7\uDCA9-\uDCB6\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD36\uDD3A\uDD3C\uDD3D\uDD3F-\uDD41\uDD43\uDD46\uDD47\uDD50-\uDD59\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD8E\uDD90\uDD91\uDD93-\uDD96\uDD98\uDDA0-\uDDA9\uDEE0-\uDEF6\uDFB0\uDFC0-\uDFD4]|\uD808[\uDC00-\uDF99]|\uD809[\uDC00-\uDC6E\uDC80-\uDD43]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF50-\uDF59\uDF5B-\uDF61\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE96\uDF00-\uDF4A\uDF4F-\uDF87\uDF8F-\uDF9F\uDFE0\uDFE1\uDFE3\uDFF0\uDFF1]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82C[\uDC00-\uDD1E\uDD50-\uDD52\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99\uDC9E]|\uD834[\uDEE0-\uDEF3\uDF60-\uDF78]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD838[\uDC00-\uDC06\uDC08-\uDC18\uDC1B-\uDC21\uDC23\uDC24\uDC26-\uDC2A\uDD00-\uDD2C\uDD37-\uDD3D\uDD40-\uDD49\uDD4E\uDEC0-\uDEEB\uDEF0-\uDEF9]|\uD83A[\uDC00-\uDCC4\uDCC7-\uDCCF\uDD00-\uDD43\uDD47\uDD4B\uDD50-\uDD59]|\uD83B[\uDC71-\uDCAB\uDCAD-\uDCAF\uDCB1-\uDCB4\uDD01-\uDD2D\uDD2F-\uDD3D\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD83C[\uDD00-\uDD0C\uDD30-\uDD49\uDD50-\uDD69\uDD70-\uDD89]|\uD83E[\uDFF0-\uDFF9]|\uD869[\uDC00-\uDEDD\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A])|$)/g, function (_, p1) {
       return p1.toLocaleUpperCase();
-    }).replace(/[0-9]+([AN_ahlp\{\}]|$)/g, function (m) {
+    }).replace(/[0-9]+((?:[0-9A-Z_a-z\xAA\xB2\xB3\xB5\xB9\xBA\xBC-\xBE\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0345\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05B0-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05EF-\u05F2\u0610-\u061A\u0620-\u0657\u0659-\u0669\u066E-\u06D3\u06D5-\u06DC\u06E1-\u06E8\u06ED-\u06FC\u06FF\u0710-\u073F\u074D-\u07B1\u07C0-\u07EA\u07F4\u07F5\u07FA\u0800-\u0817\u081A-\u082C\u0840-\u0858\u0860-\u086A\u08A0-\u08B4\u08B6-\u08C7\u08D4-\u08DF\u08E3-\u08E9\u08F0-\u093B\u093D-\u094C\u094E-\u0950\u0955-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD-\u09C4\u09C7\u09C8\u09CB\u09CC\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u09F4-\u09F9\u09FC\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3E-\u0A42\u0A47\u0A48\u0A4B\u0A4C\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD-\u0AC5\u0AC7-\u0AC9\u0ACB\u0ACC\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0AF9-\u0AFC\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D-\u0B44\u0B47\u0B48\u0B4B\u0B4C\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71-\u0B77\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCC\u0BD0\u0BD7\u0BE6-\u0BF2\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4C\u0C55\u0C56\u0C58-\u0C5A\u0C60-\u0C63\u0C66-\u0C6F\u0C78-\u0C7E\u0C80-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCC\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D00-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4C\u0D4E\u0D54-\u0D63\u0D66-\u0D78\u0D7A-\u0D7F\u0D81-\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E46\u0E4D\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F20-\u0F33\u0F40-\u0F47\u0F49-\u0F6C\u0F71-\u0F81\u0F88-\u0F97\u0F99-\u0FBC\u1000-\u1036\u1038\u103B-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1369-\u137C\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1713\u1720-\u1733\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17B3\u17B6-\u17C8\u17D7\u17DC\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1820-\u1878\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u1938\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19DA\u1A00-\u1A1B\u1A20-\u1A5E\u1A61-\u1A74\u1A80-\u1A89\u1A90-\u1A99\u1AA7\u1ABF\u1AC0\u1B00-\u1B33\u1B35-\u1B43\u1B45-\u1B4B\u1B50-\u1B59\u1B80-\u1BA9\u1BAC-\u1BE5\u1BE7-\u1BF1\u1C00-\u1C36\u1C40-\u1C49\u1C4D-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1DE7-\u1DF4\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2070\u2071\u2074-\u2079\u207F-\u2089\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2189\u2150-\u2182\u2460-\u249B\u24B6-\u24FF\u2776-\u2793\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2CFD\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u3192-\u3195\u31A0-\u31BF\u31F0-\u31FF\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\u3400-\u4DBF\u4E00-\u9FFC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66E\uA674-\uA67B\uA67F-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA7BF\uA7C2-\uA7CA\uA7F5-\uA805\uA807-\uA827\uA830-\uA835\uA840-\uA873\uA880-\uA8C3\uA8C5\uA8D0-\uA8D9\uA8F2-\uA8F7\uA8FB\uA8FD-\uA92A\uA930-\uA952\uA960-\uA97C\uA980-\uA9B2\uA9B4-\uA9BF\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAABE\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF5\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABEA\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD07-\uDD33\uDD40-\uDD78\uDD8A\uDD8B\uDE80-\uDE9C\uDEA0-\uDED0\uDEE1-\uDEFB\uDF00-\uDF23\uDF2D-\uDF4A\uDF50-\uDF7A\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC58-\uDC76\uDC79-\uDC9E\uDCA7-\uDCAF\uDCE0-\uDCF2\uDCF4\uDCF5\uDCFB-\uDD1B\uDD20-\uDD39\uDD80-\uDDB7\uDDBC-\uDDCF\uDDD2-\uDE03\uDE05\uDE06\uDE0C-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE40-\uDE48\uDE60-\uDE7E\uDE80-\uDE9F\uDEC0-\uDEC7\uDEC9-\uDEE4\uDEEB-\uDEEF\uDF00-\uDF35\uDF40-\uDF55\uDF58-\uDF72\uDF78-\uDF91\uDFA9-\uDFAF]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDCFA-\uDD27\uDD30-\uDD39\uDE60-\uDE7E\uDE80-\uDEA9\uDEAB\uDEAC\uDEB0\uDEB1\uDF00-\uDF27\uDF30-\uDF45\uDF51-\uDF54\uDFB0-\uDFCB\uDFE0-\uDFF6]|\uD804[\uDC00-\uDC45\uDC52-\uDC6F\uDC82-\uDCB8\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD00-\uDD32\uDD36-\uDD3F\uDD44-\uDD47\uDD50-\uDD72\uDD76\uDD80-\uDDBF\uDDC1-\uDDC4\uDDCE-\uDDDA\uDDDC\uDDE1-\uDDF4\uDE00-\uDE11\uDE13-\uDE34\uDE37\uDE3E\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEE8\uDEF0-\uDEF9\uDF00-\uDF03\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D-\uDF44\uDF47\uDF48\uDF4B\uDF4C\uDF50\uDF57\uDF5D-\uDF63]|\uD805[\uDC00-\uDC41\uDC43-\uDC45\uDC47-\uDC4A\uDC50-\uDC59\uDC5F-\uDC61\uDC80-\uDCC1\uDCC4\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDB5\uDDB8-\uDDBE\uDDD8-\uDDDD\uDE00-\uDE3E\uDE40\uDE44\uDE50-\uDE59\uDE80-\uDEB5\uDEB8\uDEC0-\uDEC9\uDF00-\uDF1A\uDF1D-\uDF2A\uDF30-\uDF3B]|\uD806[\uDC00-\uDC38\uDCA0-\uDCF2\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD35\uDD37\uDD38\uDD3B\uDD3C\uDD3F-\uDD42\uDD50-\uDD59\uDDA0-\uDDA7\uDDAA-\uDDD7\uDDDA-\uDDDF\uDDE1\uDDE3\uDDE4\uDE00-\uDE32\uDE35-\uDE3E\uDE50-\uDE97\uDE9D\uDEC0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC36\uDC38-\uDC3E\uDC40\uDC50-\uDC6C\uDC72-\uDC8F\uDC92-\uDCA7\uDCA9-\uDCB6\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD36\uDD3A\uDD3C\uDD3D\uDD3F-\uDD41\uDD43\uDD46\uDD47\uDD50-\uDD59\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD8E\uDD90\uDD91\uDD93-\uDD96\uDD98\uDDA0-\uDDA9\uDEE0-\uDEF6\uDFB0\uDFC0-\uDFD4]|\uD808[\uDC00-\uDF99]|\uD809[\uDC00-\uDC6E\uDC80-\uDD43]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF50-\uDF59\uDF5B-\uDF61\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE96\uDF00-\uDF4A\uDF4F-\uDF87\uDF8F-\uDF9F\uDFE0\uDFE1\uDFE3\uDFF0\uDFF1]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82C[\uDC00-\uDD1E\uDD50-\uDD52\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99\uDC9E]|\uD834[\uDEE0-\uDEF3\uDF60-\uDF78]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD838[\uDC00-\uDC06\uDC08-\uDC18\uDC1B-\uDC21\uDC23\uDC24\uDC26-\uDC2A\uDD00-\uDD2C\uDD37-\uDD3D\uDD40-\uDD49\uDD4E\uDEC0-\uDEEB\uDEF0-\uDEF9]|\uD83A[\uDC00-\uDCC4\uDCC7-\uDCCF\uDD00-\uDD43\uDD47\uDD4B\uDD50-\uDD59]|\uD83B[\uDC71-\uDCAB\uDCAD-\uDCAF\uDCB1-\uDCB4\uDD01-\uDD2D\uDD2F-\uDD3D\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD83C[\uDD00-\uDD0C\uDD30-\uDD49\uDD50-\uDD69\uDD70-\uDD89]|\uD83E[\uDFF0-\uDFF9]|\uD869[\uDC00-\uDEDD\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A])|$)/g, function (m) {
       return m.toLocaleUpperCase();
     });
     return postProcess(input);
@@ -14930,9 +14776,7 @@
   var default_1 = camelCase;
   camelcase["default"] = default_1;
 
-  var Fullstory =
-  /*#__PURE__*/
-  function () {
+  var Fullstory = /*#__PURE__*/function () {
     function Fullstory(config) {
       _classCallCheck(this, Fullstory);
 
@@ -15090,8 +14934,6 @@
             case "bools":
               return "".concat(camelcase(parts.join("_")), "_").concat(typeSuffix);
 
-            default: // passthrough
-
           }
         } // No type suffix found. Camel case the whole field name.
 
@@ -15103,9 +14945,7 @@
     return Fullstory;
   }();
 
-  var TVSquared =
-  /*#__PURE__*/
-  function () {
+  var TVSquared = /*#__PURE__*/function () {
     function TVSquared(config) {
       _classCallCheck(this, TVSquared);
 
@@ -15595,7 +15435,7 @@
       // get the dest keys from itemParameters config
       // append the already created item object keys (this is done to get the keys that are actually top level props in Rudder payload but GA expects them under items too)
       products.forEach(function (p) {
-        obj = _objectSpread2({}, getDestinationEventProperties(p, itemParametersConfigArray), {}, item && type(item) === "array" && item[0] || {});
+        obj = _objectSpread2(_objectSpread2({}, getDestinationEventProperties(p, itemParametersConfigArray)), item && type(item) === "array" && item[0] || {});
         items.push(obj);
       });
     }
@@ -15612,9 +15452,7 @@
     return getDestinationEventProperties(props, pageEventParametersConfigArray);
   }
 
-  var GA4 =
-  /*#__PURE__*/
-  function () {
+  var GA4 = /*#__PURE__*/function () {
     function GA4(config, analytics) {
       _classCallCheck(this, GA4);
 
@@ -15821,7 +15659,7 @@
         pageProps = flattenJsonPayload(pageProps);
 
         if (this.extendPageViewParams) {
-          window.gtag("event", "page_view", _objectSpread2({}, pageProps, {}, getPageViewProperty(pageProps)));
+          window.gtag("event", "page_view", _objectSpread2(_objectSpread2({}, pageProps), getPageViewProperty(pageProps)));
         } else {
           window.gtag("event", "page_view", getPageViewProperty(pageProps));
         }
@@ -15846,9 +15684,7 @@
     id: null
   };
 
-  var MoEngage =
-  /*#__PURE__*/
-  function () {
+  var MoEngage = /*#__PURE__*/function () {
     function MoEngage(config, analyticsinstance) {
       _classCallCheck(this, MoEngage);
 
@@ -16025,9 +15861,7818 @@
     return MoEngage;
   }();
 
-  var Amplitude =
-  /*#__PURE__*/
-  function () {
+  var global$1 = typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};
+
+  // based off https://github.com/defunctzombie/node-process/blob/master/browser.js
+
+  function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+  }
+
+  function defaultClearTimeout() {
+    throw new Error('clearTimeout has not been defined');
+  }
+
+  var cachedSetTimeout = defaultSetTimout;
+  var cachedClearTimeout = defaultClearTimeout;
+
+  if (typeof global$1.setTimeout === 'function') {
+    cachedSetTimeout = setTimeout;
+  }
+
+  if (typeof global$1.clearTimeout === 'function') {
+    cachedClearTimeout = clearTimeout;
+  }
+
+  function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+      //normal enviroments in sane situations
+      return setTimeout(fun, 0);
+    } // if setTimeout wasn't available but was latter defined
+
+
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+      cachedSetTimeout = setTimeout;
+      return setTimeout(fun, 0);
+    }
+
+    try {
+      // when when somebody has screwed with setTimeout but no I.E. maddness
+      return cachedSetTimeout(fun, 0);
+    } catch (e) {
+      try {
+        // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+        return cachedSetTimeout.call(null, fun, 0);
+      } catch (e) {
+        // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+        return cachedSetTimeout.call(this, fun, 0);
+      }
+    }
+  }
+
+  function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+      //normal enviroments in sane situations
+      return clearTimeout(marker);
+    } // if clearTimeout wasn't available but was latter defined
+
+
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+      cachedClearTimeout = clearTimeout;
+      return clearTimeout(marker);
+    }
+
+    try {
+      // when when somebody has screwed with setTimeout but no I.E. maddness
+      return cachedClearTimeout(marker);
+    } catch (e) {
+      try {
+        // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+        return cachedClearTimeout.call(null, marker);
+      } catch (e) {
+        // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+        // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+        return cachedClearTimeout.call(this, marker);
+      }
+    }
+  }
+
+  var queue = [];
+  var draining = false;
+  var currentQueue;
+  var queueIndex = -1;
+
+  function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+      return;
+    }
+
+    draining = false;
+
+    if (currentQueue.length) {
+      queue = currentQueue.concat(queue);
+    } else {
+      queueIndex = -1;
+    }
+
+    if (queue.length) {
+      drainQueue();
+    }
+  }
+
+  function drainQueue() {
+    if (draining) {
+      return;
+    }
+
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+    var len = queue.length;
+
+    while (len) {
+      currentQueue = queue;
+      queue = [];
+
+      while (++queueIndex < len) {
+        if (currentQueue) {
+          currentQueue[queueIndex].run();
+        }
+      }
+
+      queueIndex = -1;
+      len = queue.length;
+    }
+
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+  }
+
+  function nextTick(fun) {
+    var args = new Array(arguments.length - 1);
+
+    if (arguments.length > 1) {
+      for (var i = 1; i < arguments.length; i++) {
+        args[i - 1] = arguments[i];
+      }
+    }
+
+    queue.push(new Item(fun, args));
+
+    if (queue.length === 1 && !draining) {
+      runTimeout(drainQueue);
+    }
+  } // v8 likes predictible objects
+
+  function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+  }
+
+  Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+  };
+
+  var title = 'browser';
+  var platform = 'browser';
+  var browser$2 = true;
+  var env = {};
+  var argv = [];
+  var version = ''; // empty string to avoid regexp issues
+
+  var versions = {};
+  var release = {};
+  var config = {};
+
+  function noop$1() {}
+
+  var on = noop$1;
+  var addListener = noop$1;
+  var once = noop$1;
+  var off = noop$1;
+  var removeListener = noop$1;
+  var removeAllListeners = noop$1;
+  var emit = noop$1;
+  function binding(name) {
+    throw new Error('process.binding is not supported');
+  }
+  function cwd() {
+    return '/';
+  }
+  function chdir(dir) {
+    throw new Error('process.chdir is not supported');
+  }
+  function umask() {
+    return 0;
+  } // from https://github.com/kumavis/browser-process-hrtime/blob/master/index.js
+
+  var performance$1 = global$1.performance || {};
+
+  var performanceNow = performance$1.now || performance$1.mozNow || performance$1.msNow || performance$1.oNow || performance$1.webkitNow || function () {
+    return new Date().getTime();
+  }; // generate timestamp or delta
+  // see http://nodejs.org/api/process.html#process_process_hrtime
+
+
+  function hrtime(previousTimestamp) {
+    var clocktime = performanceNow.call(performance$1) * 1e-3;
+    var seconds = Math.floor(clocktime);
+    var nanoseconds = Math.floor(clocktime % 1 * 1e9);
+
+    if (previousTimestamp) {
+      seconds = seconds - previousTimestamp[0];
+      nanoseconds = nanoseconds - previousTimestamp[1];
+
+      if (nanoseconds < 0) {
+        seconds--;
+        nanoseconds += 1e9;
+      }
+    }
+
+    return [seconds, nanoseconds];
+  }
+  var startTime = new Date();
+  function uptime() {
+    var currentTime = new Date();
+    var dif = currentTime - startTime;
+    return dif / 1000;
+  }
+  var process = {
+    nextTick: nextTick,
+    title: title,
+    browser: browser$2,
+    env: env,
+    argv: argv,
+    version: version,
+    versions: versions,
+    on: on,
+    addListener: addListener,
+    once: once,
+    off: off,
+    removeListener: removeListener,
+    removeAllListeners: removeAllListeners,
+    emit: emit,
+    binding: binding,
+    cwd: cwd,
+    chdir: chdir,
+    umask: umask,
+    hrtime: hrtime,
+    platform: platform,
+    release: release,
+    config: config,
+    uptime: uptime
+  };
+
+  var lookup = [];
+  var revLookup = [];
+  var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array;
+  var inited = false;
+
+  function init() {
+    inited = true;
+    var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+    for (var i = 0, len = code.length; i < len; ++i) {
+      lookup[i] = code[i];
+      revLookup[code.charCodeAt(i)] = i;
+    }
+
+    revLookup['-'.charCodeAt(0)] = 62;
+    revLookup['_'.charCodeAt(0)] = 63;
+  }
+
+  function toByteArray(b64) {
+    if (!inited) {
+      init();
+    }
+
+    var i, j, l, tmp, placeHolders, arr;
+    var len = b64.length;
+
+    if (len % 4 > 0) {
+      throw new Error('Invalid string. Length must be a multiple of 4');
+    } // the number of equal signs (place holders)
+    // if there are two placeholders, than the two characters before it
+    // represent one byte
+    // if there is only one, then the three characters before it represent 2 bytes
+    // this is just a cheap hack to not do indexOf twice
+
+
+    placeHolders = b64[len - 2] === '=' ? 2 : b64[len - 1] === '=' ? 1 : 0; // base64 is 4/3 + up to two characters of the original data
+
+    arr = new Arr(len * 3 / 4 - placeHolders); // if there are placeholders, only get up to the last complete 4 chars
+
+    l = placeHolders > 0 ? len - 4 : len;
+    var L = 0;
+
+    for (i = 0, j = 0; i < l; i += 4, j += 3) {
+      tmp = revLookup[b64.charCodeAt(i)] << 18 | revLookup[b64.charCodeAt(i + 1)] << 12 | revLookup[b64.charCodeAt(i + 2)] << 6 | revLookup[b64.charCodeAt(i + 3)];
+      arr[L++] = tmp >> 16 & 0xFF;
+      arr[L++] = tmp >> 8 & 0xFF;
+      arr[L++] = tmp & 0xFF;
+    }
+
+    if (placeHolders === 2) {
+      tmp = revLookup[b64.charCodeAt(i)] << 2 | revLookup[b64.charCodeAt(i + 1)] >> 4;
+      arr[L++] = tmp & 0xFF;
+    } else if (placeHolders === 1) {
+      tmp = revLookup[b64.charCodeAt(i)] << 10 | revLookup[b64.charCodeAt(i + 1)] << 4 | revLookup[b64.charCodeAt(i + 2)] >> 2;
+      arr[L++] = tmp >> 8 & 0xFF;
+      arr[L++] = tmp & 0xFF;
+    }
+
+    return arr;
+  }
+
+  function tripletToBase64(num) {
+    return lookup[num >> 18 & 0x3F] + lookup[num >> 12 & 0x3F] + lookup[num >> 6 & 0x3F] + lookup[num & 0x3F];
+  }
+
+  function encodeChunk(uint8, start, end) {
+    var tmp;
+    var output = [];
+
+    for (var i = start; i < end; i += 3) {
+      tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + uint8[i + 2];
+      output.push(tripletToBase64(tmp));
+    }
+
+    return output.join('');
+  }
+
+  function fromByteArray(uint8) {
+    if (!inited) {
+      init();
+    }
+
+    var tmp;
+    var len = uint8.length;
+    var extraBytes = len % 3; // if we have 1 byte left, pad 2 bytes
+
+    var output = '';
+    var parts = [];
+    var maxChunkLength = 16383; // must be multiple of 3
+    // go through the array every three bytes, we'll deal with trailing stuff later
+
+    for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+      parts.push(encodeChunk(uint8, i, i + maxChunkLength > len2 ? len2 : i + maxChunkLength));
+    } // pad the end with zeros, but make sure to not forget the extra bytes
+
+
+    if (extraBytes === 1) {
+      tmp = uint8[len - 1];
+      output += lookup[tmp >> 2];
+      output += lookup[tmp << 4 & 0x3F];
+      output += '==';
+    } else if (extraBytes === 2) {
+      tmp = (uint8[len - 2] << 8) + uint8[len - 1];
+      output += lookup[tmp >> 10];
+      output += lookup[tmp >> 4 & 0x3F];
+      output += lookup[tmp << 2 & 0x3F];
+      output += '=';
+    }
+
+    parts.push(output);
+    return parts.join('');
+  }
+
+  function read(buffer, offset, isLE, mLen, nBytes) {
+    var e, m;
+    var eLen = nBytes * 8 - mLen - 1;
+    var eMax = (1 << eLen) - 1;
+    var eBias = eMax >> 1;
+    var nBits = -7;
+    var i = isLE ? nBytes - 1 : 0;
+    var d = isLE ? -1 : 1;
+    var s = buffer[offset + i];
+    i += d;
+    e = s & (1 << -nBits) - 1;
+    s >>= -nBits;
+    nBits += eLen;
+
+    for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+
+    m = e & (1 << -nBits) - 1;
+    e >>= -nBits;
+    nBits += mLen;
+
+    for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+
+    if (e === 0) {
+      e = 1 - eBias;
+    } else if (e === eMax) {
+      return m ? NaN : (s ? -1 : 1) * Infinity;
+    } else {
+      m = m + Math.pow(2, mLen);
+      e = e - eBias;
+    }
+
+    return (s ? -1 : 1) * m * Math.pow(2, e - mLen);
+  }
+  function write(buffer, value, offset, isLE, mLen, nBytes) {
+    var e, m, c;
+    var eLen = nBytes * 8 - mLen - 1;
+    var eMax = (1 << eLen) - 1;
+    var eBias = eMax >> 1;
+    var rt = mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0;
+    var i = isLE ? 0 : nBytes - 1;
+    var d = isLE ? 1 : -1;
+    var s = value < 0 || value === 0 && 1 / value < 0 ? 1 : 0;
+    value = Math.abs(value);
+
+    if (isNaN(value) || value === Infinity) {
+      m = isNaN(value) ? 1 : 0;
+      e = eMax;
+    } else {
+      e = Math.floor(Math.log(value) / Math.LN2);
+
+      if (value * (c = Math.pow(2, -e)) < 1) {
+        e--;
+        c *= 2;
+      }
+
+      if (e + eBias >= 1) {
+        value += rt / c;
+      } else {
+        value += rt * Math.pow(2, 1 - eBias);
+      }
+
+      if (value * c >= 2) {
+        e++;
+        c /= 2;
+      }
+
+      if (e + eBias >= eMax) {
+        m = 0;
+        e = eMax;
+      } else if (e + eBias >= 1) {
+        m = (value * c - 1) * Math.pow(2, mLen);
+        e = e + eBias;
+      } else {
+        m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen);
+        e = 0;
+      }
+    }
+
+    for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+    e = e << mLen | m;
+    eLen += mLen;
+
+    for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+    buffer[offset + i - d] |= s * 128;
+  }
+
+  var toString$3 = {}.toString;
+  var isArray$1 = Array.isArray || function (arr) {
+    return toString$3.call(arr) == '[object Array]';
+  };
+
+  var INSPECT_MAX_BYTES = 50;
+  /**
+   * If `Buffer.TYPED_ARRAY_SUPPORT`:
+   *   === true    Use Uint8Array implementation (fastest)
+   *   === false   Use Object implementation (most compatible, even IE6)
+   *
+   * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+   * Opera 11.6+, iOS 4.2+.
+   *
+   * Due to various browser bugs, sometimes the Object implementation will be used even
+   * when the browser supports typed arrays.
+   *
+   * Note:
+   *
+   *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
+   *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+   *
+   *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+   *
+   *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+   *     incorrect length in some situations.
+
+   * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+   * get the Object implementation, which is slower but behaves correctly.
+   */
+
+  Buffer.TYPED_ARRAY_SUPPORT = global$1.TYPED_ARRAY_SUPPORT !== undefined ? global$1.TYPED_ARRAY_SUPPORT : true;
+
+  function kMaxLength() {
+    return Buffer.TYPED_ARRAY_SUPPORT ? 0x7fffffff : 0x3fffffff;
+  }
+
+  function createBuffer(that, length) {
+    if (kMaxLength() < length) {
+      throw new RangeError('Invalid typed array length');
+    }
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      // Return an augmented `Uint8Array` instance, for best performance
+      that = new Uint8Array(length);
+      that.__proto__ = Buffer.prototype;
+    } else {
+      // Fallback: Return an object instance of the Buffer class
+      if (that === null) {
+        that = new Buffer(length);
+      }
+
+      that.length = length;
+    }
+
+    return that;
+  }
+  /**
+   * The Buffer constructor returns instances of `Uint8Array` that have their
+   * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+   * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+   * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+   * returns a single octet.
+   *
+   * The `Uint8Array` prototype remains unmodified.
+   */
+
+
+  function Buffer(arg, encodingOrOffset, length) {
+    if (!Buffer.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer)) {
+      return new Buffer(arg, encodingOrOffset, length);
+    } // Common case.
+
+
+    if (typeof arg === 'number') {
+      if (typeof encodingOrOffset === 'string') {
+        throw new Error('If encoding is specified then the first argument must be a string');
+      }
+
+      return allocUnsafe(this, arg);
+    }
+
+    return from(this, arg, encodingOrOffset, length);
+  }
+  Buffer.poolSize = 8192; // not used by this implementation
+  // TODO: Legacy, not needed anymore. Remove in next major version.
+
+  Buffer._augment = function (arr) {
+    arr.__proto__ = Buffer.prototype;
+    return arr;
+  };
+
+  function from(that, value, encodingOrOffset, length) {
+    if (typeof value === 'number') {
+      throw new TypeError('"value" argument must not be a number');
+    }
+
+    if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
+      return fromArrayBuffer(that, value, encodingOrOffset, length);
+    }
+
+    if (typeof value === 'string') {
+      return fromString(that, value, encodingOrOffset);
+    }
+
+    return fromObject(that, value);
+  }
+  /**
+   * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
+   * if value is a number.
+   * Buffer.from(str[, encoding])
+   * Buffer.from(array)
+   * Buffer.from(buffer)
+   * Buffer.from(arrayBuffer[, byteOffset[, length]])
+   **/
+
+
+  Buffer.from = function (value, encodingOrOffset, length) {
+    return from(null, value, encodingOrOffset, length);
+  };
+
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    Buffer.prototype.__proto__ = Uint8Array.prototype;
+    Buffer.__proto__ = Uint8Array;
+  }
+
+  function assertSize(size) {
+    if (typeof size !== 'number') {
+      throw new TypeError('"size" argument must be a number');
+    } else if (size < 0) {
+      throw new RangeError('"size" argument must not be negative');
+    }
+  }
+
+  function alloc(that, size, fill, encoding) {
+    assertSize(size);
+
+    if (size <= 0) {
+      return createBuffer(that, size);
+    }
+
+    if (fill !== undefined) {
+      // Only pay attention to encoding if it's a string. This
+      // prevents accidentally sending in a number that would
+      // be interpretted as a start offset.
+      return typeof encoding === 'string' ? createBuffer(that, size).fill(fill, encoding) : createBuffer(that, size).fill(fill);
+    }
+
+    return createBuffer(that, size);
+  }
+  /**
+   * Creates a new filled Buffer instance.
+   * alloc(size[, fill[, encoding]])
+   **/
+
+
+  Buffer.alloc = function (size, fill, encoding) {
+    return alloc(null, size, fill, encoding);
+  };
+
+  function allocUnsafe(that, size) {
+    assertSize(size);
+    that = createBuffer(that, size < 0 ? 0 : checked(size) | 0);
+
+    if (!Buffer.TYPED_ARRAY_SUPPORT) {
+      for (var i = 0; i < size; ++i) {
+        that[i] = 0;
+      }
+    }
+
+    return that;
+  }
+  /**
+   * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
+   * */
+
+
+  Buffer.allocUnsafe = function (size) {
+    return allocUnsafe(null, size);
+  };
+  /**
+   * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
+   */
+
+
+  Buffer.allocUnsafeSlow = function (size) {
+    return allocUnsafe(null, size);
+  };
+
+  function fromString(that, string, encoding) {
+    if (typeof encoding !== 'string' || encoding === '') {
+      encoding = 'utf8';
+    }
+
+    if (!Buffer.isEncoding(encoding)) {
+      throw new TypeError('"encoding" must be a valid string encoding');
+    }
+
+    var length = byteLength(string, encoding) | 0;
+    that = createBuffer(that, length);
+    var actual = that.write(string, encoding);
+
+    if (actual !== length) {
+      // Writing a hex string, for example, that contains invalid characters will
+      // cause everything after the first invalid character to be ignored. (e.g.
+      // 'abxxcd' will be treated as 'ab')
+      that = that.slice(0, actual);
+    }
+
+    return that;
+  }
+
+  function fromArrayLike(that, array) {
+    var length = array.length < 0 ? 0 : checked(array.length) | 0;
+    that = createBuffer(that, length);
+
+    for (var i = 0; i < length; i += 1) {
+      that[i] = array[i] & 255;
+    }
+
+    return that;
+  }
+
+  function fromArrayBuffer(that, array, byteOffset, length) {
+    array.byteLength; // this throws if `array` is not a valid ArrayBuffer
+
+    if (byteOffset < 0 || array.byteLength < byteOffset) {
+      throw new RangeError('\'offset\' is out of bounds');
+    }
+
+    if (array.byteLength < byteOffset + (length || 0)) {
+      throw new RangeError('\'length\' is out of bounds');
+    }
+
+    if (byteOffset === undefined && length === undefined) {
+      array = new Uint8Array(array);
+    } else if (length === undefined) {
+      array = new Uint8Array(array, byteOffset);
+    } else {
+      array = new Uint8Array(array, byteOffset, length);
+    }
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      // Return an augmented `Uint8Array` instance, for best performance
+      that = array;
+      that.__proto__ = Buffer.prototype;
+    } else {
+      // Fallback: Return an object instance of the Buffer class
+      that = fromArrayLike(that, array);
+    }
+
+    return that;
+  }
+
+  function fromObject(that, obj) {
+    if (internalIsBuffer(obj)) {
+      var len = checked(obj.length) | 0;
+      that = createBuffer(that, len);
+
+      if (that.length === 0) {
+        return that;
+      }
+
+      obj.copy(that, 0, 0, len);
+      return that;
+    }
+
+    if (obj) {
+      if (typeof ArrayBuffer !== 'undefined' && obj.buffer instanceof ArrayBuffer || 'length' in obj) {
+        if (typeof obj.length !== 'number' || isnan(obj.length)) {
+          return createBuffer(that, 0);
+        }
+
+        return fromArrayLike(that, obj);
+      }
+
+      if (obj.type === 'Buffer' && isArray$1(obj.data)) {
+        return fromArrayLike(that, obj.data);
+      }
+    }
+
+    throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.');
+  }
+
+  function checked(length) {
+    // Note: cannot use `length < kMaxLength()` here because that fails when
+    // length is NaN (which is otherwise coerced to zero.)
+    if (length >= kMaxLength()) {
+      throw new RangeError('Attempt to allocate Buffer larger than maximum ' + 'size: 0x' + kMaxLength().toString(16) + ' bytes');
+    }
+
+    return length | 0;
+  }
+  Buffer.isBuffer = isBuffer$2;
+
+  function internalIsBuffer(b) {
+    return !!(b != null && b._isBuffer);
+  }
+
+  Buffer.compare = function compare(a, b) {
+    if (!internalIsBuffer(a) || !internalIsBuffer(b)) {
+      throw new TypeError('Arguments must be Buffers');
+    }
+
+    if (a === b) return 0;
+    var x = a.length;
+    var y = b.length;
+
+    for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+      if (a[i] !== b[i]) {
+        x = a[i];
+        y = b[i];
+        break;
+      }
+    }
+
+    if (x < y) return -1;
+    if (y < x) return 1;
+    return 0;
+  };
+
+  Buffer.isEncoding = function isEncoding(encoding) {
+    switch (String(encoding).toLowerCase()) {
+      case 'hex':
+      case 'utf8':
+      case 'utf-8':
+      case 'ascii':
+      case 'latin1':
+      case 'binary':
+      case 'base64':
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return true;
+
+      default:
+        return false;
+    }
+  };
+
+  Buffer.concat = function concat(list, length) {
+    if (!isArray$1(list)) {
+      throw new TypeError('"list" argument must be an Array of Buffers');
+    }
+
+    if (list.length === 0) {
+      return Buffer.alloc(0);
+    }
+
+    var i;
+
+    if (length === undefined) {
+      length = 0;
+
+      for (i = 0; i < list.length; ++i) {
+        length += list[i].length;
+      }
+    }
+
+    var buffer = Buffer.allocUnsafe(length);
+    var pos = 0;
+
+    for (i = 0; i < list.length; ++i) {
+      var buf = list[i];
+
+      if (!internalIsBuffer(buf)) {
+        throw new TypeError('"list" argument must be an Array of Buffers');
+      }
+
+      buf.copy(buffer, pos);
+      pos += buf.length;
+    }
+
+    return buffer;
+  };
+
+  function byteLength(string, encoding) {
+    if (internalIsBuffer(string)) {
+      return string.length;
+    }
+
+    if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' && (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
+      return string.byteLength;
+    }
+
+    if (typeof string !== 'string') {
+      string = '' + string;
+    }
+
+    var len = string.length;
+    if (len === 0) return 0; // Use a for loop to avoid recursion
+
+    var loweredCase = false;
+
+    for (;;) {
+      switch (encoding) {
+        case 'ascii':
+        case 'latin1':
+        case 'binary':
+          return len;
+
+        case 'utf8':
+        case 'utf-8':
+        case undefined:
+          return utf8ToBytes(string).length;
+
+        case 'ucs2':
+        case 'ucs-2':
+        case 'utf16le':
+        case 'utf-16le':
+          return len * 2;
+
+        case 'hex':
+          return len >>> 1;
+
+        case 'base64':
+          return base64ToBytes(string).length;
+
+        default:
+          if (loweredCase) return utf8ToBytes(string).length; // assume utf8
+
+          encoding = ('' + encoding).toLowerCase();
+          loweredCase = true;
+      }
+    }
+  }
+
+  Buffer.byteLength = byteLength;
+
+  function slowToString(encoding, start, end) {
+    var loweredCase = false; // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
+    // property of a typed array.
+    // This behaves neither like String nor Uint8Array in that we set start/end
+    // to their upper/lower bounds if the value passed is out of range.
+    // undefined is handled specially as per ECMA-262 6th Edition,
+    // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
+
+    if (start === undefined || start < 0) {
+      start = 0;
+    } // Return early if start > this.length. Done here to prevent potential uint32
+    // coercion fail below.
+
+
+    if (start > this.length) {
+      return '';
+    }
+
+    if (end === undefined || end > this.length) {
+      end = this.length;
+    }
+
+    if (end <= 0) {
+      return '';
+    } // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
+
+
+    end >>>= 0;
+    start >>>= 0;
+
+    if (end <= start) {
+      return '';
+    }
+
+    if (!encoding) encoding = 'utf8';
+
+    while (true) {
+      switch (encoding) {
+        case 'hex':
+          return hexSlice(this, start, end);
+
+        case 'utf8':
+        case 'utf-8':
+          return utf8Slice(this, start, end);
+
+        case 'ascii':
+          return asciiSlice(this, start, end);
+
+        case 'latin1':
+        case 'binary':
+          return latin1Slice(this, start, end);
+
+        case 'base64':
+          return base64Slice(this, start, end);
+
+        case 'ucs2':
+        case 'ucs-2':
+        case 'utf16le':
+        case 'utf-16le':
+          return utf16leSlice(this, start, end);
+
+        default:
+          if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding);
+          encoding = (encoding + '').toLowerCase();
+          loweredCase = true;
+      }
+    }
+  } // The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
+  // Buffer instances.
+
+
+  Buffer.prototype._isBuffer = true;
+
+  function swap(b, n, m) {
+    var i = b[n];
+    b[n] = b[m];
+    b[m] = i;
+  }
+
+  Buffer.prototype.swap16 = function swap16() {
+    var len = this.length;
+
+    if (len % 2 !== 0) {
+      throw new RangeError('Buffer size must be a multiple of 16-bits');
+    }
+
+    for (var i = 0; i < len; i += 2) {
+      swap(this, i, i + 1);
+    }
+
+    return this;
+  };
+
+  Buffer.prototype.swap32 = function swap32() {
+    var len = this.length;
+
+    if (len % 4 !== 0) {
+      throw new RangeError('Buffer size must be a multiple of 32-bits');
+    }
+
+    for (var i = 0; i < len; i += 4) {
+      swap(this, i, i + 3);
+      swap(this, i + 1, i + 2);
+    }
+
+    return this;
+  };
+
+  Buffer.prototype.swap64 = function swap64() {
+    var len = this.length;
+
+    if (len % 8 !== 0) {
+      throw new RangeError('Buffer size must be a multiple of 64-bits');
+    }
+
+    for (var i = 0; i < len; i += 8) {
+      swap(this, i, i + 7);
+      swap(this, i + 1, i + 6);
+      swap(this, i + 2, i + 5);
+      swap(this, i + 3, i + 4);
+    }
+
+    return this;
+  };
+
+  Buffer.prototype.toString = function toString() {
+    var length = this.length | 0;
+    if (length === 0) return '';
+    if (arguments.length === 0) return utf8Slice(this, 0, length);
+    return slowToString.apply(this, arguments);
+  };
+
+  Buffer.prototype.equals = function equals(b) {
+    if (!internalIsBuffer(b)) throw new TypeError('Argument must be a Buffer');
+    if (this === b) return true;
+    return Buffer.compare(this, b) === 0;
+  };
+
+  Buffer.prototype.inspect = function inspect() {
+    var str = '';
+    var max = INSPECT_MAX_BYTES;
+
+    if (this.length > 0) {
+      str = this.toString('hex', 0, max).match(/.{2}/g).join(' ');
+      if (this.length > max) str += ' ... ';
+    }
+
+    return '<Buffer ' + str + '>';
+  };
+
+  Buffer.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+    if (!internalIsBuffer(target)) {
+      throw new TypeError('Argument must be a Buffer');
+    }
+
+    if (start === undefined) {
+      start = 0;
+    }
+
+    if (end === undefined) {
+      end = target ? target.length : 0;
+    }
+
+    if (thisStart === undefined) {
+      thisStart = 0;
+    }
+
+    if (thisEnd === undefined) {
+      thisEnd = this.length;
+    }
+
+    if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+      throw new RangeError('out of range index');
+    }
+
+    if (thisStart >= thisEnd && start >= end) {
+      return 0;
+    }
+
+    if (thisStart >= thisEnd) {
+      return -1;
+    }
+
+    if (start >= end) {
+      return 1;
+    }
+
+    start >>>= 0;
+    end >>>= 0;
+    thisStart >>>= 0;
+    thisEnd >>>= 0;
+    if (this === target) return 0;
+    var x = thisEnd - thisStart;
+    var y = end - start;
+    var len = Math.min(x, y);
+    var thisCopy = this.slice(thisStart, thisEnd);
+    var targetCopy = target.slice(start, end);
+
+    for (var i = 0; i < len; ++i) {
+      if (thisCopy[i] !== targetCopy[i]) {
+        x = thisCopy[i];
+        y = targetCopy[i];
+        break;
+      }
+    }
+
+    if (x < y) return -1;
+    if (y < x) return 1;
+    return 0;
+  }; // Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+  // OR the last index of `val` in `buffer` at offset <= `byteOffset`.
+  //
+  // Arguments:
+  // - buffer - a Buffer to search
+  // - val - a string, Buffer, or number
+  // - byteOffset - an index into `buffer`; will be clamped to an int32
+  // - encoding - an optional encoding, relevant is val is a string
+  // - dir - true for indexOf, false for lastIndexOf
+
+
+  function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
+    // Empty buffer means no match
+    if (buffer.length === 0) return -1; // Normalize byteOffset
+
+    if (typeof byteOffset === 'string') {
+      encoding = byteOffset;
+      byteOffset = 0;
+    } else if (byteOffset > 0x7fffffff) {
+      byteOffset = 0x7fffffff;
+    } else if (byteOffset < -0x80000000) {
+      byteOffset = -0x80000000;
+    }
+
+    byteOffset = +byteOffset; // Coerce to Number.
+
+    if (isNaN(byteOffset)) {
+      // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
+      byteOffset = dir ? 0 : buffer.length - 1;
+    } // Normalize byteOffset: negative offsets start from the end of the buffer
+
+
+    if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
+
+    if (byteOffset >= buffer.length) {
+      if (dir) return -1;else byteOffset = buffer.length - 1;
+    } else if (byteOffset < 0) {
+      if (dir) byteOffset = 0;else return -1;
+    } // Normalize val
+
+
+    if (typeof val === 'string') {
+      val = Buffer.from(val, encoding);
+    } // Finally, search either indexOf (if dir is true) or lastIndexOf
+
+
+    if (internalIsBuffer(val)) {
+      // Special case: looking for empty string/buffer always fails
+      if (val.length === 0) {
+        return -1;
+      }
+
+      return arrayIndexOf(buffer, val, byteOffset, encoding, dir);
+    } else if (typeof val === 'number') {
+      val = val & 0xFF; // Search for a byte value [0-255]
+
+      if (Buffer.TYPED_ARRAY_SUPPORT && typeof Uint8Array.prototype.indexOf === 'function') {
+        if (dir) {
+          return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
+        } else {
+          return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
+        }
+      }
+
+      return arrayIndexOf(buffer, [val], byteOffset, encoding, dir);
+    }
+
+    throw new TypeError('val must be string, number or Buffer');
+  }
+
+  function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
+    var indexSize = 1;
+    var arrLength = arr.length;
+    var valLength = val.length;
+
+    if (encoding !== undefined) {
+      encoding = String(encoding).toLowerCase();
+
+      if (encoding === 'ucs2' || encoding === 'ucs-2' || encoding === 'utf16le' || encoding === 'utf-16le') {
+        if (arr.length < 2 || val.length < 2) {
+          return -1;
+        }
+
+        indexSize = 2;
+        arrLength /= 2;
+        valLength /= 2;
+        byteOffset /= 2;
+      }
+    }
+
+    function read(buf, i) {
+      if (indexSize === 1) {
+        return buf[i];
+      } else {
+        return buf.readUInt16BE(i * indexSize);
+      }
+    }
+
+    var i;
+
+    if (dir) {
+      var foundIndex = -1;
+
+      for (i = byteOffset; i < arrLength; i++) {
+        if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
+          if (foundIndex === -1) foundIndex = i;
+          if (i - foundIndex + 1 === valLength) return foundIndex * indexSize;
+        } else {
+          if (foundIndex !== -1) i -= i - foundIndex;
+          foundIndex = -1;
+        }
+      }
+    } else {
+      if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength;
+
+      for (i = byteOffset; i >= 0; i--) {
+        var found = true;
+
+        for (var j = 0; j < valLength; j++) {
+          if (read(arr, i + j) !== read(val, j)) {
+            found = false;
+            break;
+          }
+        }
+
+        if (found) return i;
+      }
+    }
+
+    return -1;
+  }
+
+  Buffer.prototype.includes = function includes(val, byteOffset, encoding) {
+    return this.indexOf(val, byteOffset, encoding) !== -1;
+  };
+
+  Buffer.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
+    return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
+  };
+
+  Buffer.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+    return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
+  };
+
+  function hexWrite(buf, string, offset, length) {
+    offset = Number(offset) || 0;
+    var remaining = buf.length - offset;
+
+    if (!length) {
+      length = remaining;
+    } else {
+      length = Number(length);
+
+      if (length > remaining) {
+        length = remaining;
+      }
+    } // must be an even number of digits
+
+
+    var strLen = string.length;
+    if (strLen % 2 !== 0) throw new TypeError('Invalid hex string');
+
+    if (length > strLen / 2) {
+      length = strLen / 2;
+    }
+
+    for (var i = 0; i < length; ++i) {
+      var parsed = parseInt(string.substr(i * 2, 2), 16);
+      if (isNaN(parsed)) return i;
+      buf[offset + i] = parsed;
+    }
+
+    return i;
+  }
+
+  function utf8Write(buf, string, offset, length) {
+    return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length);
+  }
+
+  function asciiWrite(buf, string, offset, length) {
+    return blitBuffer(asciiToBytes(string), buf, offset, length);
+  }
+
+  function latin1Write(buf, string, offset, length) {
+    return asciiWrite(buf, string, offset, length);
+  }
+
+  function base64Write(buf, string, offset, length) {
+    return blitBuffer(base64ToBytes(string), buf, offset, length);
+  }
+
+  function ucs2Write(buf, string, offset, length) {
+    return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
+  }
+
+  Buffer.prototype.write = function write(string, offset, length, encoding) {
+    // Buffer#write(string)
+    if (offset === undefined) {
+      encoding = 'utf8';
+      length = this.length;
+      offset = 0; // Buffer#write(string, encoding)
+    } else if (length === undefined && typeof offset === 'string') {
+      encoding = offset;
+      length = this.length;
+      offset = 0; // Buffer#write(string, offset[, length][, encoding])
+    } else if (isFinite(offset)) {
+      offset = offset | 0;
+
+      if (isFinite(length)) {
+        length = length | 0;
+        if (encoding === undefined) encoding = 'utf8';
+      } else {
+        encoding = length;
+        length = undefined;
+      } // legacy write(string, encoding, offset, length) - remove in v0.13
+
+    } else {
+      throw new Error('Buffer.write(string, encoding, offset[, length]) is no longer supported');
+    }
+
+    var remaining = this.length - offset;
+    if (length === undefined || length > remaining) length = remaining;
+
+    if (string.length > 0 && (length < 0 || offset < 0) || offset > this.length) {
+      throw new RangeError('Attempt to write outside buffer bounds');
+    }
+
+    if (!encoding) encoding = 'utf8';
+    var loweredCase = false;
+
+    for (;;) {
+      switch (encoding) {
+        case 'hex':
+          return hexWrite(this, string, offset, length);
+
+        case 'utf8':
+        case 'utf-8':
+          return utf8Write(this, string, offset, length);
+
+        case 'ascii':
+          return asciiWrite(this, string, offset, length);
+
+        case 'latin1':
+        case 'binary':
+          return latin1Write(this, string, offset, length);
+
+        case 'base64':
+          // Warning: maxLength not taken into account in base64Write
+          return base64Write(this, string, offset, length);
+
+        case 'ucs2':
+        case 'ucs-2':
+        case 'utf16le':
+        case 'utf-16le':
+          return ucs2Write(this, string, offset, length);
+
+        default:
+          if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding);
+          encoding = ('' + encoding).toLowerCase();
+          loweredCase = true;
+      }
+    }
+  };
+
+  Buffer.prototype.toJSON = function toJSON() {
+    return {
+      type: 'Buffer',
+      data: Array.prototype.slice.call(this._arr || this, 0)
+    };
+  };
+
+  function base64Slice(buf, start, end) {
+    if (start === 0 && end === buf.length) {
+      return fromByteArray(buf);
+    } else {
+      return fromByteArray(buf.slice(start, end));
+    }
+  }
+
+  function utf8Slice(buf, start, end) {
+    end = Math.min(buf.length, end);
+    var res = [];
+    var i = start;
+
+    while (i < end) {
+      var firstByte = buf[i];
+      var codePoint = null;
+      var bytesPerSequence = firstByte > 0xEF ? 4 : firstByte > 0xDF ? 3 : firstByte > 0xBF ? 2 : 1;
+
+      if (i + bytesPerSequence <= end) {
+        var secondByte, thirdByte, fourthByte, tempCodePoint;
+
+        switch (bytesPerSequence) {
+          case 1:
+            if (firstByte < 0x80) {
+              codePoint = firstByte;
+            }
+
+            break;
+
+          case 2:
+            secondByte = buf[i + 1];
+
+            if ((secondByte & 0xC0) === 0x80) {
+              tempCodePoint = (firstByte & 0x1F) << 0x6 | secondByte & 0x3F;
+
+              if (tempCodePoint > 0x7F) {
+                codePoint = tempCodePoint;
+              }
+            }
+
+            break;
+
+          case 3:
+            secondByte = buf[i + 1];
+            thirdByte = buf[i + 2];
+
+            if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+              tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | thirdByte & 0x3F;
+
+              if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+                codePoint = tempCodePoint;
+              }
+            }
+
+            break;
+
+          case 4:
+            secondByte = buf[i + 1];
+            thirdByte = buf[i + 2];
+            fourthByte = buf[i + 3];
+
+            if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+              tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | fourthByte & 0x3F;
+
+              if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+                codePoint = tempCodePoint;
+              }
+            }
+
+        }
+      }
+
+      if (codePoint === null) {
+        // we did not generate a valid codePoint so insert a
+        // replacement char (U+FFFD) and advance only 1 byte
+        codePoint = 0xFFFD;
+        bytesPerSequence = 1;
+      } else if (codePoint > 0xFFFF) {
+        // encode to utf16 (surrogate pair dance)
+        codePoint -= 0x10000;
+        res.push(codePoint >>> 10 & 0x3FF | 0xD800);
+        codePoint = 0xDC00 | codePoint & 0x3FF;
+      }
+
+      res.push(codePoint);
+      i += bytesPerSequence;
+    }
+
+    return decodeCodePointsArray(res);
+  } // Based on http://stackoverflow.com/a/22747272/680742, the browser with
+  // the lowest limit is Chrome, with 0x10000 args.
+  // We go 1 magnitude less, for safety
+
+
+  var MAX_ARGUMENTS_LENGTH = 0x1000;
+
+  function decodeCodePointsArray(codePoints) {
+    var len = codePoints.length;
+
+    if (len <= MAX_ARGUMENTS_LENGTH) {
+      return String.fromCharCode.apply(String, codePoints); // avoid extra slice()
+    } // Decode in chunks to avoid "call stack size exceeded".
+
+
+    var res = '';
+    var i = 0;
+
+    while (i < len) {
+      res += String.fromCharCode.apply(String, codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH));
+    }
+
+    return res;
+  }
+
+  function asciiSlice(buf, start, end) {
+    var ret = '';
+    end = Math.min(buf.length, end);
+
+    for (var i = start; i < end; ++i) {
+      ret += String.fromCharCode(buf[i] & 0x7F);
+    }
+
+    return ret;
+  }
+
+  function latin1Slice(buf, start, end) {
+    var ret = '';
+    end = Math.min(buf.length, end);
+
+    for (var i = start; i < end; ++i) {
+      ret += String.fromCharCode(buf[i]);
+    }
+
+    return ret;
+  }
+
+  function hexSlice(buf, start, end) {
+    var len = buf.length;
+    if (!start || start < 0) start = 0;
+    if (!end || end < 0 || end > len) end = len;
+    var out = '';
+
+    for (var i = start; i < end; ++i) {
+      out += toHex(buf[i]);
+    }
+
+    return out;
+  }
+
+  function utf16leSlice(buf, start, end) {
+    var bytes = buf.slice(start, end);
+    var res = '';
+
+    for (var i = 0; i < bytes.length; i += 2) {
+      res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256);
+    }
+
+    return res;
+  }
+
+  Buffer.prototype.slice = function slice(start, end) {
+    var len = this.length;
+    start = ~~start;
+    end = end === undefined ? len : ~~end;
+
+    if (start < 0) {
+      start += len;
+      if (start < 0) start = 0;
+    } else if (start > len) {
+      start = len;
+    }
+
+    if (end < 0) {
+      end += len;
+      if (end < 0) end = 0;
+    } else if (end > len) {
+      end = len;
+    }
+
+    if (end < start) end = start;
+    var newBuf;
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      newBuf = this.subarray(start, end);
+      newBuf.__proto__ = Buffer.prototype;
+    } else {
+      var sliceLen = end - start;
+      newBuf = new Buffer(sliceLen, undefined);
+
+      for (var i = 0; i < sliceLen; ++i) {
+        newBuf[i] = this[i + start];
+      }
+    }
+
+    return newBuf;
+  };
+  /*
+   * Need to make sure that buffer isn't trying to write out of bounds.
+   */
+
+
+  function checkOffset(offset, ext, length) {
+    if (offset % 1 !== 0 || offset < 0) throw new RangeError('offset is not uint');
+    if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length');
+  }
+
+  Buffer.prototype.readUIntLE = function readUIntLE(offset, byteLength, noAssert) {
+    offset = offset | 0;
+    byteLength = byteLength | 0;
+    if (!noAssert) checkOffset(offset, byteLength, this.length);
+    var val = this[offset];
+    var mul = 1;
+    var i = 0;
+
+    while (++i < byteLength && (mul *= 0x100)) {
+      val += this[offset + i] * mul;
+    }
+
+    return val;
+  };
+
+  Buffer.prototype.readUIntBE = function readUIntBE(offset, byteLength, noAssert) {
+    offset = offset | 0;
+    byteLength = byteLength | 0;
+
+    if (!noAssert) {
+      checkOffset(offset, byteLength, this.length);
+    }
+
+    var val = this[offset + --byteLength];
+    var mul = 1;
+
+    while (byteLength > 0 && (mul *= 0x100)) {
+      val += this[offset + --byteLength] * mul;
+    }
+
+    return val;
+  };
+
+  Buffer.prototype.readUInt8 = function readUInt8(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 1, this.length);
+    return this[offset];
+  };
+
+  Buffer.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 2, this.length);
+    return this[offset] | this[offset + 1] << 8;
+  };
+
+  Buffer.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 2, this.length);
+    return this[offset] << 8 | this[offset + 1];
+  };
+
+  Buffer.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 4, this.length);
+    return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 0x1000000;
+  };
+
+  Buffer.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 4, this.length);
+    return this[offset] * 0x1000000 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
+  };
+
+  Buffer.prototype.readIntLE = function readIntLE(offset, byteLength, noAssert) {
+    offset = offset | 0;
+    byteLength = byteLength | 0;
+    if (!noAssert) checkOffset(offset, byteLength, this.length);
+    var val = this[offset];
+    var mul = 1;
+    var i = 0;
+
+    while (++i < byteLength && (mul *= 0x100)) {
+      val += this[offset + i] * mul;
+    }
+
+    mul *= 0x80;
+    if (val >= mul) val -= Math.pow(2, 8 * byteLength);
+    return val;
+  };
+
+  Buffer.prototype.readIntBE = function readIntBE(offset, byteLength, noAssert) {
+    offset = offset | 0;
+    byteLength = byteLength | 0;
+    if (!noAssert) checkOffset(offset, byteLength, this.length);
+    var i = byteLength;
+    var mul = 1;
+    var val = this[offset + --i];
+
+    while (i > 0 && (mul *= 0x100)) {
+      val += this[offset + --i] * mul;
+    }
+
+    mul *= 0x80;
+    if (val >= mul) val -= Math.pow(2, 8 * byteLength);
+    return val;
+  };
+
+  Buffer.prototype.readInt8 = function readInt8(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 1, this.length);
+    if (!(this[offset] & 0x80)) return this[offset];
+    return (0xff - this[offset] + 1) * -1;
+  };
+
+  Buffer.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 2, this.length);
+    var val = this[offset] | this[offset + 1] << 8;
+    return val & 0x8000 ? val | 0xFFFF0000 : val;
+  };
+
+  Buffer.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 2, this.length);
+    var val = this[offset + 1] | this[offset] << 8;
+    return val & 0x8000 ? val | 0xFFFF0000 : val;
+  };
+
+  Buffer.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 4, this.length);
+    return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
+  };
+
+  Buffer.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 4, this.length);
+    return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
+  };
+
+  Buffer.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 4, this.length);
+    return read(this, offset, true, 23, 4);
+  };
+
+  Buffer.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 4, this.length);
+    return read(this, offset, false, 23, 4);
+  };
+
+  Buffer.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 8, this.length);
+    return read(this, offset, true, 52, 8);
+  };
+
+  Buffer.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
+    if (!noAssert) checkOffset(offset, 8, this.length);
+    return read(this, offset, false, 52, 8);
+  };
+
+  function checkInt(buf, value, offset, ext, max, min) {
+    if (!internalIsBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
+    if (value > max || value < min) throw new RangeError('"value" argument is out of bounds');
+    if (offset + ext > buf.length) throw new RangeError('Index out of range');
+  }
+
+  Buffer.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    byteLength = byteLength | 0;
+
+    if (!noAssert) {
+      var maxBytes = Math.pow(2, 8 * byteLength) - 1;
+      checkInt(this, value, offset, byteLength, maxBytes, 0);
+    }
+
+    var mul = 1;
+    var i = 0;
+    this[offset] = value & 0xFF;
+
+    while (++i < byteLength && (mul *= 0x100)) {
+      this[offset + i] = value / mul & 0xFF;
+    }
+
+    return offset + byteLength;
+  };
+
+  Buffer.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    byteLength = byteLength | 0;
+
+    if (!noAssert) {
+      var maxBytes = Math.pow(2, 8 * byteLength) - 1;
+      checkInt(this, value, offset, byteLength, maxBytes, 0);
+    }
+
+    var i = byteLength - 1;
+    var mul = 1;
+    this[offset + i] = value & 0xFF;
+
+    while (--i >= 0 && (mul *= 0x100)) {
+      this[offset + i] = value / mul & 0xFF;
+    }
+
+    return offset + byteLength;
+  };
+
+  Buffer.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0);
+    if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value);
+    this[offset] = value & 0xff;
+    return offset + 1;
+  };
+
+  function objectWriteUInt16(buf, value, offset, littleEndian) {
+    if (value < 0) value = 0xffff + value + 1;
+
+    for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
+      buf[offset + i] = (value & 0xff << 8 * (littleEndian ? i : 1 - i)) >>> (littleEndian ? i : 1 - i) * 8;
+    }
+  }
+
+  Buffer.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value & 0xff;
+      this[offset + 1] = value >>> 8;
+    } else {
+      objectWriteUInt16(this, value, offset, true);
+    }
+
+    return offset + 2;
+  };
+
+  Buffer.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value >>> 8;
+      this[offset + 1] = value & 0xff;
+    } else {
+      objectWriteUInt16(this, value, offset, false);
+    }
+
+    return offset + 2;
+  };
+
+  function objectWriteUInt32(buf, value, offset, littleEndian) {
+    if (value < 0) value = 0xffffffff + value + 1;
+
+    for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
+      buf[offset + i] = value >>> (littleEndian ? i : 3 - i) * 8 & 0xff;
+    }
+  }
+
+  Buffer.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset + 3] = value >>> 24;
+      this[offset + 2] = value >>> 16;
+      this[offset + 1] = value >>> 8;
+      this[offset] = value & 0xff;
+    } else {
+      objectWriteUInt32(this, value, offset, true);
+    }
+
+    return offset + 4;
+  };
+
+  Buffer.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value >>> 24;
+      this[offset + 1] = value >>> 16;
+      this[offset + 2] = value >>> 8;
+      this[offset + 3] = value & 0xff;
+    } else {
+      objectWriteUInt32(this, value, offset, false);
+    }
+
+    return offset + 4;
+  };
+
+  Buffer.prototype.writeIntLE = function writeIntLE(value, offset, byteLength, noAssert) {
+    value = +value;
+    offset = offset | 0;
+
+    if (!noAssert) {
+      var limit = Math.pow(2, 8 * byteLength - 1);
+      checkInt(this, value, offset, byteLength, limit - 1, -limit);
+    }
+
+    var i = 0;
+    var mul = 1;
+    var sub = 0;
+    this[offset] = value & 0xFF;
+
+    while (++i < byteLength && (mul *= 0x100)) {
+      if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
+        sub = 1;
+      }
+
+      this[offset + i] = (value / mul >> 0) - sub & 0xFF;
+    }
+
+    return offset + byteLength;
+  };
+
+  Buffer.prototype.writeIntBE = function writeIntBE(value, offset, byteLength, noAssert) {
+    value = +value;
+    offset = offset | 0;
+
+    if (!noAssert) {
+      var limit = Math.pow(2, 8 * byteLength - 1);
+      checkInt(this, value, offset, byteLength, limit - 1, -limit);
+    }
+
+    var i = byteLength - 1;
+    var mul = 1;
+    var sub = 0;
+    this[offset + i] = value & 0xFF;
+
+    while (--i >= 0 && (mul *= 0x100)) {
+      if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
+        sub = 1;
+      }
+
+      this[offset + i] = (value / mul >> 0) - sub & 0xFF;
+    }
+
+    return offset + byteLength;
+  };
+
+  Buffer.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80);
+    if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value);
+    if (value < 0) value = 0xff + value + 1;
+    this[offset] = value & 0xff;
+    return offset + 1;
+  };
+
+  Buffer.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value & 0xff;
+      this[offset + 1] = value >>> 8;
+    } else {
+      objectWriteUInt16(this, value, offset, true);
+    }
+
+    return offset + 2;
+  };
+
+  Buffer.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value >>> 8;
+      this[offset + 1] = value & 0xff;
+    } else {
+      objectWriteUInt16(this, value, offset, false);
+    }
+
+    return offset + 2;
+  };
+
+  Buffer.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value & 0xff;
+      this[offset + 1] = value >>> 8;
+      this[offset + 2] = value >>> 16;
+      this[offset + 3] = value >>> 24;
+    } else {
+      objectWriteUInt32(this, value, offset, true);
+    }
+
+    return offset + 4;
+  };
+
+  Buffer.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
+    value = +value;
+    offset = offset | 0;
+    if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000);
+    if (value < 0) value = 0xffffffff + value + 1;
+
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      this[offset] = value >>> 24;
+      this[offset + 1] = value >>> 16;
+      this[offset + 2] = value >>> 8;
+      this[offset + 3] = value & 0xff;
+    } else {
+      objectWriteUInt32(this, value, offset, false);
+    }
+
+    return offset + 4;
+  };
+
+  function checkIEEE754(buf, value, offset, ext, max, min) {
+    if (offset + ext > buf.length) throw new RangeError('Index out of range');
+    if (offset < 0) throw new RangeError('Index out of range');
+  }
+
+  function writeFloat(buf, value, offset, littleEndian, noAssert) {
+    if (!noAssert) {
+      checkIEEE754(buf, value, offset, 4);
+    }
+
+    write(buf, value, offset, littleEndian, 23, 4);
+    return offset + 4;
+  }
+
+  Buffer.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
+    return writeFloat(this, value, offset, true, noAssert);
+  };
+
+  Buffer.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
+    return writeFloat(this, value, offset, false, noAssert);
+  };
+
+  function writeDouble(buf, value, offset, littleEndian, noAssert) {
+    if (!noAssert) {
+      checkIEEE754(buf, value, offset, 8);
+    }
+
+    write(buf, value, offset, littleEndian, 52, 8);
+    return offset + 8;
+  }
+
+  Buffer.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
+    return writeDouble(this, value, offset, true, noAssert);
+  };
+
+  Buffer.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
+    return writeDouble(this, value, offset, false, noAssert);
+  }; // copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+
+
+  Buffer.prototype.copy = function copy(target, targetStart, start, end) {
+    if (!start) start = 0;
+    if (!end && end !== 0) end = this.length;
+    if (targetStart >= target.length) targetStart = target.length;
+    if (!targetStart) targetStart = 0;
+    if (end > 0 && end < start) end = start; // Copy 0 bytes; we're done
+
+    if (end === start) return 0;
+    if (target.length === 0 || this.length === 0) return 0; // Fatal error conditions
+
+    if (targetStart < 0) {
+      throw new RangeError('targetStart out of bounds');
+    }
+
+    if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds');
+    if (end < 0) throw new RangeError('sourceEnd out of bounds'); // Are we oob?
+
+    if (end > this.length) end = this.length;
+
+    if (target.length - targetStart < end - start) {
+      end = target.length - targetStart + start;
+    }
+
+    var len = end - start;
+    var i;
+
+    if (this === target && start < targetStart && targetStart < end) {
+      // descending copy from end
+      for (i = len - 1; i >= 0; --i) {
+        target[i + targetStart] = this[i + start];
+      }
+    } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+      // ascending copy from start
+      for (i = 0; i < len; ++i) {
+        target[i + targetStart] = this[i + start];
+      }
+    } else {
+      Uint8Array.prototype.set.call(target, this.subarray(start, start + len), targetStart);
+    }
+
+    return len;
+  }; // Usage:
+  //    buffer.fill(number[, offset[, end]])
+  //    buffer.fill(buffer[, offset[, end]])
+  //    buffer.fill(string[, offset[, end]][, encoding])
+
+
+  Buffer.prototype.fill = function fill(val, start, end, encoding) {
+    // Handle string cases:
+    if (typeof val === 'string') {
+      if (typeof start === 'string') {
+        encoding = start;
+        start = 0;
+        end = this.length;
+      } else if (typeof end === 'string') {
+        encoding = end;
+        end = this.length;
+      }
+
+      if (val.length === 1) {
+        var code = val.charCodeAt(0);
+
+        if (code < 256) {
+          val = code;
+        }
+      }
+
+      if (encoding !== undefined && typeof encoding !== 'string') {
+        throw new TypeError('encoding must be a string');
+      }
+
+      if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+        throw new TypeError('Unknown encoding: ' + encoding);
+      }
+    } else if (typeof val === 'number') {
+      val = val & 255;
+    } // Invalid ranges are not set to a default, so can range check early.
+
+
+    if (start < 0 || this.length < start || this.length < end) {
+      throw new RangeError('Out of range index');
+    }
+
+    if (end <= start) {
+      return this;
+    }
+
+    start = start >>> 0;
+    end = end === undefined ? this.length : end >>> 0;
+    if (!val) val = 0;
+    var i;
+
+    if (typeof val === 'number') {
+      for (i = start; i < end; ++i) {
+        this[i] = val;
+      }
+    } else {
+      var bytes = internalIsBuffer(val) ? val : utf8ToBytes(new Buffer(val, encoding).toString());
+      var len = bytes.length;
+
+      for (i = 0; i < end - start; ++i) {
+        this[i + start] = bytes[i % len];
+      }
+    }
+
+    return this;
+  }; // HELPER FUNCTIONS
+  // ================
+
+
+  var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g;
+
+  function base64clean(str) {
+    // Node strips out invalid characters like \n and \t from the string, base64-js does not
+    str = stringtrim(str).replace(INVALID_BASE64_RE, ''); // Node converts strings with length < 2 to ''
+
+    if (str.length < 2) return ''; // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+
+    while (str.length % 4 !== 0) {
+      str = str + '=';
+    }
+
+    return str;
+  }
+
+  function stringtrim(str) {
+    if (str.trim) return str.trim();
+    return str.replace(/^\s+|\s+$/g, '');
+  }
+
+  function toHex(n) {
+    if (n < 16) return '0' + n.toString(16);
+    return n.toString(16);
+  }
+
+  function utf8ToBytes(string, units) {
+    units = units || Infinity;
+    var codePoint;
+    var length = string.length;
+    var leadSurrogate = null;
+    var bytes = [];
+
+    for (var i = 0; i < length; ++i) {
+      codePoint = string.charCodeAt(i); // is surrogate component
+
+      if (codePoint > 0xD7FF && codePoint < 0xE000) {
+        // last char was a lead
+        if (!leadSurrogate) {
+          // no lead yet
+          if (codePoint > 0xDBFF) {
+            // unexpected trail
+            if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
+            continue;
+          } else if (i + 1 === length) {
+            // unpaired lead
+            if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
+            continue;
+          } // valid lead
+
+
+          leadSurrogate = codePoint;
+          continue;
+        } // 2 leads in a row
+
+
+        if (codePoint < 0xDC00) {
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
+          leadSurrogate = codePoint;
+          continue;
+        } // valid surrogate pair
+
+
+        codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000;
+      } else if (leadSurrogate) {
+        // valid bmp char, but last char was a lead
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD);
+      }
+
+      leadSurrogate = null; // encode utf8
+
+      if (codePoint < 0x80) {
+        if ((units -= 1) < 0) break;
+        bytes.push(codePoint);
+      } else if (codePoint < 0x800) {
+        if ((units -= 2) < 0) break;
+        bytes.push(codePoint >> 0x6 | 0xC0, codePoint & 0x3F | 0x80);
+      } else if (codePoint < 0x10000) {
+        if ((units -= 3) < 0) break;
+        bytes.push(codePoint >> 0xC | 0xE0, codePoint >> 0x6 & 0x3F | 0x80, codePoint & 0x3F | 0x80);
+      } else if (codePoint < 0x110000) {
+        if ((units -= 4) < 0) break;
+        bytes.push(codePoint >> 0x12 | 0xF0, codePoint >> 0xC & 0x3F | 0x80, codePoint >> 0x6 & 0x3F | 0x80, codePoint & 0x3F | 0x80);
+      } else {
+        throw new Error('Invalid code point');
+      }
+    }
+
+    return bytes;
+  }
+
+  function asciiToBytes(str) {
+    var byteArray = [];
+
+    for (var i = 0; i < str.length; ++i) {
+      // Node's code seems to be doing this and not & 0x7F..
+      byteArray.push(str.charCodeAt(i) & 0xFF);
+    }
+
+    return byteArray;
+  }
+
+  function utf16leToBytes(str, units) {
+    var c, hi, lo;
+    var byteArray = [];
+
+    for (var i = 0; i < str.length; ++i) {
+      if ((units -= 2) < 0) break;
+      c = str.charCodeAt(i);
+      hi = c >> 8;
+      lo = c % 256;
+      byteArray.push(lo);
+      byteArray.push(hi);
+    }
+
+    return byteArray;
+  }
+
+  function base64ToBytes(str) {
+    return toByteArray(base64clean(str));
+  }
+
+  function blitBuffer(src, dst, offset, length) {
+    for (var i = 0; i < length; ++i) {
+      if (i + offset >= dst.length || i >= src.length) break;
+      dst[i + offset] = src[i];
+    }
+
+    return i;
+  }
+
+  function isnan(val) {
+    return val !== val; // eslint-disable-line no-self-compare
+  } // the following is from is-buffer, also by Feross Aboukhadijeh and with same lisence
+  // The _isBuffer check is for Safari 5-7 support, because it's missing
+  // Object.prototype.constructor. Remove this eventually
+
+
+  function isBuffer$2(obj) {
+    return obj != null && (!!obj._isBuffer || isFastBuffer(obj) || isSlowBuffer$1(obj));
+  }
+
+  function isFastBuffer(obj) {
+    return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+  } // For Node v0.10 support. Remove this eventually.
+
+
+  function isSlowBuffer$1(obj) {
+    return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isFastBuffer(obj.slice(0, 0));
+  }
+
+  var amplitude_umd = createCommonjsModule(function (module, exports) {
+    (function (global, factory) {
+       module.exports = factory() ;
+    })(commonjsGlobal, function () {
+
+      function _typeof$1(obj) {
+        if (typeof Symbol === "function" && _typeof(Symbol.iterator) === "symbol") {
+          _typeof$1 = function _typeof$1(obj) {
+            return _typeof(obj);
+          };
+        } else {
+          _typeof$1 = function _typeof$1(obj) {
+            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof(obj);
+          };
+        }
+
+        return _typeof$1(obj);
+      }
+
+      function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) {
+          throw new TypeError("Cannot call a class as a function");
+        }
+      }
+
+      function _defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+          var descriptor = props[i];
+          descriptor.enumerable = descriptor.enumerable || false;
+          descriptor.configurable = true;
+          if ("value" in descriptor) descriptor.writable = true;
+          Object.defineProperty(target, descriptor.key, descriptor);
+        }
+      }
+
+      function _createClass(Constructor, protoProps, staticProps) {
+        if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) _defineProperties(Constructor, staticProps);
+        return Constructor;
+      }
+
+      function _defineProperty(obj, key, value) {
+        if (key in obj) {
+          Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+          });
+        } else {
+          obj[key] = value;
+        }
+
+        return obj;
+      }
+
+      function _objectSpread(target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i] != null ? arguments[i] : {};
+          var ownKeys = Object.keys(source);
+
+          if (typeof Object.getOwnPropertySymbols === 'function') {
+            ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+              return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+            }));
+          }
+
+          ownKeys.forEach(function (key) {
+            _defineProperty(target, key, source[key]);
+          });
+        }
+
+        return target;
+      }
+      /**
+       * Strings that have special meaning when used as an event's type
+       * and have different specifications.
+       */
+
+
+      var SpecialEventType;
+
+      (function (SpecialEventType) {
+        SpecialEventType["IDENTIFY"] = "$identify";
+      })(SpecialEventType || (SpecialEventType = {}));
+
+      var IdentifyOperation;
+
+      (function (IdentifyOperation) {
+        // Base Operations to set values
+        IdentifyOperation["SET"] = "$set";
+        IdentifyOperation["SET_ONCE"] = "$setOnce"; // Operations around modifying existing values
+
+        IdentifyOperation["ADD"] = "$add";
+        IdentifyOperation["APPEND"] = "$append";
+        IdentifyOperation["PREPEND"] = "$prepend";
+        IdentifyOperation["REMOVE"] = "$remove"; // Operations around appending values *if* they aren't present
+
+        IdentifyOperation["PREINSERT"] = "$preinsert";
+        IdentifyOperation["POSTINSERT"] = "$postinsert"; // Operations around removing properties/values
+
+        IdentifyOperation["UNSET"] = "$unset";
+        IdentifyOperation["CLEAR_ALL"] = "$clearAll";
+      })(IdentifyOperation || (IdentifyOperation = {}));
+      /** The default identity instance. Needs to match the default instance for the JS SDK */
+
+      /** Console logging verbosity for the SDK. */
+
+
+      var LogLevel;
+
+      (function (LogLevel) {
+        /** No logs will be generated. */
+        LogLevel[LogLevel["None"] = 0] = "None";
+        /** Only SDK internal errors will be logged. */
+
+        LogLevel[LogLevel["Error"] = 1] = "Error";
+        /** Information useful for debugging the SDK will be logged. */
+
+        LogLevel[LogLevel["Warn"] = 2] = "Warn";
+        /** All SDK actions will be logged. */
+
+        LogLevel[LogLevel["Verbose"] = 3] = "Verbose";
+      })(LogLevel || (LogLevel = {}));
+      /** The status of an event. */
+
+
+      var Status;
+
+      (function (Status) {
+        /** The status could not be determined. */
+        Status["Unknown"] = "unknown";
+        /** The event was skipped due to configuration or callbacks. */
+
+        Status["Skipped"] = "skipped";
+        /** The event was sent successfully. */
+
+        Status["Success"] = "success";
+        /** A user or device in the payload is currently rate limited and should try again later. */
+
+        Status["RateLimit"] = "rate_limit";
+        /** The sent payload was too large to be processed. */
+
+        Status["PayloadTooLarge"] = "payload_too_large";
+        /** The event could not be processed. */
+
+        Status["Invalid"] = "invalid";
+        /** A server-side error ocurred during submission. */
+
+        Status["Failed"] = "failed";
+      })(Status || (Status = {})); // tslint:disable:completed-docs
+      // tslint:disable:no-unnecessary-qualifier no-namespace
+
+
+      (function (Status) {
+        /**
+         * Converts a HTTP status code into a {@link Status}.
+         *
+         * @param code The HTTP response status code.
+         * @returns The send status or {@link Status.Unknown}.
+         */
+        function fromHttpCode(code) {
+          if (code >= 200 && code < 300) {
+            return Status.Success;
+          }
+
+          if (code === 429) {
+            return Status.RateLimit;
+          }
+
+          if (code === 413) {
+            return Status.PayloadTooLarge;
+          }
+
+          if (code >= 400 && code < 500) {
+            return Status.Invalid;
+          }
+
+          if (code >= 500) {
+            return Status.Failed;
+          }
+
+          return Status.Unknown;
+        }
+
+        Status.fromHttpCode = fromHttpCode;
+      })(Status || (Status = {}));
+      /** The Response to expect if a request might have been sent but it was skipped
+       *  e.g. no events to flush, user has opted out and nothing should be sent.
+       */
+
+
+      var SKIPPED_RESPONSE = {
+        status: Status.Skipped,
+        statusCode: 0
+      };
+      /**
+       * Checks whether we're in a Node.js environment
+       *
+       * @returns Answer to given question
+       */
+
+      function isNodeEnv() {
+        var _a;
+
+        return _typeof(process) === 'object' && ((_a = process === null || process === void 0 ? void 0 : process.versions) === null || _a === void 0 ? void 0 : _a.node) !== undefined;
+      }
+      /**
+       * Checks whether we're in a browser environment
+       *
+       * @returns Answer to given question
+       */
+
+
+      function isBrowserEnv() {
+        return (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && (window === null || window === void 0 ? void 0 : window.document) !== undefined;
+      }
+
+      var fallbackGlobalObject = {};
+      /**
+       * Safely get global scope object
+       *
+       * @returns Global scope object
+       */
+
+      var getGlobalObject = function getGlobalObject() {
+        return isNodeEnv() ? commonjsGlobal : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : fallbackGlobalObject;
+      };
+
+      var getGlobalAmplitudeNamespace = function getGlobalAmplitudeNamespace() {
+        var global = getGlobalObject();
+        global.__AMPLITUDE__ = global.__AMPLITUDE__ || {};
+        return global.__AMPLITUDE__;
+      };
+      /**
+       * Fixes browser edge case where Prototype.js injects Array.prototype.toJSON and breaks the built-in JSON.stringify()
+       *
+       * @returns true if Array.prototype.toJSON was deleted, false if not
+       */
+
+
+      var prototypeJsFix = function prototypeJsFix() {
+        var _a;
+
+        if (isBrowserEnv()) {
+          var augmentedWindow = window;
+          var augmentedArray = Array;
+
+          if (augmentedWindow.Prototype !== undefined && ((_a = augmentedArray.prototype) === null || _a === void 0 ? void 0 : _a.toJSON) !== undefined) {
+            delete augmentedArray.prototype.toJSON;
+            return true;
+          }
+        }
+
+        return false;
+      }; // TODO: Type the global constant
+
+
+      var globalNamespace = getGlobalAmplitudeNamespace();
+      /** Prefix for logging strings */
+
+      var PREFIX = 'Amplitude Logger ';
+      /** JSDoc */
+
+      var Logger =
+      /** @class */
+      function () {
+        /** JSDoc */
+        function Logger() {
+          this._logLevel = 0;
+        }
+        /** JSDoc */
+
+
+        Logger.prototype.disable = function () {
+          this._logLevel = 0;
+        };
+        /** JSDoc */
+
+
+        Logger.prototype.enable = function (logLevel) {
+          if (logLevel === void 0) {
+            logLevel = LogLevel.Warn;
+          }
+
+          this._logLevel = logLevel;
+        };
+        /** JSDoc */
+
+
+        Logger.prototype.log = function () {
+          var args = [];
+
+          for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+          }
+
+          if (this._logLevel < LogLevel.Verbose) {
+            return;
+          }
+
+          commonjsGlobal.console.log(PREFIX + "[Log]: " + args.join(' ')); // tslint:disable-line:no-console
+        };
+        /** JSDoc */
+
+
+        Logger.prototype.warn = function () {
+          var args = [];
+
+          for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+          }
+
+          if (this._logLevel < LogLevel.Warn) {
+            return;
+          }
+
+          commonjsGlobal.console.warn(PREFIX + "[Warn]: " + args.join(' ')); // tslint:disable-line:no-console
+        };
+        /** JSDoc */
+
+
+        Logger.prototype.error = function () {
+          var args = [];
+
+          for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+          }
+
+          if (this._logLevel < LogLevel.Error) {
+            return;
+          }
+
+          commonjsGlobal.console.error(PREFIX + "[Error]: " + args.join(' ')); // tslint:disable-line:no-console
+        };
+
+        return Logger;
+      }(); // Ensure we only have a single logger instance, even if multiple versions of @amplitude/utils are being used
+
+
+      var logger = globalNamespace.logger || (globalNamespace.logger = new Logger());
+      var Constants = {
+        DEFAULT_INSTANCE: '$default_instance',
+        API_VERSION: 2,
+        MAX_STRING_LENGTH: 4096,
+        MAX_PROPERTY_KEYS: 1000,
+        IDENTIFY_EVENT: '$identify',
+        GROUP_IDENTIFY_EVENT: '$groupidentify',
+        // localStorageKeys
+        LAST_EVENT_ID: 'amplitude_lastEventId',
+        LAST_EVENT_TIME: 'amplitude_lastEventTime',
+        LAST_IDENTIFY_ID: 'amplitude_lastIdentifyId',
+        LAST_SEQUENCE_NUMBER: 'amplitude_lastSequenceNumber',
+        SESSION_ID: 'amplitude_sessionId',
+        // Used in cookie as well
+        DEVICE_ID: 'amplitude_deviceId',
+        OPT_OUT: 'amplitude_optOut',
+        USER_ID: 'amplitude_userId',
+        COOKIE_TEST_PREFIX: 'amp_cookie_test',
+        COOKIE_PREFIX: 'amp',
+        // Storage options
+        STORAGE_DEFAULT: '',
+        STORAGE_COOKIES: 'cookies',
+        STORAGE_NONE: 'none',
+        STORAGE_LOCAL: 'localStorage',
+        STORAGE_SESSION: 'sessionStorage',
+        // revenue keys
+        REVENUE_EVENT: 'revenue_amount',
+        REVENUE_PRODUCT_ID: '$productId',
+        REVENUE_QUANTITY: '$quantity',
+        REVENUE_PRICE: '$price',
+        REVENUE_REVENUE_TYPE: '$revenueType',
+        AMP_DEVICE_ID_PARAM: 'amp_device_id',
+        // url param
+        REFERRER: 'referrer',
+        // UTM Params
+        UTM_SOURCE: 'utm_source',
+        UTM_MEDIUM: 'utm_medium',
+        UTM_CAMPAIGN: 'utm_campaign',
+        UTM_TERM: 'utm_term',
+        UTM_CONTENT: 'utm_content',
+        ATTRIBUTION_EVENT: '[Amplitude] Attribution Captured'
+      };
+      /*
+       * UTF-8 encoder/decoder
+       * http://www.webtoolkit.info/
+       */
+
+      var UTF8 = {
+        encode: function encode(s) {
+          var utftext = '';
+
+          for (var n = 0; n < s.length; n++) {
+            var c = s.charCodeAt(n);
+
+            if (c < 128) {
+              utftext += String.fromCharCode(c);
+            } else if (c > 127 && c < 2048) {
+              utftext += String.fromCharCode(c >> 6 | 192);
+              utftext += String.fromCharCode(c & 63 | 128);
+            } else {
+              utftext += String.fromCharCode(c >> 12 | 224);
+              utftext += String.fromCharCode(c >> 6 & 63 | 128);
+              utftext += String.fromCharCode(c & 63 | 128);
+            }
+          }
+
+          return utftext;
+        },
+        decode: function decode(utftext) {
+          var s = '';
+          var i = 0;
+          var c = 0,
+              c1 = 0,
+              c2 = 0;
+
+          while (i < utftext.length) {
+            c = utftext.charCodeAt(i);
+
+            if (c < 128) {
+              s += String.fromCharCode(c);
+              i++;
+            } else if (c > 191 && c < 224) {
+              c1 = utftext.charCodeAt(i + 1);
+              s += String.fromCharCode((c & 31) << 6 | c1 & 63);
+              i += 2;
+            } else {
+              c1 = utftext.charCodeAt(i + 1);
+              c2 = utftext.charCodeAt(i + 2);
+              s += String.fromCharCode((c & 15) << 12 | (c1 & 63) << 6 | c2 & 63);
+              i += 3;
+            }
+          }
+
+          return s;
+        }
+      };
+      /*
+       * Base64 encoder/decoder
+       * http://www.webtoolkit.info/
+       */
+
+      var Base64 = {
+        _keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+        encode: function encode(input) {
+          try {
+            if (window.btoa && window.atob) {
+              return window.btoa(unescape(encodeURIComponent(input)));
+            }
+          } catch (e) {//log(e);
+          }
+
+          return Base64._encode(input);
+        },
+        _encode: function _encode(input) {
+          var output = '';
+          var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+          var i = 0;
+          input = UTF8.encode(input);
+
+          while (i < input.length) {
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+            enc1 = chr1 >> 2;
+            enc2 = (chr1 & 3) << 4 | chr2 >> 4;
+            enc3 = (chr2 & 15) << 2 | chr3 >> 6;
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+              enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+              enc4 = 64;
+            }
+
+            output = output + Base64._keyStr.charAt(enc1) + Base64._keyStr.charAt(enc2) + Base64._keyStr.charAt(enc3) + Base64._keyStr.charAt(enc4);
+          }
+
+          return output;
+        },
+        decode: function decode(input) {
+          try {
+            if (window.btoa && window.atob) {
+              return decodeURIComponent(escape(window.atob(input)));
+            }
+          } catch (e) {//log(e);
+          }
+
+          return Base64._decode(input);
+        },
+        _decode: function _decode(input) {
+          var output = '';
+          var chr1, chr2, chr3;
+          var enc1, enc2, enc3, enc4;
+          var i = 0;
+          input = input.replace(/[^A-Za-z0-9+/=]/g, '');
+
+          while (i < input.length) {
+            enc1 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc2 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc3 = Base64._keyStr.indexOf(input.charAt(i++));
+            enc4 = Base64._keyStr.indexOf(input.charAt(i++));
+            chr1 = enc1 << 2 | enc2 >> 4;
+            chr2 = (enc2 & 15) << 4 | enc3 >> 2;
+            chr3 = (enc3 & 3) << 6 | enc4;
+            output = output + String.fromCharCode(chr1);
+
+            if (enc3 !== 64) {
+              output = output + String.fromCharCode(chr2);
+            }
+
+            if (enc4 !== 64) {
+              output = output + String.fromCharCode(chr3);
+            }
+          }
+
+          output = UTF8.decode(output);
+          return output;
+        }
+      };
+      /**
+       * toString ref.
+       * @private
+       */
+
+      var toString = Object.prototype.toString;
+      /**
+       * Return the type of `val`.
+       * @private
+       * @param {Mixed} val
+       * @return {String}
+       * @api public
+       */
+
+      function type(val) {
+        switch (toString.call(val)) {
+          case '[object Date]':
+            return 'date';
+
+          case '[object RegExp]':
+            return 'regexp';
+
+          case '[object Arguments]':
+            return 'arguments';
+
+          case '[object Array]':
+            return 'array';
+
+          case '[object Error]':
+            return 'error';
+        }
+
+        if (val === null) {
+          return 'null';
+        }
+
+        if (val === undefined) {
+          return 'undefined';
+        }
+
+        if (val !== val) {
+          return 'nan';
+        }
+
+        if (val && val.nodeType === 1) {
+          return 'element';
+        }
+
+        if (typeof Buffer !== 'undefined' && typeof isBuffer$2 === 'function' && isBuffer$2(val)) {
+          return 'buffer';
+        }
+
+        val = val.valueOf ? val.valueOf() : Object.prototype.valueOf.apply(val);
+        return _typeof$1(val);
+      }
+
+      var logLevels = {
+        DISABLE: 0,
+        ERROR: 1,
+        WARN: 2,
+        INFO: 3
+      };
+      var logLevel = logLevels.WARN;
+
+      var setLogLevel = function setLogLevel(logLevelName) {
+        if (logLevels.hasOwnProperty(logLevelName)) {
+          logLevel = logLevels[logLevelName];
+        }
+      };
+
+      var getLogLevel = function getLogLevel() {
+        return logLevel;
+      };
+
+      var log = {
+        error: function error(s) {
+          if (logLevel >= logLevels.ERROR) {
+            _log(s);
+          }
+        },
+        warn: function warn(s) {
+          if (logLevel >= logLevels.WARN) {
+            _log(s);
+          }
+        },
+        info: function info(s) {
+          if (logLevel >= logLevels.INFO) {
+            _log(s);
+          }
+        }
+      };
+
+      var _log = function _log(s) {
+        try {
+          console.log('[Amplitude] ' + s);
+        } catch (e) {// console logging not available
+        }
+      };
+
+      var isEmptyString = function isEmptyString(str) {
+        return !str || str.length === 0;
+      };
+
+      var sessionStorageEnabled = function sessionStorageEnabled() {
+        try {
+          if (window.sessionStorage) {
+            return true;
+          }
+        } catch (e) {// sessionStorage disabled
+        }
+
+        return false;
+      }; // truncate string values in event and user properties so that request size does not get too large
+
+
+      var truncate = function truncate(value) {
+        if (type(value) === 'array') {
+          for (var i = 0; i < value.length; i++) {
+            value[i] = truncate(value[i]);
+          }
+        } else if (type(value) === 'object') {
+          for (var key in value) {
+            if (key in value) {
+              value[key] = truncate(value[key]);
+            }
+          }
+        } else {
+          value = _truncateValue(value);
+        }
+
+        return value;
+      };
+
+      var _truncateValue = function _truncateValue(value) {
+        if (type(value) === 'string') {
+          return value.length > Constants.MAX_STRING_LENGTH ? value.substring(0, Constants.MAX_STRING_LENGTH) : value;
+        }
+
+        return value;
+      };
+
+      var validateInput = function validateInput(input, name, expectedType) {
+        if (type(input) !== expectedType) {
+          log.error('Invalid ' + name + ' input type. Expected ' + expectedType + ' but received ' + type(input));
+          return false;
+        }
+
+        return true;
+      }; // do some basic sanitization and type checking, also catch property dicts with more than 1000 key/value pairs
+
+
+      var validateProperties = function validateProperties(properties) {
+        var propsType = type(properties);
+
+        if (propsType !== 'object') {
+          log.error('Error: invalid properties format. Expecting Javascript object, received ' + propsType + ', ignoring');
+          return {};
+        }
+
+        if (Object.keys(properties).length > Constants.MAX_PROPERTY_KEYS) {
+          log.error('Error: too many properties (more than 1000), ignoring');
+          return {};
+        }
+
+        var copy = {}; // create a copy with all of the valid properties
+
+        for (var property in properties) {
+          if (!(property in properties)) {
+            continue;
+          } // validate key
+
+
+          var key = property;
+          var keyType = type(key);
+
+          if (keyType !== 'string') {
+            key = String(key);
+            log.warn('WARNING: Non-string property key, received type ' + keyType + ', coercing to string "' + key + '"');
+          } // validate value
+
+
+          var value = validatePropertyValue(key, properties[property]);
+
+          if (value === null) {
+            continue;
+          }
+
+          copy[key] = value;
+        }
+
+        return copy;
+      };
+
+      var invalidValueTypes = ['nan', 'function', 'arguments', 'regexp', 'element'];
+
+      var validatePropertyValue = function validatePropertyValue(key, value) {
+        var valueType = type(value);
+
+        if (invalidValueTypes.indexOf(valueType) !== -1) {
+          log.warn('WARNING: Property key "' + key + '" with invalid value type ' + valueType + ', ignoring');
+          value = null;
+        } else if (valueType === 'undefined') {
+          value = null;
+        } else if (valueType === 'error') {
+          value = String(value);
+          log.warn('WARNING: Property key "' + key + '" with value type error, coercing to ' + value);
+        } else if (valueType === 'array') {
+          // check for nested arrays or objects
+          var arrayCopy = [];
+
+          for (var i = 0; i < value.length; i++) {
+            var element = value[i];
+            var elemType = type(element);
+
+            if (elemType === 'array') {
+              log.warn('WARNING: Cannot have ' + elemType + ' nested in an array property value, skipping');
+              continue;
+            } else if (elemType === 'object') {
+              arrayCopy.push(validateProperties(element));
+            } else {
+              arrayCopy.push(validatePropertyValue(key, element));
+            }
+          }
+
+          value = arrayCopy;
+        } else if (valueType === 'object') {
+          value = validateProperties(value);
+        }
+
+        return value;
+      };
+
+      var validateGroups = function validateGroups(groups) {
+        var groupsType = type(groups);
+
+        if (groupsType !== 'object') {
+          log.error('Error: invalid groups format. Expecting Javascript object, received ' + groupsType + ', ignoring');
+          return {};
+        }
+
+        var copy = {}; // create a copy with all of the valid properties
+
+        for (var group in groups) {
+          if (!groups.hasOwnProperty(group)) {
+            continue;
+          } // validate key
+
+
+          var key = group;
+          var keyType = type(key);
+
+          if (keyType !== 'string') {
+            key = String(key);
+            log.warn('WARNING: Non-string groupType, received type ' + keyType + ', coercing to string "' + key + '"');
+          } // validate value
+
+
+          var value = validateGroupName(key, groups[group]);
+
+          if (value === null) {
+            continue;
+          }
+
+          copy[key] = value;
+        }
+
+        return copy;
+      };
+
+      var validateGroupName = function validateGroupName(key, groupName) {
+        var groupNameType = type(groupName);
+
+        if (groupNameType === 'string') {
+          return groupName;
+        }
+
+        if (groupNameType === 'date' || groupNameType === 'number' || groupNameType === 'boolean') {
+          groupName = String(groupName);
+          log.warn('WARNING: Non-string groupName, received type ' + groupNameType + ', coercing to string "' + groupName + '"');
+          return groupName;
+        }
+
+        if (groupNameType === 'array') {
+          // check for nested arrays or objects
+          var arrayCopy = [];
+
+          for (var i = 0; i < groupName.length; i++) {
+            var element = groupName[i];
+            var elemType = type(element);
+
+            if (elemType === 'array' || elemType === 'object') {
+              log.warn('WARNING: Skipping nested ' + elemType + ' in array groupName');
+              continue;
+            } else if (elemType === 'string') {
+              arrayCopy.push(element);
+            } else if (elemType === 'date' || elemType === 'number' || elemType === 'boolean') {
+              element = String(element);
+              log.warn('WARNING: Non-string groupName, received type ' + elemType + ', coercing to string "' + element + '"');
+              arrayCopy.push(element);
+            }
+          }
+
+          return arrayCopy;
+        }
+
+        log.warn('WARNING: Non-string groupName, received type ' + groupNameType + '. Please use strings or array of strings for groupName');
+      }; // parses the value of a url param (for example ?gclid=1234&...)
+
+
+      var getQueryParam = function getQueryParam(name, query) {
+        name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(query);
+        return results === null ? undefined : decodeURIComponent(results[1].replace(/\+/g, ' '));
+      };
+
+      var utils = {
+        setLogLevel: setLogLevel,
+        getLogLevel: getLogLevel,
+        logLevels: logLevels,
+        log: log,
+        isEmptyString: isEmptyString,
+        getQueryParam: getQueryParam,
+        sessionStorageEnabled: sessionStorageEnabled,
+        truncate: truncate,
+        validateGroups: validateGroups,
+        validateInput: validateInput,
+        validateProperties: validateProperties
+      };
+
+      var getLocation = function getLocation() {
+        return window.location;
+      }; // A URL safe variation on the the list of Base64 characters
+
+
+      var base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+      var base64Id = function base64Id() {
+        var str = '';
+
+        for (var i = 0; i < 22; ++i) {
+          str += base64Chars.charAt(Math.floor(Math.random() * 64));
+        }
+
+        return str;
+      };
+
+      var get = function get(name) {
+        try {
+          var ca = document.cookie.split(';');
+          var value = null;
+
+          for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+
+            while (c.charAt(0) === ' ') {
+              c = c.substring(1, c.length);
+            }
+
+            if (c.indexOf(name) === 0) {
+              value = c.substring(name.length, c.length);
+              break;
+            }
+          }
+
+          return value;
+        } catch (e) {
+          return null;
+        }
+      };
+
+      var set = function set(name, value, opts) {
+        var expires = value !== null ? opts.expirationDays : -1;
+
+        if (expires) {
+          var date = new Date();
+          date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
+          expires = date;
+        }
+
+        var str = name + '=' + value;
+
+        if (expires) {
+          str += '; expires=' + expires.toUTCString();
+        }
+
+        str += '; path=/';
+
+        if (opts.domain) {
+          str += '; domain=' + opts.domain;
+        }
+
+        if (opts.secure) {
+          str += '; Secure';
+        }
+
+        if (opts.sameSite) {
+          str += '; SameSite=' + opts.sameSite;
+        }
+
+        document.cookie = str;
+      }; // test that cookies are enabled - navigator.cookiesEnabled yields false positives in IE, need to test directly
+
+
+      var areCookiesEnabled = function areCookiesEnabled() {
+        var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var uid = String(new Date());
+
+        try {
+          var cookieName = Constants.COOKIE_TEST_PREFIX + base64Id();
+          set(cookieName, uid, opts);
+
+          var _areCookiesEnabled = get(cookieName + '=') === uid;
+
+          set(cookieName, null, opts);
+          return _areCookiesEnabled;
+        } catch (e) {}
+        /* eslint-disable-line no-empty */
+
+
+        return false;
+      };
+
+      var baseCookie = {
+        set: set,
+        get: get,
+        areCookiesEnabled: areCookiesEnabled
+      };
+
+      var getHost = function getHost(url) {
+        var a = document.createElement('a');
+        a.href = url;
+        return a.hostname || location.hostname;
+      };
+
+      var topDomain = function topDomain(url) {
+        var host = getHost(url);
+        var parts = host.split('.');
+        var levels = [];
+        var cname = '_tldtest_' + base64Id();
+
+        for (var i = parts.length - 2; i >= 0; --i) {
+          levels.push(parts.slice(i).join('.'));
+        }
+
+        for (var _i = 0; _i < levels.length; ++_i) {
+          var domain = levels[_i];
+          var opts = {
+            domain: '.' + domain
+          };
+          baseCookie.set(cname, 1, opts);
+
+          if (baseCookie.get(cname)) {
+            baseCookie.set(cname, null, opts);
+            return domain;
+          }
+        }
+
+        return '';
+      };
+      /*
+       * Cookie data
+       */
+
+
+      var _options = {
+        expirationDays: undefined,
+        domain: undefined
+      };
+
+      var reset = function reset() {
+        _options = {
+          expirationDays: undefined,
+          domain: undefined
+        };
+      };
+
+      var options = function options(opts) {
+        if (arguments.length === 0) {
+          return _options;
+        }
+
+        opts = opts || {};
+        _options.expirationDays = opts.expirationDays;
+        _options.secure = opts.secure;
+        _options.sameSite = opts.sameSite;
+        var domain = !utils.isEmptyString(opts.domain) ? opts.domain : '.' + topDomain(getLocation().href);
+        var token = Math.random();
+        _options.domain = domain;
+        set$1('amplitude_test', token);
+        var stored = get$1('amplitude_test');
+
+        if (!stored || stored !== token) {
+          domain = null;
+        }
+
+        remove('amplitude_test');
+        _options.domain = domain;
+        return _options;
+      };
+
+      var _domainSpecific = function _domainSpecific(name) {
+        // differentiate between cookies on different domains
+        var suffix = '';
+
+        if (_options.domain) {
+          suffix = _options.domain.charAt(0) === '.' ? _options.domain.substring(1) : _options.domain;
+        }
+
+        return name + suffix;
+      };
+
+      var get$1 = function get(name) {
+        var nameEq = _domainSpecific(name) + '=';
+        var value = baseCookie.get(nameEq);
+
+        try {
+          if (value) {
+            return JSON.parse(Base64.decode(value));
+          }
+        } catch (e) {
+          return null;
+        }
+
+        return null;
+      };
+
+      var set$1 = function set(name, value) {
+        try {
+          baseCookie.set(_domainSpecific(name), Base64.encode(JSON.stringify(value)), _options);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      };
+
+      var setRaw = function setRaw(name, value) {
+        try {
+          baseCookie.set(_domainSpecific(name), value, _options);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      };
+
+      var getRaw = function getRaw(name) {
+        var nameEq = _domainSpecific(name) + '=';
+        return baseCookie.get(nameEq);
+      };
+
+      var remove = function remove(name) {
+        try {
+          baseCookie.set(_domainSpecific(name), null, _options);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      };
+
+      var Cookie = {
+        reset: reset,
+        options: options,
+        get: get$1,
+        set: set$1,
+        remove: remove,
+        setRaw: setRaw,
+        getRaw: getRaw
+      };
+      /*
+       * Implement localStorage to support Firefox 2-3 and IE 5-7
+       */
+
+      var localStorage;
+      {
+        // test that Window.localStorage is available and works
+        var windowLocalStorageAvailable = function windowLocalStorageAvailable() {
+          var uid = new Date();
+          var result;
+
+          try {
+            window.localStorage.setItem(uid, uid);
+            result = window.localStorage.getItem(uid) === String(uid);
+            window.localStorage.removeItem(uid);
+            return result;
+          } catch (e) {// localStorage not available
+          }
+
+          return false;
+        };
+
+        if (windowLocalStorageAvailable()) {
+          localStorage = window.localStorage;
+        } else if (window.globalStorage) {
+          // Firefox 2-3 use globalStorage
+          // See https://developer.mozilla.org/en/dom/storage#globalStorage
+          try {
+            localStorage = window.globalStorage[window.location.hostname];
+          } catch (e) {// Something bad happened...
+          }
+        } else if (typeof document !== 'undefined') {
+          // IE 5-7 use userData
+          // See http://msdn.microsoft.com/en-us/library/ms531424(v=vs.85).aspx
+          var div = document.createElement('div'),
+              attrKey = 'localStorage';
+          div.style.display = 'none';
+          document.getElementsByTagName('head')[0].appendChild(div);
+
+          if (div.addBehavior) {
+            div.addBehavior('#default#userdata');
+            localStorage = {
+              length: 0,
+              setItem: function setItem(k, v) {
+                div.load(attrKey);
+
+                if (!div.getAttribute(k)) {
+                  this.length++;
+                }
+
+                div.setAttribute(k, v);
+                div.save(attrKey);
+              },
+              getItem: function getItem(k) {
+                div.load(attrKey);
+                return div.getAttribute(k);
+              },
+              removeItem: function removeItem(k) {
+                div.load(attrKey);
+
+                if (div.getAttribute(k)) {
+                  this.length--;
+                }
+
+                div.removeAttribute(k);
+                div.save(attrKey);
+              },
+              clear: function clear() {
+                div.load(attrKey);
+                var i = 0;
+                var attr;
+
+                while (attr = div.XMLDocument.documentElement.attributes[i++]) {
+                  div.removeAttribute(attr.name);
+                }
+
+                div.save(attrKey);
+                this.length = 0;
+              },
+              key: function key(k) {
+                div.load(attrKey);
+                return div.XMLDocument.documentElement.attributes[k];
+              }
+            };
+            div.load(attrKey);
+            localStorage.length = div.XMLDocument.documentElement.attributes.length;
+          }
+        }
+
+        if (!localStorage) {
+          /* eslint-disable no-unused-vars */
+          localStorage = {
+            length: 0,
+            setItem: function setItem(k, v) {},
+            getItem: function getItem(k) {},
+            removeItem: function removeItem(k) {},
+            clear: function clear() {},
+            key: function key(k) {}
+          };
+          /* eslint-enable no-unused-vars */
+        }
+      }
+      var localStorage$1 = localStorage;
+      /*
+       * Abstraction layer for cookie storage.
+       * Uses cookie if available, otherwise fallback to localstorage.
+       */
+
+      var cookieStorage = function cookieStorage() {
+        this.storage = null;
+      };
+
+      cookieStorage.prototype.getStorage = function () {
+        if (this.storage !== null) {
+          return this.storage;
+        }
+
+        if (baseCookie.areCookiesEnabled()) {
+          this.storage = Cookie;
+        } else {
+          // if cookies disabled, fallback to localstorage
+          // note: localstorage does not persist across subdomains
+          var keyPrefix = 'amp_cookiestore_';
+          this.storage = {
+            _options: {
+              expirationDays: undefined,
+              domain: undefined,
+              secure: false
+            },
+            reset: function reset() {
+              this._options = {
+                expirationDays: undefined,
+                domain: undefined,
+                secure: false
+              };
+            },
+            options: function options(opts) {
+              if (arguments.length === 0) {
+                return this._options;
+              }
+
+              opts = opts || {};
+              this._options.expirationDays = opts.expirationDays || this._options.expirationDays; // localStorage is specific to subdomains
+
+              this._options.domain = opts.domain || this._options.domain || window && window.location && window.location.hostname;
+              return this._options.secure = opts.secure || false;
+            },
+            get: function get(name) {
+              try {
+                return JSON.parse(localStorage$1.getItem(keyPrefix + name));
+              } catch (e) {}
+              /* eslint-disable-line no-empty */
+
+
+              return null;
+            },
+            set: function set(name, value) {
+              try {
+                localStorage$1.setItem(keyPrefix + name, JSON.stringify(value));
+                return true;
+              } catch (e) {}
+              /* eslint-disable-line no-empty */
+
+
+              return false;
+            },
+            remove: function remove(name) {
+              try {
+                localStorage$1.removeItem(keyPrefix + name);
+              } catch (e) {
+                return false;
+              }
+            }
+          };
+        }
+
+        return this.storage;
+      };
+
+      var _storageOptionExists;
+
+      var storageOptionExists = (_storageOptionExists = {}, _defineProperty(_storageOptionExists, Constants.STORAGE_COOKIES, true), _defineProperty(_storageOptionExists, Constants.STORAGE_NONE, true), _defineProperty(_storageOptionExists, Constants.STORAGE_LOCAL, true), _defineProperty(_storageOptionExists, Constants.STORAGE_SESSION, true), _storageOptionExists);
+      /**
+       * MetadataStorage involves SDK data persistance
+       * storage priority: cookies -> localStorage -> in memory
+       * This priority can be overriden by setting the storage options.
+       * if in localStorage, unable track users between subdomains
+       * if in memory, then memory can't be shared between different tabs
+       */
+
+      var MetadataStorage = /*#__PURE__*/function () {
+        function MetadataStorage(_ref) {
+          var storageKey = _ref.storageKey,
+              disableCookies = _ref.disableCookies,
+              domain = _ref.domain,
+              secure = _ref.secure,
+              sameSite = _ref.sameSite,
+              expirationDays = _ref.expirationDays,
+              storage = _ref.storage;
+
+          _classCallCheck(this, MetadataStorage);
+
+          this.storageKey = storageKey;
+          this.domain = domain;
+          this.secure = secure;
+          this.sameSite = sameSite;
+          this.expirationDays = expirationDays;
+          this.cookieDomain = '';
+          {
+            var writableTopDomain = topDomain(getLocation().href);
+            this.cookieDomain = domain || (writableTopDomain ? '.' + writableTopDomain : null);
+          }
+
+          if (storageOptionExists[storage]) {
+            this.storage = storage;
+          } else {
+            var disableCookieStorage = disableCookies || !baseCookie.areCookiesEnabled({
+              domain: this.cookieDomain,
+              secure: this.secure,
+              sameSite: this.sameSite,
+              expirationDays: this.expirationDays
+            });
+
+            if (disableCookieStorage) {
+              this.storage = Constants.STORAGE_LOCAL;
+            } else {
+              this.storage = Constants.STORAGE_COOKIES;
+            }
+          }
+        }
+
+        _createClass(MetadataStorage, [{
+          key: "getCookieStorageKey",
+          value: function getCookieStorageKey() {
+            if (!this.domain) {
+              return this.storageKey;
+            }
+
+            var suffix = this.domain.charAt(0) === '.' ? this.domain.substring(1) : this.domain;
+            return "".concat(this.storageKey).concat(suffix ? "_".concat(suffix) : '');
+          }
+          /*
+           * Data is saved as delimited values rather than JSO to minimize cookie space
+           * Should not change order of the items
+           */
+
+        }, {
+          key: "save",
+          value: function save(_ref2) {
+            var deviceId = _ref2.deviceId,
+                userId = _ref2.userId,
+                optOut = _ref2.optOut,
+                sessionId = _ref2.sessionId,
+                lastEventTime = _ref2.lastEventTime,
+                eventId = _ref2.eventId,
+                identifyId = _ref2.identifyId,
+                sequenceNumber = _ref2.sequenceNumber;
+
+            if (this.storage === Constants.STORAGE_NONE) {
+              return;
+            }
+
+            var value = [deviceId, Base64.encode(userId || ''), // used to convert not unicode to alphanumeric since cookies only use alphanumeric
+            optOut ? '1' : '', sessionId ? sessionId.toString(32) : '0', // generated when instantiated, timestamp (but re-uses session id in cookie if not expired) @TODO clients may want custom session id
+            lastEventTime ? lastEventTime.toString(32) : '0', // last time an event was set
+            eventId ? eventId.toString(32) : '0', identifyId ? identifyId.toString(32) : '0', sequenceNumber ? sequenceNumber.toString(32) : '0'].join('.');
+
+            switch (this.storage) {
+              case Constants.STORAGE_SESSION:
+                if (window.sessionStorage) {
+                  window.sessionStorage.setItem(this.storageKey, value);
+                }
+
+                break;
+
+              case Constants.STORAGE_LOCAL:
+                localStorage$1.setItem(this.storageKey, value);
+                break;
+
+              case Constants.STORAGE_COOKIES:
+                baseCookie.set(this.getCookieStorageKey(), value, {
+                  domain: this.cookieDomain,
+                  secure: this.secure,
+                  sameSite: this.sameSite,
+                  expirationDays: this.expirationDays
+                });
+                break;
+            }
+          }
+        }, {
+          key: "load",
+          value: function load() {
+            var str;
+
+            if (this.storage === Constants.STORAGE_COOKIES) {
+              str = baseCookie.get(this.getCookieStorageKey() + '=');
+            }
+
+            if (!str) {
+              str = localStorage$1.getItem(this.storageKey);
+            }
+
+            if (!str) {
+              str = window.sessionStorage && window.sessionStorage.getItem(this.storageKey);
+            }
+
+            if (!str) {
+              return null;
+            }
+
+            var values = str.split('.');
+            var userId = null;
+
+            if (values[1]) {
+              try {
+                userId = Base64.decode(values[1]);
+              } catch (e) {
+                userId = null;
+              }
+            }
+
+            return {
+              deviceId: values[0],
+              userId: userId,
+              optOut: values[2] === '1',
+              sessionId: parseInt(values[3], 32),
+              lastEventTime: parseInt(values[4], 32),
+              eventId: parseInt(values[5], 32),
+              identifyId: parseInt(values[6], 32),
+              sequenceNumber: parseInt(values[7], 32)
+            };
+          }
+        }]);
+
+        return MetadataStorage;
+      }();
+
+      var getUtmData = function getUtmData(rawCookie, query) {
+        // Translate the utmz cookie format into url query string format.
+        var cookie = rawCookie ? '?' + rawCookie.split('.').slice(-1)[0].replace(/\|/g, '&') : '';
+
+        var fetchParam = function fetchParam(queryName, query, cookieName, cookie) {
+          return utils.getQueryParam(queryName, query) || utils.getQueryParam(cookieName, cookie);
+        };
+
+        var utmSource = fetchParam(Constants.UTM_SOURCE, query, 'utmcsr', cookie);
+        var utmMedium = fetchParam(Constants.UTM_MEDIUM, query, 'utmcmd', cookie);
+        var utmCampaign = fetchParam(Constants.UTM_CAMPAIGN, query, 'utmccn', cookie);
+        var utmTerm = fetchParam(Constants.UTM_TERM, query, 'utmctr', cookie);
+        var utmContent = fetchParam(Constants.UTM_CONTENT, query, 'utmcct', cookie);
+        var utmData = {};
+
+        var addIfNotNull = function addIfNotNull(key, value) {
+          if (!utils.isEmptyString(value)) {
+            utmData[key] = value;
+          }
+        };
+
+        addIfNotNull(Constants.UTM_SOURCE, utmSource);
+        addIfNotNull(Constants.UTM_MEDIUM, utmMedium);
+        addIfNotNull(Constants.UTM_CAMPAIGN, utmCampaign);
+        addIfNotNull(Constants.UTM_TERM, utmTerm);
+        addIfNotNull(Constants.UTM_CONTENT, utmContent);
+        return utmData;
+      };
+      /*
+       * Wrapper for a user properties JSON object that supports operations.
+       * Note: if a user property is used in multiple operations on the same Identify object,
+       * only the first operation will be saved, and the rest will be ignored.
+       */
+
+
+      var AMP_OP_ADD = '$add';
+      var AMP_OP_APPEND = '$append';
+      var AMP_OP_CLEAR_ALL = '$clearAll';
+      var AMP_OP_PREPEND = '$prepend';
+      var AMP_OP_SET = '$set';
+      var AMP_OP_SET_ONCE = '$setOnce';
+      var AMP_OP_UNSET = '$unset';
+      /**
+       * Identify API - instance constructor. Identify objects are a wrapper for user property operations.
+       * Each method adds a user property operation to the Identify object, and returns the same Identify object,
+       * allowing you to chain multiple method calls together.
+       * Note: if the same user property is used in multiple operations on a single Identify object,
+       * only the first operation on that property will be saved, and the rest will be ignored.
+       * @constructor Identify
+       * @public
+       * @example var identify = new amplitude.Identify();
+       */
+
+      var Identify = function Identify() {
+        this.userPropertiesOperations = {};
+        this.properties = []; // keep track of keys that have been added
+      };
+      /**
+       * Increment a user property by a given value (can also be negative to decrement).
+       * If the user property does not have a value set yet, it will be initialized to 0 before being incremented.
+       * @public
+       * @param {string} property - The user property key.
+       * @param {number|string} value - The amount by which to increment the user property. Allows numbers as strings (ex: '123').
+       * @return {Identify} Returns the same Identify object, allowing you to chain multiple method calls together.
+       * @example var identify = new amplitude.Identify().add('karma', 1).add('friends', 1);
+       * amplitude.identify(identify); // send the Identify call
+       */
+
+
+      Identify.prototype.add = function (property, value) {
+        if (type(value) === 'number' || type(value) === 'string') {
+          this._addOperation(AMP_OP_ADD, property, value);
+        } else {
+          utils.log.error('Unsupported type for value: ' + type(value) + ', expecting number or string');
+        }
+
+        return this;
+      };
+      /**
+       * Append a value or values to a user property.
+       * If the user property does not have a value set yet,
+       * it will be initialized to an empty list before the new values are appended.
+       * If the user property has an existing value and it is not a list,
+       * the existing value will be converted into a list with the new values appended.
+       * @public
+       * @param {string} property - The user property key.
+       * @param {number|string|list|object} value - A value or values to append.
+       * Values can be numbers, strings, lists, or object (key:value dict will be flattened).
+       * @return {Identify} Returns the same Identify object, allowing you to chain multiple method calls together.
+       * @example var identify = new amplitude.Identify().append('ab-tests', 'new-user-tests');
+       * identify.append('some_list', [1, 2, 3, 4, 'values']);
+       * amplitude.identify(identify); // send the Identify call
+       */
+
+
+      Identify.prototype.append = function (property, value) {
+        this._addOperation(AMP_OP_APPEND, property, value);
+
+        return this;
+      };
+      /**
+       * Clear all user properties for the current user.
+       * SDK user should instead call amplitude.clearUserProperties() instead of using this.
+       * $clearAll needs to be sent on its own Identify object. If there are already other operations, then don't add $clearAll.
+       * If $clearAll already in an Identify object, don't allow other operations to be added.
+       * @private
+       */
+
+
+      Identify.prototype.clearAll = function () {
+        if (Object.keys(this.userPropertiesOperations).length > 0) {
+          if (!this.userPropertiesOperations.hasOwnProperty(AMP_OP_CLEAR_ALL)) {
+            utils.log.error('Need to send $clearAll on its own Identify object without any other operations, skipping $clearAll');
+          }
+
+          return this;
+        }
+
+        this.userPropertiesOperations[AMP_OP_CLEAR_ALL] = '-';
+        return this;
+      };
+      /**
+       * Prepend a value or values to a user property.
+       * Prepend means inserting the value or values at the front of a list.
+       * If the user property does not have a value set yet,
+       * it will be initialized to an empty list before the new values are prepended.
+       * If the user property has an existing value and it is not a list,
+       * the existing value will be converted into a list with the new values prepended.
+       * @public
+       * @param {string} property - The user property key.
+       * @param {number|string|list|object} value - A value or values to prepend.
+       * Values can be numbers, strings, lists, or object (key:value dict will be flattened).
+       * @return {Identify} Returns the same Identify object, allowing you to chain multiple method calls together.
+       * @example var identify = new amplitude.Identify().prepend('ab-tests', 'new-user-tests');
+       * identify.prepend('some_list', [1, 2, 3, 4, 'values']);
+       * amplitude.identify(identify); // send the Identify call
+       */
+
+
+      Identify.prototype.prepend = function (property, value) {
+        this._addOperation(AMP_OP_PREPEND, property, value);
+
+        return this;
+      };
+      /**
+       * Sets the value of a given user property. If a value already exists, it will be overwriten with the new value.
+       * @public
+       * @param {string} property - The user property key.
+       * @param {number|string|list|boolean|object} value - A value or values to set.
+       * Values can be numbers, strings, lists, or object (key:value dict will be flattened).
+       * @return {Identify} Returns the same Identify object, allowing you to chain multiple method calls together.
+       * @example var identify = new amplitude.Identify().set('user_type', 'beta');
+       * identify.set('name', {'first': 'John', 'last': 'Doe'}); // dict is flattened and becomes name.first: John, name.last: Doe
+       * amplitude.identify(identify); // send the Identify call
+       */
+
+
+      Identify.prototype.set = function (property, value) {
+        this._addOperation(AMP_OP_SET, property, value);
+
+        return this;
+      };
+      /**
+       * Sets the value of a given user property only once. Subsequent setOnce operations on that user property will be ignored;
+       * however, that user property can still be modified through any of the other operations.
+       * Useful for capturing properties such as 'initial_signup_date', 'initial_referrer', etc.
+       * @public
+       * @param {string} property - The user property key.
+       * @param {number|string|list|boolean|object} value - A value or values to set once.
+       * Values can be numbers, strings, lists, or object (key:value dict will be flattened).
+       * @return {Identify} Returns the same Identify object, allowing you to chain multiple method calls together.
+       * @example var identify = new amplitude.Identify().setOnce('sign_up_date', '2016-04-01');
+       * amplitude.identify(identify); // send the Identify call
+       */
+
+
+      Identify.prototype.setOnce = function (property, value) {
+        this._addOperation(AMP_OP_SET_ONCE, property, value);
+
+        return this;
+      };
+      /**
+       * Unset and remove a user property. This user property will no longer show up in a user's profile.
+       * @public
+       * @param {string} property - The user property key.
+       * @return {Identify} Returns the same Identify object, allowing you to chain multiple method calls together.
+       * @example var identify = new amplitude.Identify().unset('user_type').unset('age');
+       * amplitude.identify(identify); // send the Identify call
+       */
+
+
+      Identify.prototype.unset = function (property) {
+        this._addOperation(AMP_OP_UNSET, property, '-');
+
+        return this;
+      };
+      /**
+       * Helper function that adds operation to the Identify's object
+       * Handle's filtering of duplicate user property keys, and filtering for clearAll.
+       * @private
+       */
+
+
+      Identify.prototype._addOperation = function (operation, property, value) {
+        // check that the identify doesn't already contain a clearAll
+        if (this.userPropertiesOperations.hasOwnProperty(AMP_OP_CLEAR_ALL)) {
+          utils.log.error('This identify already contains a $clearAll operation, skipping operation ' + operation);
+          return;
+        } // check that property wasn't already used in this Identify
+
+
+        if (this.properties.indexOf(property) !== -1) {
+          utils.log.error('User property "' + property + '" already used in this identify, skipping operation ' + operation);
+          return;
+        }
+
+        if (!this.userPropertiesOperations.hasOwnProperty(operation)) {
+          this.userPropertiesOperations[operation] = {};
+        }
+
+        this.userPropertiesOperations[operation][property] = value;
+        this.properties.push(property);
+      };
+
+      var commonjsGlobal$1 = typeof window !== 'undefined' ? window : typeof commonjsGlobal !== 'undefined' ? commonjsGlobal : typeof self !== 'undefined' ? self : {};
+
+      function createCommonjsModule(fn, module) {
+        return module = {
+          exports: {}
+        }, fn(module, module.exports), module.exports;
+      }
+
+      var md5 = createCommonjsModule(function (module) {
+        (function ($) {
+          /*
+          * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+          * to work around bugs in some JS interpreters.
+          */
+          function safeAdd(x, y) {
+            var lsw = (x & 0xffff) + (y & 0xffff);
+            var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+            return msw << 16 | lsw & 0xffff;
+          }
+          /*
+          * Bitwise rotate a 32-bit number to the left.
+          */
+
+
+          function bitRotateLeft(num, cnt) {
+            return num << cnt | num >>> 32 - cnt;
+          }
+          /*
+          * These functions implement the four basic operations the algorithm uses.
+          */
+
+
+          function md5cmn(q, a, b, x, s, t) {
+            return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
+          }
+
+          function md5ff(a, b, c, d, x, s, t) {
+            return md5cmn(b & c | ~b & d, a, b, x, s, t);
+          }
+
+          function md5gg(a, b, c, d, x, s, t) {
+            return md5cmn(b & d | c & ~d, a, b, x, s, t);
+          }
+
+          function md5hh(a, b, c, d, x, s, t) {
+            return md5cmn(b ^ c ^ d, a, b, x, s, t);
+          }
+
+          function md5ii(a, b, c, d, x, s, t) {
+            return md5cmn(c ^ (b | ~d), a, b, x, s, t);
+          }
+          /*
+          * Calculate the MD5 of an array of little-endian words, and a bit length.
+          */
+
+
+          function binlMD5(x, len) {
+            /* append padding */
+            x[len >> 5] |= 0x80 << len % 32;
+            x[(len + 64 >>> 9 << 4) + 14] = len;
+            var i;
+            var olda;
+            var oldb;
+            var oldc;
+            var oldd;
+            var a = 1732584193;
+            var b = -271733879;
+            var c = -1732584194;
+            var d = 271733878;
+
+            for (i = 0; i < x.length; i += 16) {
+              olda = a;
+              oldb = b;
+              oldc = c;
+              oldd = d;
+              a = md5ff(a, b, c, d, x[i], 7, -680876936);
+              d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);
+              c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);
+              b = md5ff(b, c, d, a, x[i + 3], 22, -1044525330);
+              a = md5ff(a, b, c, d, x[i + 4], 7, -176418897);
+              d = md5ff(d, a, b, c, x[i + 5], 12, 1200080426);
+              c = md5ff(c, d, a, b, x[i + 6], 17, -1473231341);
+              b = md5ff(b, c, d, a, x[i + 7], 22, -45705983);
+              a = md5ff(a, b, c, d, x[i + 8], 7, 1770035416);
+              d = md5ff(d, a, b, c, x[i + 9], 12, -1958414417);
+              c = md5ff(c, d, a, b, x[i + 10], 17, -42063);
+              b = md5ff(b, c, d, a, x[i + 11], 22, -1990404162);
+              a = md5ff(a, b, c, d, x[i + 12], 7, 1804603682);
+              d = md5ff(d, a, b, c, x[i + 13], 12, -40341101);
+              c = md5ff(c, d, a, b, x[i + 14], 17, -1502002290);
+              b = md5ff(b, c, d, a, x[i + 15], 22, 1236535329);
+              a = md5gg(a, b, c, d, x[i + 1], 5, -165796510);
+              d = md5gg(d, a, b, c, x[i + 6], 9, -1069501632);
+              c = md5gg(c, d, a, b, x[i + 11], 14, 643717713);
+              b = md5gg(b, c, d, a, x[i], 20, -373897302);
+              a = md5gg(a, b, c, d, x[i + 5], 5, -701558691);
+              d = md5gg(d, a, b, c, x[i + 10], 9, 38016083);
+              c = md5gg(c, d, a, b, x[i + 15], 14, -660478335);
+              b = md5gg(b, c, d, a, x[i + 4], 20, -405537848);
+              a = md5gg(a, b, c, d, x[i + 9], 5, 568446438);
+              d = md5gg(d, a, b, c, x[i + 14], 9, -1019803690);
+              c = md5gg(c, d, a, b, x[i + 3], 14, -187363961);
+              b = md5gg(b, c, d, a, x[i + 8], 20, 1163531501);
+              a = md5gg(a, b, c, d, x[i + 13], 5, -1444681467);
+              d = md5gg(d, a, b, c, x[i + 2], 9, -51403784);
+              c = md5gg(c, d, a, b, x[i + 7], 14, 1735328473);
+              b = md5gg(b, c, d, a, x[i + 12], 20, -1926607734);
+              a = md5hh(a, b, c, d, x[i + 5], 4, -378558);
+              d = md5hh(d, a, b, c, x[i + 8], 11, -2022574463);
+              c = md5hh(c, d, a, b, x[i + 11], 16, 1839030562);
+              b = md5hh(b, c, d, a, x[i + 14], 23, -35309556);
+              a = md5hh(a, b, c, d, x[i + 1], 4, -1530992060);
+              d = md5hh(d, a, b, c, x[i + 4], 11, 1272893353);
+              c = md5hh(c, d, a, b, x[i + 7], 16, -155497632);
+              b = md5hh(b, c, d, a, x[i + 10], 23, -1094730640);
+              a = md5hh(a, b, c, d, x[i + 13], 4, 681279174);
+              d = md5hh(d, a, b, c, x[i], 11, -358537222);
+              c = md5hh(c, d, a, b, x[i + 3], 16, -722521979);
+              b = md5hh(b, c, d, a, x[i + 6], 23, 76029189);
+              a = md5hh(a, b, c, d, x[i + 9], 4, -640364487);
+              d = md5hh(d, a, b, c, x[i + 12], 11, -421815835);
+              c = md5hh(c, d, a, b, x[i + 15], 16, 530742520);
+              b = md5hh(b, c, d, a, x[i + 2], 23, -995338651);
+              a = md5ii(a, b, c, d, x[i], 6, -198630844);
+              d = md5ii(d, a, b, c, x[i + 7], 10, 1126891415);
+              c = md5ii(c, d, a, b, x[i + 14], 15, -1416354905);
+              b = md5ii(b, c, d, a, x[i + 5], 21, -57434055);
+              a = md5ii(a, b, c, d, x[i + 12], 6, 1700485571);
+              d = md5ii(d, a, b, c, x[i + 3], 10, -1894986606);
+              c = md5ii(c, d, a, b, x[i + 10], 15, -1051523);
+              b = md5ii(b, c, d, a, x[i + 1], 21, -2054922799);
+              a = md5ii(a, b, c, d, x[i + 8], 6, 1873313359);
+              d = md5ii(d, a, b, c, x[i + 15], 10, -30611744);
+              c = md5ii(c, d, a, b, x[i + 6], 15, -1560198380);
+              b = md5ii(b, c, d, a, x[i + 13], 21, 1309151649);
+              a = md5ii(a, b, c, d, x[i + 4], 6, -145523070);
+              d = md5ii(d, a, b, c, x[i + 11], 10, -1120210379);
+              c = md5ii(c, d, a, b, x[i + 2], 15, 718787259);
+              b = md5ii(b, c, d, a, x[i + 9], 21, -343485551);
+              a = safeAdd(a, olda);
+              b = safeAdd(b, oldb);
+              c = safeAdd(c, oldc);
+              d = safeAdd(d, oldd);
+            }
+
+            return [a, b, c, d];
+          }
+          /*
+          * Convert an array of little-endian words to a string
+          */
+
+
+          function binl2rstr(input) {
+            var i;
+            var output = '';
+            var length32 = input.length * 32;
+
+            for (i = 0; i < length32; i += 8) {
+              output += String.fromCharCode(input[i >> 5] >>> i % 32 & 0xff);
+            }
+
+            return output;
+          }
+          /*
+          * Convert a raw string to an array of little-endian words
+          * Characters >255 have their high-byte silently ignored.
+          */
+
+
+          function rstr2binl(input) {
+            var i;
+            var output = [];
+            output[(input.length >> 2) - 1] = undefined;
+
+            for (i = 0; i < output.length; i += 1) {
+              output[i] = 0;
+            }
+
+            var length8 = input.length * 8;
+
+            for (i = 0; i < length8; i += 8) {
+              output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << i % 32;
+            }
+
+            return output;
+          }
+          /*
+          * Calculate the MD5 of a raw string
+          */
+
+
+          function rstrMD5(s) {
+            return binl2rstr(binlMD5(rstr2binl(s), s.length * 8));
+          }
+          /*
+          * Calculate the HMAC-MD5, of a key and some data (raw strings)
+          */
+
+
+          function rstrHMACMD5(key, data) {
+            var i;
+            var bkey = rstr2binl(key);
+            var ipad = [];
+            var opad = [];
+            var hash;
+            ipad[15] = opad[15] = undefined;
+
+            if (bkey.length > 16) {
+              bkey = binlMD5(bkey, key.length * 8);
+            }
+
+            for (i = 0; i < 16; i += 1) {
+              ipad[i] = bkey[i] ^ 0x36363636;
+              opad[i] = bkey[i] ^ 0x5c5c5c5c;
+            }
+
+            hash = binlMD5(ipad.concat(rstr2binl(data)), 512 + data.length * 8);
+            return binl2rstr(binlMD5(opad.concat(hash), 512 + 128));
+          }
+          /*
+          * Convert a raw string to a hex string
+          */
+
+
+          function rstr2hex(input) {
+            var hexTab = '0123456789abcdef';
+            var output = '';
+            var x;
+            var i;
+
+            for (i = 0; i < input.length; i += 1) {
+              x = input.charCodeAt(i);
+              output += hexTab.charAt(x >>> 4 & 0x0f) + hexTab.charAt(x & 0x0f);
+            }
+
+            return output;
+          }
+          /*
+          * Encode a string as utf-8
+          */
+
+
+          function str2rstrUTF8(input) {
+            return unescape(encodeURIComponent(input));
+          }
+          /*
+          * Take string arguments and return either raw or hex encoded strings
+          */
+
+
+          function rawMD5(s) {
+            return rstrMD5(str2rstrUTF8(s));
+          }
+
+          function hexMD5(s) {
+            return rstr2hex(rawMD5(s));
+          }
+
+          function rawHMACMD5(k, d) {
+            return rstrHMACMD5(str2rstrUTF8(k), str2rstrUTF8(d));
+          }
+
+          function hexHMACMD5(k, d) {
+            return rstr2hex(rawHMACMD5(k, d));
+          }
+
+          function md5(string, key, raw) {
+            if (!key) {
+              if (!raw) {
+                return hexMD5(string);
+              }
+
+              return rawMD5(string);
+            }
+
+            if (!raw) {
+              return hexHMACMD5(key, string);
+            }
+
+            return rawHMACMD5(key, string);
+          }
+
+          if (module.exports) {
+            module.exports = md5;
+          } else {
+            $.md5 = md5;
+          }
+        })(commonjsGlobal$1);
+      });
+
+      var strictUriEncode = function strictUriEncode(str) {
+        return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+          return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+        });
+      };
+      /*
+      object-assign
+      (c) Sindre Sorhus
+      @license MIT
+      */
+
+      /* eslint-disable no-unused-vars */
+
+
+      var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
+      var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+      function toObject(val) {
+        if (val === null || val === undefined) {
+          throw new TypeError('Object.assign cannot be called with null or undefined');
+        }
+
+        return Object(val);
+      }
+
+      function shouldUseNative() {
+        try {
+          if (!Object.assign) {
+            return false;
+          } // Detect buggy property enumeration order in older V8 versions.
+          // https://bugs.chromium.org/p/v8/issues/detail?id=4118
+
+
+          var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+
+          test1[5] = 'de';
+
+          if (Object.getOwnPropertyNames(test1)[0] === '5') {
+            return false;
+          } // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+
+
+          var test2 = {};
+
+          for (var i = 0; i < 10; i++) {
+            test2['_' + String.fromCharCode(i)] = i;
+          }
+
+          var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+            return test2[n];
+          });
+
+          if (order2.join('') !== '0123456789') {
+            return false;
+          } // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+
+
+          var test3 = {};
+          'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+            test3[letter] = letter;
+          });
+
+          if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+            return false;
+          }
+
+          return true;
+        } catch (err) {
+          // We don't expect any of the above to throw, but better to be safe.
+          return false;
+        }
+      }
+
+      var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
+        var from;
+        var to = toObject(target);
+        var symbols;
+
+        for (var s = 1; s < arguments.length; s++) {
+          from = Object(arguments[s]);
+
+          for (var key in from) {
+            if (hasOwnProperty.call(from, key)) {
+              to[key] = from[key];
+            }
+          }
+
+          if (getOwnPropertySymbols) {
+            symbols = getOwnPropertySymbols(from);
+
+            for (var i = 0; i < symbols.length; i++) {
+              if (propIsEnumerable.call(from, symbols[i])) {
+                to[symbols[i]] = from[symbols[i]];
+              }
+            }
+          }
+        }
+
+        return to;
+      };
+      var token = '%[a-f0-9]{2}';
+      var singleMatcher = new RegExp(token, 'gi');
+      var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+
+      function decodeComponents(components, split) {
+        try {
+          // Try to decode the entire string first
+          return decodeURIComponent(components.join(''));
+        } catch (err) {// Do nothing
+        }
+
+        if (components.length === 1) {
+          return components;
+        }
+
+        split = split || 1; // Split the array in 2 parts
+
+        var left = components.slice(0, split);
+        var right = components.slice(split);
+        return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+      }
+
+      function decode(input) {
+        try {
+          return decodeURIComponent(input);
+        } catch (err) {
+          var tokens = input.match(singleMatcher);
+
+          for (var i = 1; i < tokens.length; i++) {
+            input = decodeComponents(tokens, i).join('');
+            tokens = input.match(singleMatcher);
+          }
+
+          return input;
+        }
+      }
+
+      function customDecodeURIComponent(input) {
+        // Keep track of all the replacements and prefill the map with the `BOM`
+        var replaceMap = {
+          '%FE%FF': "\uFFFD\uFFFD",
+          '%FF%FE': "\uFFFD\uFFFD"
+        };
+        var match = multiMatcher.exec(input);
+
+        while (match) {
+          try {
+            // Decode as big chunks as possible
+            replaceMap[match[0]] = decodeURIComponent(match[0]);
+          } catch (err) {
+            var result = decode(match[0]);
+
+            if (result !== match[0]) {
+              replaceMap[match[0]] = result;
+            }
+          }
+
+          match = multiMatcher.exec(input);
+        } // Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
+
+
+        replaceMap['%C2'] = "\uFFFD";
+        var entries = Object.keys(replaceMap);
+
+        for (var i = 0; i < entries.length; i++) {
+          // Replace all decoded components
+          var key = entries[i];
+          input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
+        }
+
+        return input;
+      }
+
+      var decodeUriComponent = function decodeUriComponent(encodedURI) {
+        if (typeof encodedURI !== 'string') {
+          throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + _typeof(encodedURI) + '`');
+        }
+
+        try {
+          encodedURI = encodedURI.replace(/\+/g, ' '); // Try the built in decoder first
+
+          return decodeURIComponent(encodedURI);
+        } catch (err) {
+          // Fallback to a more advanced decoder
+          return customDecodeURIComponent(encodedURI);
+        }
+      };
+
+      function encoderForArrayFormat(opts) {
+        switch (opts.arrayFormat) {
+          case 'index':
+            return function (key, value, index) {
+              return value === null ? [encode(key, opts), '[', index, ']'].join('') : [encode(key, opts), '[', encode(index, opts), ']=', encode(value, opts)].join('');
+            };
+
+          case 'bracket':
+            return function (key, value) {
+              return value === null ? encode(key, opts) : [encode(key, opts), '[]=', encode(value, opts)].join('');
+            };
+
+          default:
+            return function (key, value) {
+              return value === null ? encode(key, opts) : [encode(key, opts), '=', encode(value, opts)].join('');
+            };
+        }
+      }
+
+      function parserForArrayFormat(opts) {
+        var result;
+
+        switch (opts.arrayFormat) {
+          case 'index':
+            return function (key, value, accumulator) {
+              result = /\[(\d*)\]$/.exec(key);
+              key = key.replace(/\[\d*\]$/, '');
+
+              if (!result) {
+                accumulator[key] = value;
+                return;
+              }
+
+              if (accumulator[key] === undefined) {
+                accumulator[key] = {};
+              }
+
+              accumulator[key][result[1]] = value;
+            };
+
+          case 'bracket':
+            return function (key, value, accumulator) {
+              result = /(\[\])$/.exec(key);
+              key = key.replace(/\[\]$/, '');
+
+              if (!result) {
+                accumulator[key] = value;
+                return;
+              } else if (accumulator[key] === undefined) {
+                accumulator[key] = [value];
+                return;
+              }
+
+              accumulator[key] = [].concat(accumulator[key], value);
+            };
+
+          default:
+            return function (key, value, accumulator) {
+              if (accumulator[key] === undefined) {
+                accumulator[key] = value;
+                return;
+              }
+
+              accumulator[key] = [].concat(accumulator[key], value);
+            };
+        }
+      }
+
+      function encode(value, opts) {
+        if (opts.encode) {
+          return opts.strict ? strictUriEncode(value) : encodeURIComponent(value);
+        }
+
+        return value;
+      }
+
+      function keysSorter(input) {
+        if (Array.isArray(input)) {
+          return input.sort();
+        } else if (_typeof(input) === 'object') {
+          return keysSorter(Object.keys(input)).sort(function (a, b) {
+            return Number(a) - Number(b);
+          }).map(function (key) {
+            return input[key];
+          });
+        }
+
+        return input;
+      }
+
+      function extract(str) {
+        var queryStart = str.indexOf('?');
+
+        if (queryStart === -1) {
+          return '';
+        }
+
+        return str.slice(queryStart + 1);
+      }
+
+      function parse(str, opts) {
+        opts = objectAssign({
+          arrayFormat: 'none'
+        }, opts);
+        var formatter = parserForArrayFormat(opts); // Create an object with no prototype
+        // https://github.com/sindresorhus/query-string/issues/47
+
+        var ret = Object.create(null);
+
+        if (typeof str !== 'string') {
+          return ret;
+        }
+
+        str = str.trim().replace(/^[?#&]/, '');
+
+        if (!str) {
+          return ret;
+        }
+
+        str.split('&').forEach(function (param) {
+          var parts = param.replace(/\+/g, ' ').split('='); // Firefox (pre 40) decodes `%3D` to `=`
+          // https://github.com/sindresorhus/query-string/pull/37
+
+          var key = parts.shift();
+          var val = parts.length > 0 ? parts.join('=') : undefined; // missing `=` should be `null`:
+          // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+
+          val = val === undefined ? null : decodeUriComponent(val);
+          formatter(decodeUriComponent(key), val, ret);
+        });
+        return Object.keys(ret).sort().reduce(function (result, key) {
+          var val = ret[key];
+
+          if (Boolean(val) && _typeof(val) === 'object' && !Array.isArray(val)) {
+            // Sort object keys, not values
+            result[key] = keysSorter(val);
+          } else {
+            result[key] = val;
+          }
+
+          return result;
+        }, Object.create(null));
+      }
+
+      var extract_1 = extract;
+      var parse_1 = parse;
+
+      var stringify = function stringify(obj, opts) {
+        var defaults = {
+          encode: true,
+          strict: true,
+          arrayFormat: 'none'
+        };
+        opts = objectAssign(defaults, opts);
+
+        if (opts.sort === false) {
+          opts.sort = function () {};
+        }
+
+        var formatter = encoderForArrayFormat(opts);
+        return obj ? Object.keys(obj).sort(opts.sort).map(function (key) {
+          var val = obj[key];
+
+          if (val === undefined) {
+            return '';
+          }
+
+          if (val === null) {
+            return encode(key, opts);
+          }
+
+          if (Array.isArray(val)) {
+            var result = [];
+            val.slice().forEach(function (val2) {
+              if (val2 === undefined) {
+                return;
+              }
+
+              result.push(formatter(key, val2, result.length));
+            });
+            return result.join('&');
+          }
+
+          return encode(key, opts) + '=' + encode(val, opts);
+        }).filter(function (x) {
+          return x.length > 0;
+        }).join('&') : '';
+      };
+
+      var parseUrl = function parseUrl(str, opts) {
+        return {
+          url: str.split('?')[0] || '',
+          query: parse(extract(str), opts)
+        };
+      };
+
+      var queryString = {
+        extract: extract_1,
+        parse: parse_1,
+        stringify: stringify,
+        parseUrl: parseUrl
+      };
+      /*
+       * Simple AJAX request object
+       */
+
+      var Request = function Request(url, data) {
+        this.url = url;
+        this.data = data || {};
+      };
+
+      Request.prototype.send = function (callback) {
+        var isIE = window.XDomainRequest ? true : false;
+
+        if (isIE) {
+          var xdr = new window.XDomainRequest();
+          xdr.open('POST', this.url, true);
+
+          xdr.onload = function () {
+            callback(200, xdr.responseText);
+          };
+
+          xdr.onerror = function () {
+            // status code not available from xdr, try string matching on responseText
+            if (xdr.responseText === 'Request Entity Too Large') {
+              callback(413, xdr.responseText);
+            } else {
+              callback(500, xdr.responseText);
+            }
+          };
+
+          xdr.ontimeout = function () {};
+
+          xdr.onprogress = function () {};
+
+          xdr.send(queryString.stringify(this.data));
+        } else {
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', this.url, true);
+
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              callback(xhr.status, xhr.responseText);
+            }
+          };
+
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+          xhr.send(queryString.stringify(this.data));
+        } //log('sent request to ' + this.url + ' with data ' + decodeURIComponent(queryString(this.data)));
+
+      };
+      /**
+       * Revenue API - instance constructor. Wrapper for logging Revenue data. Revenue objects get passed to amplitude.logRevenueV2 to send to Amplitude servers.
+       * Each method updates a revenue property in the Revenue object, and returns the same Revenue object,
+       * allowing you to chain multiple method calls together.
+       *
+       * Note: price is a required field to log revenue events.
+       * If quantity is not specified then defaults to 1.
+       * @constructor Revenue
+       * @public
+       * @example var revenue = new amplitude.Revenue();
+       */
+
+
+      var Revenue = function Revenue() {
+        // required fields
+        this._price = null; // optional fields
+
+        this._productId = null;
+        this._quantity = 1;
+        this._revenueType = null;
+        this._properties = null;
+      };
+      /**
+       * Set a value for the product identifer.
+       * @public
+       * @param {string} productId - The value for the product identifier. Empty and invalid strings are ignored.
+       * @return {Revenue} Returns the same Revenue object, allowing you to chain multiple method calls together.
+       * @example var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99);
+       * amplitude.logRevenueV2(revenue);
+       */
+
+
+      Revenue.prototype.setProductId = function setProductId(productId) {
+        if (type(productId) !== 'string') {
+          utils.log.error('Unsupported type for productId: ' + type(productId) + ', expecting string');
+        } else if (utils.isEmptyString(productId)) {
+          utils.log.error('Invalid empty productId');
+        } else {
+          this._productId = productId;
+        }
+
+        return this;
+      };
+      /**
+       * Set a value for the quantity. Note revenue amount is calculated as price * quantity.
+       * @public
+       * @param {number} quantity - Integer value for the quantity. If not set, quantity defaults to 1.
+       * @return {Revenue} Returns the same Revenue object, allowing you to chain multiple method calls together.
+       * @example var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99).setQuantity(5);
+       * amplitude.logRevenueV2(revenue);
+       */
+
+
+      Revenue.prototype.setQuantity = function setQuantity(quantity) {
+        if (type(quantity) !== 'number') {
+          utils.log.error('Unsupported type for quantity: ' + type(quantity) + ', expecting number');
+        } else {
+          this._quantity = parseInt(quantity);
+        }
+
+        return this;
+      };
+      /**
+       * Set a value for the price. This field is required for all revenue being logged.
+       *
+       * Note: revenue amount is calculated as price * quantity.
+       * @public
+       * @param {number} price - Double value for the quantity.
+       * @return {Revenue} Returns the same Revenue object, allowing you to chain multiple method calls together.
+       * @example var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99);
+       * amplitude.logRevenueV2(revenue);
+       */
+
+
+      Revenue.prototype.setPrice = function setPrice(price) {
+        if (type(price) !== 'number') {
+          utils.log.error('Unsupported type for price: ' + type(price) + ', expecting number');
+        } else {
+          this._price = price;
+        }
+
+        return this;
+      };
+      /**
+       * Set a value for the revenueType (for example purchase, cost, tax, refund, etc).
+       * @public
+       * @param {string} revenueType - RevenueType to designate.
+       * @return {Revenue} Returns the same Revenue object, allowing you to chain multiple method calls together.
+       * @example var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99).setRevenueType('purchase');
+       * amplitude.logRevenueV2(revenue);
+       */
+
+
+      Revenue.prototype.setRevenueType = function setRevenueType(revenueType) {
+        if (type(revenueType) !== 'string') {
+          utils.log.error('Unsupported type for revenueType: ' + type(revenueType) + ', expecting string');
+        } else {
+          this._revenueType = revenueType;
+        }
+
+        return this;
+      };
+      /**
+       * Set event properties for the revenue event.
+       * @public
+       * @param {object} eventProperties - Revenue event properties to set.
+       * @return {Revenue} Returns the same Revenue object, allowing you to chain multiple method calls together.
+       * @example var event_properties = {'city': 'San Francisco'};
+       * var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99).setEventProperties(event_properties);
+       * amplitude.logRevenueV2(revenue);
+       */
+
+
+      Revenue.prototype.setEventProperties = function setEventProperties(eventProperties) {
+        if (type(eventProperties) !== 'object') {
+          utils.log.error('Unsupported type for eventProperties: ' + type(eventProperties) + ', expecting object');
+        } else {
+          this._properties = utils.validateProperties(eventProperties);
+        }
+
+        return this;
+      };
+      /**
+       * @private
+       */
+
+
+      Revenue.prototype._isValidRevenue = function _isValidRevenue() {
+        if (type(this._price) !== 'number') {
+          utils.log.error('Invalid revenue, need to set price field');
+          return false;
+        }
+
+        return true;
+      };
+      /**
+       * @private
+       */
+
+
+      Revenue.prototype._toJSONObject = function _toJSONObject() {
+        var obj = type(this._properties) === 'object' ? this._properties : {};
+
+        if (this._productId !== null) {
+          obj[Constants.REVENUE_PRODUCT_ID] = this._productId;
+        }
+
+        if (this._quantity !== null) {
+          obj[Constants.REVENUE_QUANTITY] = this._quantity;
+        }
+
+        if (this._price !== null) {
+          obj[Constants.REVENUE_PRICE] = this._price;
+        }
+
+        if (this._revenueType !== null) {
+          obj[Constants.REVENUE_REVENUE_TYPE] = this._revenueType;
+        }
+
+        return obj;
+      };
+
+      var uaParser = createCommonjsModule(function (module, exports) {
+        /*!
+         * UAParser.js v0.7.21
+         * Lightweight JavaScript-based User-Agent string parser
+         * https://github.com/faisalman/ua-parser-js
+         *
+         * Copyright © 2012-2019 Faisal Salman <f@faisalman.com>
+         * Licensed under MIT License
+         */
+        (function (window, undefined$1) {
+          //////////////
+          // Constants
+          /////////////
+          var LIBVERSION = '0.7.21',
+              EMPTY = '',
+              UNKNOWN = '?',
+              FUNC_TYPE = 'function',
+              OBJ_TYPE = 'object',
+              STR_TYPE = 'string',
+              MAJOR = 'major',
+              // deprecated
+          MODEL = 'model',
+              NAME = 'name',
+              TYPE = 'type',
+              VENDOR = 'vendor',
+              VERSION = 'version',
+              ARCHITECTURE = 'architecture',
+              CONSOLE = 'console',
+              MOBILE = 'mobile',
+              TABLET = 'tablet',
+              SMARTTV = 'smarttv',
+              WEARABLE = 'wearable',
+              EMBEDDED = 'embedded'; ///////////
+          // Helper
+          //////////
+
+          var util = {
+            extend: function extend(regexes, extensions) {
+              var mergedRegexes = {};
+
+              for (var i in regexes) {
+                if (extensions[i] && extensions[i].length % 2 === 0) {
+                  mergedRegexes[i] = extensions[i].concat(regexes[i]);
+                } else {
+                  mergedRegexes[i] = regexes[i];
+                }
+              }
+
+              return mergedRegexes;
+            },
+            has: function has(str1, str2) {
+              if (typeof str1 === "string") {
+                return str2.toLowerCase().indexOf(str1.toLowerCase()) !== -1;
+              } else {
+                return false;
+              }
+            },
+            lowerize: function lowerize(str) {
+              return str.toLowerCase();
+            },
+            major: function major(version) {
+              return _typeof(version) === STR_TYPE ? version.replace(/[^\d\.]/g, '').split(".")[0] : undefined$1;
+            },
+            trim: function trim(str) {
+              return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+            }
+          }; ///////////////
+          // Map helper
+          //////////////
+
+          var mapper = {
+            rgx: function rgx(ua, arrays) {
+              var i = 0,
+                  j,
+                  k,
+                  p,
+                  q,
+                  matches,
+                  match; // loop through all regexes maps
+
+              while (i < arrays.length && !matches) {
+                var regex = arrays[i],
+                    // even sequence (0,2,4,..)
+                props = arrays[i + 1]; // odd sequence (1,3,5,..)
+
+                j = k = 0; // try matching uastring with regexes
+
+                while (j < regex.length && !matches) {
+                  matches = regex[j++].exec(ua);
+
+                  if (!!matches) {
+                    for (p = 0; p < props.length; p++) {
+                      match = matches[++k];
+                      q = props[p]; // check if given property is actually array
+
+                      if (_typeof(q) === OBJ_TYPE && q.length > 0) {
+                        if (q.length == 2) {
+                          if (_typeof(q[1]) == FUNC_TYPE) {
+                            // assign modified match
+                            this[q[0]] = q[1].call(this, match);
+                          } else {
+                            // assign given value, ignore regex match
+                            this[q[0]] = q[1];
+                          }
+                        } else if (q.length == 3) {
+                          // check whether function or regex
+                          if (_typeof(q[1]) === FUNC_TYPE && !(q[1].exec && q[1].test)) {
+                            // call function (usually string mapper)
+                            this[q[0]] = match ? q[1].call(this, match, q[2]) : undefined$1;
+                          } else {
+                            // sanitize match using given regex
+                            this[q[0]] = match ? match.replace(q[1], q[2]) : undefined$1;
+                          }
+                        } else if (q.length == 4) {
+                          this[q[0]] = match ? q[3].call(this, match.replace(q[1], q[2])) : undefined$1;
+                        }
+                      } else {
+                        this[q] = match ? match : undefined$1;
+                      }
+                    }
+                  }
+                }
+
+                i += 2;
+              }
+            },
+            str: function str(_str, map) {
+              for (var i in map) {
+                // check if array
+                if (_typeof(map[i]) === OBJ_TYPE && map[i].length > 0) {
+                  for (var j = 0; j < map[i].length; j++) {
+                    if (util.has(map[i][j], _str)) {
+                      return i === UNKNOWN ? undefined$1 : i;
+                    }
+                  }
+                } else if (util.has(map[i], _str)) {
+                  return i === UNKNOWN ? undefined$1 : i;
+                }
+              }
+
+              return _str;
+            }
+          }; ///////////////
+          // String map
+          //////////////
+
+          var maps = {
+            browser: {
+              oldsafari: {
+                version: {
+                  '1.0': '/8',
+                  '1.2': '/1',
+                  '1.3': '/3',
+                  '2.0': '/412',
+                  '2.0.2': '/416',
+                  '2.0.3': '/417',
+                  '2.0.4': '/419',
+                  '?': '/'
+                }
+              }
+            },
+            device: {
+              amazon: {
+                model: {
+                  'Fire Phone': ['SD', 'KF']
+                }
+              },
+              sprint: {
+                model: {
+                  'Evo Shift 4G': '7373KT'
+                },
+                vendor: {
+                  'HTC': 'APA',
+                  'Sprint': 'Sprint'
+                }
+              }
+            },
+            os: {
+              windows: {
+                version: {
+                  'ME': '4.90',
+                  'NT 3.11': 'NT3.51',
+                  'NT 4.0': 'NT4.0',
+                  '2000': 'NT 5.0',
+                  'XP': ['NT 5.1', 'NT 5.2'],
+                  'Vista': 'NT 6.0',
+                  '7': 'NT 6.1',
+                  '8': 'NT 6.2',
+                  '8.1': 'NT 6.3',
+                  '10': ['NT 6.4', 'NT 10.0'],
+                  'RT': 'ARM'
+                }
+              }
+            }
+          }; //////////////
+          // Regex map
+          /////////////
+
+          var regexes = {
+            browser: [[// Presto based
+            /(opera\smini)\/([\w\.-]+)/i, // Opera Mini
+            /(opera\s[mobiletab]+).+version\/([\w\.-]+)/i, // Opera Mobi/Tablet
+            /(opera).+version\/([\w\.]+)/i, // Opera > 9.80
+            /(opera)[\/\s]+([\w\.]+)/i // Opera < 9.80
+            ], [NAME, VERSION], [/(opios)[\/\s]+([\w\.]+)/i // Opera mini on iphone >= 8.0
+            ], [[NAME, 'Opera Mini'], VERSION], [/\s(opr)\/([\w\.]+)/i // Opera Webkit
+            ], [[NAME, 'Opera'], VERSION], [// Mixed
+            /(kindle)\/([\w\.]+)/i, // Kindle
+            /(lunascape|maxthon|netfront|jasmine|blazer)[\/\s]?([\w\.]*)/i, // Lunascape/Maxthon/Netfront/Jasmine/Blazer
+            // Trident based
+            /(avant\s|iemobile|slim)(?:browser)?[\/\s]?([\w\.]*)/i, // Avant/IEMobile/SlimBrowser
+            /(bidubrowser|baidubrowser)[\/\s]?([\w\.]+)/i, // Baidu Browser
+            /(?:ms|\()(ie)\s([\w\.]+)/i, // Internet Explorer
+            // Webkit/KHTML based
+            /(rekonq)\/([\w\.]*)/i, // Rekonq
+            /(chromium|flock|rockmelt|midori|epiphany|silk|skyfire|ovibrowser|bolt|iron|vivaldi|iridium|phantomjs|bowser|quark|qupzilla|falkon)\/([\w\.-]+)/i // Chromium/Flock/RockMelt/Midori/Epiphany/Silk/Skyfire/Bolt/Iron/Iridium/PhantomJS/Bowser/QupZilla/Falkon
+            ], [NAME, VERSION], [/(konqueror)\/([\w\.]+)/i // Konqueror
+            ], [[NAME, 'Konqueror'], VERSION], [/(trident).+rv[:\s]([\w\.]+).+like\sgecko/i // IE11
+            ], [[NAME, 'IE'], VERSION], [/(edge|edgios|edga|edg)\/((\d+)?[\w\.]+)/i // Microsoft Edge
+            ], [[NAME, 'Edge'], VERSION], [/(yabrowser)\/([\w\.]+)/i // Yandex
+            ], [[NAME, 'Yandex'], VERSION], [/(Avast)\/([\w\.]+)/i // Avast Secure Browser
+            ], [[NAME, 'Avast Secure Browser'], VERSION], [/(AVG)\/([\w\.]+)/i // AVG Secure Browser
+            ], [[NAME, 'AVG Secure Browser'], VERSION], [/(puffin)\/([\w\.]+)/i // Puffin
+            ], [[NAME, 'Puffin'], VERSION], [/(focus)\/([\w\.]+)/i // Firefox Focus
+            ], [[NAME, 'Firefox Focus'], VERSION], [/(opt)\/([\w\.]+)/i // Opera Touch
+            ], [[NAME, 'Opera Touch'], VERSION], [/((?:[\s\/])uc?\s?browser|(?:juc.+)ucweb)[\/\s]?([\w\.]+)/i // UCBrowser
+            ], [[NAME, 'UCBrowser'], VERSION], [/(comodo_dragon)\/([\w\.]+)/i // Comodo Dragon
+            ], [[NAME, /_/g, ' '], VERSION], [/(windowswechat qbcore)\/([\w\.]+)/i // WeChat Desktop for Windows Built-in Browser
+            ], [[NAME, 'WeChat(Win) Desktop'], VERSION], [/(micromessenger)\/([\w\.]+)/i // WeChat
+            ], [[NAME, 'WeChat'], VERSION], [/(brave)\/([\w\.]+)/i // Brave browser
+            ], [[NAME, 'Brave'], VERSION], [/(qqbrowserlite)\/([\w\.]+)/i // QQBrowserLite
+            ], [NAME, VERSION], [/(QQ)\/([\d\.]+)/i // QQ, aka ShouQ
+            ], [NAME, VERSION], [/m?(qqbrowser)[\/\s]?([\w\.]+)/i // QQBrowser
+            ], [NAME, VERSION], [/(baiduboxapp)[\/\s]?([\w\.]+)/i // Baidu App
+            ], [NAME, VERSION], [/(2345Explorer)[\/\s]?([\w\.]+)/i // 2345 Browser
+            ], [NAME, VERSION], [/(MetaSr)[\/\s]?([\w\.]+)/i // SouGouBrowser
+            ], [NAME], [/(LBBROWSER)/i // LieBao Browser
+            ], [NAME], [/xiaomi\/miuibrowser\/([\w\.]+)/i // MIUI Browser
+            ], [VERSION, [NAME, 'MIUI Browser']], [/;fbav\/([\w\.]+);/i // Facebook App for iOS & Android
+            ], [VERSION, [NAME, 'Facebook']], [/safari\s(line)\/([\w\.]+)/i, // Line App for iOS
+            /android.+(line)\/([\w\.]+)\/iab/i // Line App for Android
+            ], [NAME, VERSION], [/headlesschrome(?:\/([\w\.]+)|\s)/i // Chrome Headless
+            ], [VERSION, [NAME, 'Chrome Headless']], [/\swv\).+(chrome)\/([\w\.]+)/i // Chrome WebView
+            ], [[NAME, /(.+)/, '$1 WebView'], VERSION], [/((?:oculus|samsung)browser)\/([\w\.]+)/i], [[NAME, /(.+(?:g|us))(.+)/, '$1 $2'], VERSION], [// Oculus / Samsung Browser
+            /((?:android.+)crmo|crios)\/([\w\.]+)/i, // Chrome for Android/iOS
+            /android.+(chrome)\/([\w\.]+)\s+(?:mobile\s?safari)/i], [[NAME, 'Chrome Mobile'], VERSION], [/android.+version\/([\w\.]+)\s+(?:mobile\s?safari|safari)*/i // Android Browser
+            ], [VERSION, [NAME, 'Android Browser']], [/(sailfishbrowser)\/([\w\.]+)/i // Sailfish Browser
+            ], [[NAME, 'Sailfish Browser'], VERSION], [/(chrome|omniweb|arora|[tizenoka]{5}\s?browser)\/v?([\w\.]+)/i // Chrome/OmniWeb/Arora/Tizen/Nokia
+            ], [NAME, VERSION], [/(dolfin)\/([\w\.]+)/i // Dolphin
+            ], [[NAME, 'Dolphin'], VERSION], [/(qihu|qhbrowser|qihoobrowser|360browser)/i // 360
+            ], [[NAME, '360 Browser']], [/(coast)\/([\w\.]+)/i // Opera Coast
+            ], [[NAME, 'Opera Coast'], VERSION], [/fxios\/([\w\.-]+)/i // Firefox for iOS
+            ], [VERSION, [NAME, 'Firefox']], [/version\/([\w\.]+).+?mobile\/\w+\s(safari)/i // Mobile Safari
+            ], [VERSION, [NAME, 'Mobile Safari']], [/version\/([\w\.]+).+?(mobile\s?safari|safari)/i // Safari & Safari Mobile
+            ], [VERSION, NAME], [/webkit.+?(gsa)\/([\w\.]+).+?(mobile\s?safari|safari)(\/[\w\.]+)/i // Google Search Appliance on iOS
+            ], [[NAME, 'GSA'], VERSION], [/webkit.+?(mobile\s?safari|safari)(\/[\w\.]+)/i // Safari < 3.0
+            ], [NAME, [VERSION, mapper.str, maps.browser.oldsafari.version]], [/(webkit|khtml)\/([\w\.]+)/i], [NAME, VERSION], [// Gecko based
+            /(navigator|netscape)\/([\w\.-]+)/i // Netscape
+            ], [[NAME, 'Netscape'], VERSION], [/(swiftfox)/i, // Swiftfox
+            /(icedragon|iceweasel|camino|chimera|fennec|maemo\sbrowser|minimo|conkeror)[\/\s]?([\w\.\+]+)/i, // IceDragon/Iceweasel/Camino/Chimera/Fennec/Maemo/Minimo/Conkeror
+            /(firefox|seamonkey|k-meleon|icecat|iceape|firebird|phoenix|palemoon|basilisk|waterfox)\/([\w\.-]+)/i, // Firefox/SeaMonkey/K-Meleon/IceCat/IceApe/Firebird/Phoenix
+            /(mozilla)\/([\w\.]+).+rv\:.+gecko\/\d+/i, // Mozilla
+            // Other
+            /(polaris|lynx|dillo|icab|doris|amaya|w3m|netsurf|sleipnir)[\/\s]?([\w\.]+)/i, // Polaris/Lynx/Dillo/iCab/Doris/Amaya/w3m/NetSurf/Sleipnir
+            /(links)\s\(([\w\.]+)/i, // Links
+            /(gobrowser)\/?([\w\.]*)/i, // GoBrowser
+            /(ice\s?browser)\/v?([\w\._]+)/i, // ICE Browser
+            /(mosaic)[\/\s]([\w\.]+)/i // Mosaic
+            ], [NAME, VERSION]],
+            cpu: [[/(?:(amd|x(?:(?:86|64)[_-])?|wow|win)64)[;\)]/i // AMD64
+            ], [[ARCHITECTURE, 'amd64']], [/(ia32(?=;))/i // IA32 (quicktime)
+            ], [[ARCHITECTURE, util.lowerize]], [/((?:i[346]|x)86)[;\)]/i // IA32
+            ], [[ARCHITECTURE, 'ia32']], [// PocketPC mistakenly identified as PowerPC
+            /windows\s(ce|mobile);\sppc;/i], [[ARCHITECTURE, 'arm']], [/((?:ppc|powerpc)(?:64)?)(?:\smac|;|\))/i // PowerPC
+            ], [[ARCHITECTURE, /ower/, '', util.lowerize]], [/(sun4\w)[;\)]/i // SPARC
+            ], [[ARCHITECTURE, 'sparc']], [/((?:avr32|ia64(?=;))|68k(?=\))|arm(?:64|(?=v\d+[;l]))|(?=atmel\s)avr|(?:irix|mips|sparc)(?:64)?(?=;)|pa-risc)/i // IA64, 68K, ARM/64, AVR/32, IRIX/64, MIPS/64, SPARC/64, PA-RISC
+            ], [[ARCHITECTURE, util.lowerize]]],
+            device: [[/\((ipad|playbook);[\w\s\),;-]+(rim|apple)/i // iPad/PlayBook
+            ], [MODEL, VENDOR, [TYPE, TABLET]], [/applecoremedia\/[\w\.]+ \((ipad)/ // iPad
+            ], [MODEL, [VENDOR, 'Apple'], [TYPE, TABLET]], [/(apple\s{0,1}tv)/i // Apple TV
+            ], [[MODEL, 'Apple TV'], [VENDOR, 'Apple'], [TYPE, SMARTTV]], [/(archos)\s(gamepad2?)/i, // Archos
+            /(hp).+(touchpad)/i, // HP TouchPad
+            /(hp).+(tablet)/i, // HP Tablet
+            /(kindle)\/([\w\.]+)/i, // Kindle
+            /\s(nook)[\w\s]+build\/(\w+)/i, // Nook
+            /(dell)\s(strea[kpr\s\d]*[\dko])/i // Dell Streak
+            ], [VENDOR, MODEL, [TYPE, TABLET]], [/(kf[A-z]+)\sbuild\/.+silk\//i // Kindle Fire HD
+            ], [MODEL, [VENDOR, 'Amazon'], [TYPE, TABLET]], [/(sd|kf)[0349hijorstuw]+\sbuild\/.+silk\//i // Fire Phone
+            ], [[MODEL, mapper.str, maps.device.amazon.model], [VENDOR, 'Amazon'], [TYPE, MOBILE]], [/android.+aft([bms])\sbuild/i // Fire TV
+            ], [MODEL, [VENDOR, 'Amazon'], [TYPE, SMARTTV]], [/\((ip[honed|\s\w*]+);.+(apple)/i // iPod/iPhone
+            ], [MODEL, VENDOR, [TYPE, MOBILE]], [/\((ip[honed|\s\w*]+);/i // iPod/iPhone
+            ], [MODEL, [VENDOR, 'Apple'], [TYPE, MOBILE]], [/(blackberry)[\s-]?(\w+)/i, // BlackBerry
+            /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus|dell|meizu|motorola|polytron)[\s_-]?([\w-]*)/i, // BenQ/Palm/Sony-Ericsson/Acer/Asus/Dell/Meizu/Motorola/Polytron
+            /(hp)\s([\w\s]+\w)/i, // HP iPAQ
+            /(asus)-?(\w+)/i // Asus
+            ], [VENDOR, MODEL, [TYPE, MOBILE]], [/\(bb10;\s(\w+)/i // BlackBerry 10
+            ], [MODEL, [VENDOR, 'BlackBerry'], [TYPE, MOBILE]], [// Asus Tablets
+            /android.+(transfo[prime\s]{4,10}\s\w+|eeepc|slider\s\w+|nexus 7|padfone|p00c)/i], [MODEL, [VENDOR, 'Asus'], [TYPE, TABLET]], [/(sony)\s(tablet\s[ps])\sbuild\//i, // Sony
+            /(sony)?(?:sgp.+)\sbuild\//i], [[VENDOR, 'Sony'], [MODEL, 'Xperia Tablet'], [TYPE, TABLET]], [/android.+\s([c-g]\d{4}|so[-l]\w+)(?=\sbuild\/|\).+chrome\/(?![1-6]{0,1}\d\.))/i], [MODEL, [VENDOR, 'Sony'], [TYPE, MOBILE]], [/\s(ouya)\s/i, // Ouya
+            /(nintendo)\s([wids3u]+)/i // Nintendo
+            ], [VENDOR, MODEL, [TYPE, CONSOLE]], [/android.+;\s(shield)\sbuild/i // Nvidia
+            ], [MODEL, [VENDOR, 'Nvidia'], [TYPE, CONSOLE]], [/(playstation\s[34portablevi]+)/i // Playstation
+            ], [MODEL, [VENDOR, 'Sony'], [TYPE, CONSOLE]], [/(sprint\s(\w+))/i // Sprint Phones
+            ], [[VENDOR, mapper.str, maps.device.sprint.vendor], [MODEL, mapper.str, maps.device.sprint.model], [TYPE, MOBILE]], [/(htc)[;_\s-]+([\w\s]+(?=\)|\sbuild)|\w+)/i, // HTC
+            /(zte)-(\w*)/i, // ZTE
+            /(alcatel|geeksphone|nexian|panasonic|(?=;\s)sony)[_\s-]?([\w-]*)/i // Alcatel/GeeksPhone/Nexian/Panasonic/Sony
+            ], [VENDOR, [MODEL, /_/g, ' '], [TYPE, MOBILE]], [/(nexus\s9)/i // HTC Nexus 9
+            ], [MODEL, [VENDOR, 'HTC'], [TYPE, TABLET]], [/d\/huawei([\w\s-]+)[;\)]/i, /(nexus\s6p|vog-l29|ane-lx1|eml-l29)/i // Huawei
+            ], [MODEL, [VENDOR, 'Huawei'], [TYPE, MOBILE]], [/android.+(bah2?-a?[lw]\d{2})/i // Huawei MediaPad
+            ], [MODEL, [VENDOR, 'Huawei'], [TYPE, TABLET]], [/(microsoft);\s(lumia[\s\w]+)/i // Microsoft Lumia
+            ], [VENDOR, MODEL, [TYPE, MOBILE]], [/[\s\(;](xbox(?:\sone)?)[\s\);]/i // Microsoft Xbox
+            ], [MODEL, [VENDOR, 'Microsoft'], [TYPE, CONSOLE]], [/(kin\.[onetw]{3})/i // Microsoft Kin
+            ], [[MODEL, /\./g, ' '], [VENDOR, 'Microsoft'], [TYPE, MOBILE]], [// Motorola
+            /\s(milestone|droid(?:[2-4x]|\s(?:bionic|x2|pro|razr))?:?(\s4g)?)[\w\s]+build\//i, /mot[\s-]?(\w*)/i, /(XT\d{3,4}) build\//i, /(nexus\s6)/i], [MODEL, [VENDOR, 'Motorola'], [TYPE, MOBILE]], [/android.+\s(mz60\d|xoom[\s2]{0,2})\sbuild\//i], [MODEL, [VENDOR, 'Motorola'], [TYPE, TABLET]], [/hbbtv\/\d+\.\d+\.\d+\s+\([\w\s]*;\s*(\w[^;]*);([^;]*)/i // HbbTV devices
+            ], [[VENDOR, util.trim], [MODEL, util.trim], [TYPE, SMARTTV]], [/hbbtv.+maple;(\d+)/i], [[MODEL, /^/, 'SmartTV'], [VENDOR, 'Samsung'], [TYPE, SMARTTV]], [/\(dtv[\);].+(aquos)/i // Sharp
+            ], [MODEL, [VENDOR, 'Sharp'], [TYPE, SMARTTV]], [/android.+((sch-i[89]0\d|shw-m380s|gt-p\d{4}|gt-n\d+|sgh-t8[56]9|nexus 10))/i, /((SM-T\w+))/i], [[VENDOR, 'Samsung'], MODEL, [TYPE, TABLET]], [// Samsung
+            /smart-tv.+(samsung)/i], [VENDOR, [TYPE, SMARTTV], MODEL], [/((s[cgp]h-\w+|gt-\w+|galaxy\snexus|sm-\w[\w\d]+))/i, /(sam[sung]*)[\s-]*(\w+-?[\w-]*)/i, /sec-((sgh\w+))/i], [[VENDOR, 'Samsung'], MODEL, [TYPE, MOBILE]], [/sie-(\w*)/i // Siemens
+            ], [MODEL, [VENDOR, 'Siemens'], [TYPE, MOBILE]], [/(maemo|nokia).*(n900|lumia\s\d+)/i, // Nokia
+            /(nokia)[\s_-]?([\w-]*)/i], [[VENDOR, 'Nokia'], MODEL, [TYPE, MOBILE]], [/android[x\d\.\s;]+\s([ab][1-7]\-?[0178a]\d\d?)/i // Acer
+            ], [MODEL, [VENDOR, 'Acer'], [TYPE, TABLET]], [/android.+([vl]k\-?\d{3})\s+build/i // LG Tablet
+            ], [MODEL, [VENDOR, 'LG'], [TYPE, TABLET]], [/android\s3\.[\s\w;-]{10}(lg?)-([06cv9]{3,4})/i // LG Tablet
+            ], [[VENDOR, 'LG'], MODEL, [TYPE, TABLET]], [/(lg) netcast\.tv/i // LG SmartTV
+            ], [VENDOR, MODEL, [TYPE, SMARTTV]], [/(nexus\s[45])/i, // LG
+            /lg[e;\s\/-]+(\w*)/i, /android.+lg(\-?[\d\w]+)\s+build/i], [MODEL, [VENDOR, 'LG'], [TYPE, MOBILE]], [/(lenovo)\s?(s(?:5000|6000)(?:[\w-]+)|tab(?:[\s\w]+))/i // Lenovo tablets
+            ], [VENDOR, MODEL, [TYPE, TABLET]], [/android.+(ideatab[a-z0-9\-\s]+)/i // Lenovo
+            ], [MODEL, [VENDOR, 'Lenovo'], [TYPE, TABLET]], [/(lenovo)[_\s-]?([\w-]+)/i], [VENDOR, MODEL, [TYPE, MOBILE]], [/linux;.+((jolla));/i // Jolla
+            ], [VENDOR, MODEL, [TYPE, MOBILE]], [/((pebble))app\/[\d\.]+\s/i // Pebble
+            ], [VENDOR, MODEL, [TYPE, WEARABLE]], [/android.+;\s(oppo)\s?([\w\s]+)\sbuild/i // OPPO
+            ], [VENDOR, MODEL, [TYPE, MOBILE]], [/crkey/i // Google Chromecast
+            ], [[MODEL, 'Chromecast'], [VENDOR, 'Google'], [TYPE, SMARTTV]], [/android.+;\s(glass)\s\d/i // Google Glass
+            ], [MODEL, [VENDOR, 'Google'], [TYPE, WEARABLE]], [/android.+;\s(pixel c)[\s)]/i // Google Pixel C
+            ], [MODEL, [VENDOR, 'Google'], [TYPE, TABLET]], [/android.+;\s(pixel( [23])?( xl)?)[\s)]/i // Google Pixel
+            ], [MODEL, [VENDOR, 'Google'], [TYPE, MOBILE]], [/android.+;\s(\w+)\s+build\/hm\1/i, // Xiaomi Hongmi 'numeric' models
+            /android.+(hm[\s\-_]*note?[\s_]*(?:\d\w)?)\s+build/i, // Xiaomi Hongmi
+            /android.+(mi[\s\-_]*(?:a\d|one|one[\s_]plus|note lte)?[\s_]*(?:\d?\w?)[\s_]*(?:plus)?)\s+build/i, // Xiaomi Mi
+            /android.+(redmi[\s\-_]*(?:note)?(?:[\s_]*[\w\s]+))\s+build/i // Redmi Phones
+            ], [[MODEL, /_/g, ' '], [VENDOR, 'Xiaomi'], [TYPE, MOBILE]], [/android.+(mi[\s\-_]*(?:pad)(?:[\s_]*[\w\s]+))\s+build/i // Mi Pad tablets
+            ], [[MODEL, /_/g, ' '], [VENDOR, 'Xiaomi'], [TYPE, TABLET]], [/android.+;\s(m[1-5]\snote)\sbuild/i // Meizu
+            ], [MODEL, [VENDOR, 'Meizu'], [TYPE, MOBILE]], [/(mz)-([\w-]{2,})/i], [[VENDOR, 'Meizu'], MODEL, [TYPE, MOBILE]], [/android.+a000(1)\s+build/i, // OnePlus
+            /android.+oneplus\s(a\d{4})[\s)]/i], [MODEL, [VENDOR, 'OnePlus'], [TYPE, MOBILE]], [/android.+[;\/]\s*(RCT[\d\w]+)\s+build/i // RCA Tablets
+            ], [MODEL, [VENDOR, 'RCA'], [TYPE, TABLET]], [/android.+[;\/\s]+(Venue[\d\s]{2,7})\s+build/i // Dell Venue Tablets
+            ], [MODEL, [VENDOR, 'Dell'], [TYPE, TABLET]], [/android.+[;\/]\s*(Q[T|M][\d\w]+)\s+build/i // Verizon Tablet
+            ], [MODEL, [VENDOR, 'Verizon'], [TYPE, TABLET]], [/android.+[;\/]\s+(Barnes[&\s]+Noble\s+|BN[RT])(V?.*)\s+build/i // Barnes & Noble Tablet
+            ], [[VENDOR, 'Barnes & Noble'], MODEL, [TYPE, TABLET]], [/android.+[;\/]\s+(TM\d{3}.*\b)\s+build/i // Barnes & Noble Tablet
+            ], [MODEL, [VENDOR, 'NuVision'], [TYPE, TABLET]], [/android.+;\s(k88)\sbuild/i // ZTE K Series Tablet
+            ], [MODEL, [VENDOR, 'ZTE'], [TYPE, TABLET]], [/android.+[;\/]\s*(gen\d{3})\s+build.*49h/i // Swiss GEN Mobile
+            ], [MODEL, [VENDOR, 'Swiss'], [TYPE, MOBILE]], [/android.+[;\/]\s*(zur\d{3})\s+build/i // Swiss ZUR Tablet
+            ], [MODEL, [VENDOR, 'Swiss'], [TYPE, TABLET]], [/android.+[;\/]\s*((Zeki)?TB.*\b)\s+build/i // Zeki Tablets
+            ], [MODEL, [VENDOR, 'Zeki'], [TYPE, TABLET]], [/(android).+[;\/]\s+([YR]\d{2})\s+build/i, /android.+[;\/]\s+(Dragon[\-\s]+Touch\s+|DT)(\w{5})\sbuild/i // Dragon Touch Tablet
+            ], [[VENDOR, 'Dragon Touch'], MODEL, [TYPE, TABLET]], [/android.+[;\/]\s*(NS-?\w{0,9})\sbuild/i // Insignia Tablets
+            ], [MODEL, [VENDOR, 'Insignia'], [TYPE, TABLET]], [/android.+[;\/]\s*((NX|Next)-?\w{0,9})\s+build/i // NextBook Tablets
+            ], [MODEL, [VENDOR, 'NextBook'], [TYPE, TABLET]], [/android.+[;\/]\s*(Xtreme\_)?(V(1[045]|2[015]|30|40|60|7[05]|90))\s+build/i], [[VENDOR, 'Voice'], MODEL, [TYPE, MOBILE]], [// Voice Xtreme Phones
+            /android.+[;\/]\s*(LVTEL\-)?(V1[12])\s+build/i // LvTel Phones
+            ], [[VENDOR, 'LvTel'], MODEL, [TYPE, MOBILE]], [/android.+;\s(PH-1)\s/i], [MODEL, [VENDOR, 'Essential'], [TYPE, MOBILE]], [// Essential PH-1
+            /android.+[;\/]\s*(V(100MD|700NA|7011|917G).*\b)\s+build/i // Envizen Tablets
+            ], [MODEL, [VENDOR, 'Envizen'], [TYPE, TABLET]], [/android.+[;\/]\s*(Le[\s\-]+Pan)[\s\-]+(\w{1,9})\s+build/i // Le Pan Tablets
+            ], [VENDOR, MODEL, [TYPE, TABLET]], [/android.+[;\/]\s*(Trio[\s\-]*.*)\s+build/i // MachSpeed Tablets
+            ], [MODEL, [VENDOR, 'MachSpeed'], [TYPE, TABLET]], [/android.+[;\/]\s*(Trinity)[\-\s]*(T\d{3})\s+build/i // Trinity Tablets
+            ], [VENDOR, MODEL, [TYPE, TABLET]], [/android.+[;\/]\s*TU_(1491)\s+build/i // Rotor Tablets
+            ], [MODEL, [VENDOR, 'Rotor'], [TYPE, TABLET]], [/android.+(KS(.+))\s+build/i // Amazon Kindle Tablets
+            ], [MODEL, [VENDOR, 'Amazon'], [TYPE, TABLET]], [/android.+(Gigaset)[\s\-]+(Q\w{1,9})\s+build/i // Gigaset Tablets
+            ], [VENDOR, MODEL, [TYPE, TABLET]], [/\s(tablet|tab)[;\/]/i, // Unidentifiable Tablet
+            /\s(mobile)(?:[;\/]|\ssafari)/i // Unidentifiable Mobile
+            ], [[TYPE, util.lowerize], VENDOR, MODEL], [/[\s\/\(](smart-?tv)[;\)]/i // SmartTV
+            ], [[TYPE, SMARTTV]], [/(android[\w\.\s\-]{0,9});.+build/i // Generic Android Device
+            ], [MODEL, [VENDOR, 'Generic']]],
+            engine: [[/windows.+\sedge\/([\w\.]+)/i // EdgeHTML
+            ], [VERSION, [NAME, 'EdgeHTML']], [/webkit\/537\.36.+chrome\/(?!27)([\w\.]+)/i // Blink
+            ], [VERSION, [NAME, 'Blink']], [/(presto)\/([\w\.]+)/i, // Presto
+            /(webkit|trident|netfront|netsurf|amaya|lynx|w3m|goanna)\/([\w\.]+)/i, // WebKit/Trident/NetFront/NetSurf/Amaya/Lynx/w3m/Goanna
+            /(khtml|tasman|links)[\/\s]\(?([\w\.]+)/i, // KHTML/Tasman/Links
+            /(icab)[\/\s]([23]\.[\d\.]+)/i // iCab
+            ], [NAME, VERSION], [/rv\:([\w\.]{1,9}).+(gecko)/i // Gecko
+            ], [VERSION, NAME]],
+            os: [[// Windows based
+            /microsoft\s(windows)\s(vista|xp)/i // Windows (iTunes)
+            ], [NAME, VERSION], [/(windows)\snt\s6\.2;\s(arm)/i, // Windows RT
+            /(windows\sphone(?:\sos)*)[\s\/]?([\d\.\s\w]*)/i, // Windows Phone
+            /(windows\smobile|windows)[\s\/]?([ntce\d\.\s]+\w)/i], [[NAME, mapper.str, maps.os.windows.name], [VERSION, mapper.str, maps.os.windows.version]], [/(win(?=3|9|n)|win\s9x\s)([nt\d\.]+)/i], [[NAME, 'Windows'], [VERSION, mapper.str, maps.os.windows.version]], [// Mobile/Embedded OS
+            /\((bb)(10);/i // BlackBerry 10
+            ], [[NAME, 'BlackBerry'], VERSION], [/(blackberry)\w*\/?([\w\.]*)/i, // Blackberry
+            /(tizen|kaios)[\/\s]([\w\.]+)/i, // Tizen/KaiOS
+            /(android|webos|palm\sos|qnx|bada|rim\stablet\sos|meego|sailfish|contiki)[\/\s-]?([\w\.]*)/i // Android/WebOS/Palm/QNX/Bada/RIM/MeeGo/Contiki/Sailfish OS
+            ], [NAME, VERSION], [/(symbian\s?os|symbos|s60(?=;))[\/\s-]?([\w\.]*)/i // Symbian
+            ], [[NAME, 'Symbian'], VERSION], [/\((series40);/i // Series 40
+            ], [NAME], [/mozilla.+\(mobile;.+gecko.+firefox/i // Firefox OS
+            ], [[NAME, 'Firefox OS'], VERSION], [// Console
+            /(nintendo|playstation)\s([wids34portablevu]+)/i, // Nintendo/Playstation
+            // GNU/Linux based
+            /(mint)[\/\s\(]?(\w*)/i, // Mint
+            /(mageia|vectorlinux)[;\s]/i, // Mageia/VectorLinux
+            /(joli|[kxln]?ubuntu|debian|suse|opensuse|gentoo|(?=\s)arch|slackware|fedora|mandriva|centos|pclinuxos|redhat|zenwalk|linpus)[\/\s-]?(?!chrom)([\w\.-]*)/i, // Joli/Ubuntu/Debian/SUSE/Gentoo/Arch/Slackware
+            // Fedora/Mandriva/CentOS/PCLinuxOS/RedHat/Zenwalk/Linpus
+            /(hurd|linux)\s?([\w\.]*)/i, // Hurd/Linux
+            /(gnu)\s?([\w\.]*)/i // GNU
+            ], [[NAME, 'Linux'], VERSION], [/(cros)\s[\w]+\s([\w\.]+\w)/i // Chromium OS
+            ], [[NAME, 'Chromium OS'], VERSION], [// Solaris
+            /(sunos)\s?([\w\.\d]*)/i // Solaris
+            ], [[NAME, 'Solaris'], VERSION], [// BSD based
+            /\s([frentopc-]{0,4}bsd|dragonfly)\s?([\w\.]*)/i // FreeBSD/NetBSD/OpenBSD/PC-BSD/DragonFly
+            ], [[NAME, 'Linux'], VERSION], [/(iphone)(?:.*os\s*([\w]*)\slike\smac|;\sopera)/i // iOS
+            ], [[NAME, 'iPhone'], [VERSION, /_/g, '.']], [/(ipad)(?:.*os\s*([\w]*)\slike\smac|;\sopera)/i // iOS
+            ], [[NAME, 'iPad'], [VERSION, /_/g, '.']], [/(haiku)\s(\w+)/i // Haiku
+            ], [NAME, VERSION], [/cfnetwork\/.+darwin/i, /ip[honead]{2,4}(?:.*os\s([\w]+)\slike\smac|;\sopera)/i // iOS
+            ], [[VERSION, /_/g, '.'], [NAME, 'iOS']], [/(mac\sos\sx)\s?([\w\s\.]*)/i, /(macintosh|mac(?=_powerpc)\s)/i // Mac OS
+            ], [[NAME, 'Mac'], [VERSION, /_/g, '.']], [// Other
+            /((?:open)?solaris)[\/\s-]?([\w\.]*)/i, // Solaris
+            /(aix)\s((\d)(?=\.|\)|\s)[\w\.])*/i, // AIX
+            /(plan\s9|minix|beos|os\/2|amigaos|morphos|risc\sos|openvms|fuchsia)/i, // Plan9/Minix/BeOS/OS2/AmigaOS/MorphOS/RISCOS/OpenVMS/Fuchsia
+            /(unix)\s?([\w\.]*)/i // UNIX
+            ], [NAME, VERSION]]
+          }; /////////////////
+          // Constructor
+          ////////////////
+
+          var UAParser = function UAParser(uastring, extensions) {
+            if (_typeof(uastring) === 'object') {
+              extensions = uastring;
+              uastring = undefined$1;
+            }
+
+            if (!(this instanceof UAParser)) {
+              return new UAParser(uastring, extensions).getResult();
+            }
+
+            var ua = uastring || (window && window.navigator && window.navigator.userAgent ? window.navigator.userAgent : EMPTY);
+            var rgxmap = extensions ? util.extend(regexes, extensions) : regexes;
+
+            this.getBrowser = function () {
+              var browser = {
+                name: undefined$1,
+                version: undefined$1
+              };
+              mapper.rgx.call(browser, ua, rgxmap.browser);
+              browser.major = util.major(browser.version); // deprecated
+
+              return browser;
+            };
+
+            this.getCPU = function () {
+              var cpu = {
+                architecture: undefined$1
+              };
+              mapper.rgx.call(cpu, ua, rgxmap.cpu);
+              return cpu;
+            };
+
+            this.getDevice = function () {
+              var device = {
+                vendor: undefined$1,
+                model: undefined$1,
+                type: undefined$1
+              };
+              mapper.rgx.call(device, ua, rgxmap.device);
+              return device;
+            };
+
+            this.getEngine = function () {
+              var engine = {
+                name: undefined$1,
+                version: undefined$1
+              };
+              mapper.rgx.call(engine, ua, rgxmap.engine);
+              return engine;
+            };
+
+            this.getOS = function () {
+              var os = {
+                name: undefined$1,
+                version: undefined$1
+              };
+              mapper.rgx.call(os, ua, rgxmap.os);
+              return os;
+            };
+
+            this.getResult = function () {
+              return {
+                ua: this.getUA(),
+                browser: this.getBrowser(),
+                engine: this.getEngine(),
+                os: this.getOS(),
+                device: this.getDevice(),
+                cpu: this.getCPU()
+              };
+            };
+
+            this.getUA = function () {
+              return ua;
+            };
+
+            this.setUA = function (uastring) {
+              ua = uastring;
+              return this;
+            };
+
+            return this;
+          };
+
+          UAParser.VERSION = LIBVERSION;
+          UAParser.BROWSER = {
+            NAME: NAME,
+            MAJOR: MAJOR,
+            // deprecated
+            VERSION: VERSION
+          };
+          UAParser.CPU = {
+            ARCHITECTURE: ARCHITECTURE
+          };
+          UAParser.DEVICE = {
+            MODEL: MODEL,
+            VENDOR: VENDOR,
+            TYPE: TYPE,
+            CONSOLE: CONSOLE,
+            MOBILE: MOBILE,
+            SMARTTV: SMARTTV,
+            TABLET: TABLET,
+            WEARABLE: WEARABLE,
+            EMBEDDED: EMBEDDED
+          };
+          UAParser.ENGINE = {
+            NAME: NAME,
+            VERSION: VERSION
+          };
+          UAParser.OS = {
+            NAME: NAME,
+            VERSION: VERSION
+          }; ///////////
+          // Export
+          //////////
+          // check js environment
+
+          {
+            // nodejs env
+            if (module.exports) {
+              exports = module.exports = UAParser;
+            }
+
+            exports.UAParser = UAParser;
+          } // jQuery/Zepto specific (optional)
+          // Note:
+          //   In AMD env the global scope should be kept clean, but jQuery is an exception.
+          //   jQuery always exports to global scope, unless jQuery.noConflict(true) is used,
+          //   and we should catch that.
+
+          var $ = window && (window.jQuery || window.Zepto);
+
+          if ($ && !$.ua) {
+            var parser = new UAParser();
+            $.ua = parser.getResult();
+
+            $.ua.get = function () {
+              return parser.getUA();
+            };
+
+            $.ua.set = function (uastring) {
+              parser.setUA(uastring);
+              var result = parser.getResult();
+
+              for (var prop in result) {
+                $.ua[prop] = result[prop];
+              }
+            };
+          }
+        })((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' ? window : commonjsGlobal$1);
+      });
+      var uaParser_1 = uaParser.UAParser;
+      /**
+       * Source: [jed's gist]{@link https://gist.github.com/982883}.
+       * Returns a random v4 UUID of the form xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx,
+       * where each x is replaced with a random hexadecimal digit from 0 to f, and
+       * y is replaced with a random hexadecimal digit from 8 to b.
+       * Used to generate UUIDs for deviceIds.
+       * @private
+       */
+
+      var uuid = function uuid(a) {
+        return a // if the placeholder was passed, return
+        ? // a random number from 0 to 15
+        (a ^ // unless b is 8,
+        Math.random() * // in which case
+        16 >> // a random number from
+        a / 4). // 8 to 11
+        toString(16) // in hexadecimal
+        : // or otherwise a concatenated string:
+        ([1e7] + // 10000000 +
+        -1e3 + // -1000 +
+        -4e3 + // -4000 +
+        -8e3 + // -80000000 +
+        -1e11). // -100000000000,
+        replace( // replacing
+        /[018]/g, // zeroes, ones, and eights with
+        uuid // random hex digits
+        );
+      };
+
+      var version = "7.4.0";
+
+      var getLanguage = function getLanguage() {
+        return navigator && (navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage) || '';
+      };
+
+      var language = {
+        getLanguage: getLanguage
+      };
+      var platform = 'Web';
+      /**
+       * Options used when initializing Amplitude
+       * @typedef {Object} Options
+       * @property {string} [apiEndpoint=`api.amplitude.com`] - Endpoint to send amplitude event requests to.
+       * @property {boolean} [batchEvents=`false`] -  If `true`, then events are batched together and uploaded only when the number of unsent events is greater than or equal to eventUploadThreshold or after eventUploadPeriodMillis milliseconds have passed since the first unsent event was logged.
+       * @property {number} [cookieExpiration=`365`] - The number of days after which the Amplitude cookie will expire. 12 months is for GDPR compliance.
+       * @property {string} [cookieName=`amplitude_id`] - *DEPRECATED*
+       * @property {string} [sameSiteCookie='None'] -  Sets the SameSite flag on the amplitude cookie. Decides cookie privacy policy.
+       * @property {boolean} [cookieForceUpgrade=`false`] - Forces pre-v6.0.0 instances to adopt post-v6.0.0 compat cookie formats.
+       * @property {boolean} [deferInitialization=`null`] -  If `true`, disables the core functionality of the sdk, including saving a cookie and all logging, until explicitly enabled. To enable tracking, please call `amplitude.getInstance().enableTracking()` *Note: This will not affect users who already have an amplitude cookie. The decision to track events is determined by whether or not a user has an amplitude analytics cookie. If the `cookieExpiration</code> is manually defined to be a short lifespan, you may need to run `amplitude.getInstance().enableTracking()` upon the cookie expiring or upon logging in.*
+       * @property {boolean} [disableCookies=`false`] -  Disable Ampllitude cookies altogether.
+       * @property {string} [deviceId=A randomly generated UUID.] -  The custom Device ID to set. *Note: This is not recommended unless you know what you are doing (e.g. you have your own system for tracking user devices).*
+       * @property {boolean} [deviceIdFromUrlParam=`false`] -  If `true`, then the SDK will parse Device ID values from the URL parameter amp_device_id if available. Device IDs defined in the configuration options during init will take priority over Device IDs from URL parameters.
+       * @property {string} [domain=The top domain of the current page's URL. ('https://amplitude.com')] -  Set a custom domain for the Amplitude cookie. To include subdomains, add a preceding period, eg: `.amplitude.com`.
+       * @property {number} [eventUploadPeriodMillis=`30000` (30 sec)] -  Amount of time in milliseconds that the SDK waits before uploading events if batchEvents is true.
+       * @property {number} [eventUploadThreshold=`30`] -  Minimum number of events to batch together per request if batchEvents is true.
+       * @property {boolean} [forceHttps=`true`] -  If `true`, the events will always be uploaded to HTTPS endpoint. Otherwise, it will use the embedding site's protocol.
+       * @property {boolean} [includeFbclid=`false`] -  If `true`, captures the fbclid URL parameter as well as the user's initial_fbclid via a setOnce operation.
+       * @property {boolean} [includeGclid=`false`] -  If `true`, captures the gclid URL parameter as well as the user's initial_gclid via a setOnce operation.
+       * @property {boolean} [includeReferrer=`false`] -  If `true`, captures the referrer and referring_domain for each session, as well as the user's initial_referrer and initial_referring_domain via a setOnce operation.
+       * @property {boolean} [includeUtm=`false`] -  If `true`, finds UTM parameters in the query string or the _utmz cookie, parses, and includes them as user properties on all events uploaded. This also captures initial UTM parameters for each session via a setOnce operation.
+       * @property {string} [language=The language determined by the browser] -  Custom language to set.
+       * @property {string} [logLevel=`WARN`] -  Level of logs to be printed in the developer console. Valid values are 'DISABLE', 'ERROR', 'WARN', 'INFO'. To learn more about the different options, see below.
+       * @property {boolean} [logAttributionCapturedEvent=`false`] - If `true`, the SDK will log an Amplitude event anytime new attribution values are captured from the user. **Note: These events count towards your event volume.** Event name being logged: [Amplitude] Attribution Captured. Event Properties that can be logged: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `referrer`, `referring_domain`, `gclid`, `fbclid`. For UTM properties to be logged, `includeUtm` must be set to `true`. For the `referrer` and `referring_domain` properties to be logged, `includeReferrer` must be set to `true`. For the `gclid` property to be logged, `includeGclid` must be set to `true`. For the `fbclid` property to be logged, `includeFbclid` must be set to `true`.
+       * @property {boolean} [optOut=`false`] -  Whether or not to disable tracking for the current user.
+       * @property {function} [onError=`() => {}`] - Function to call on error.
+       * @property {string} [platform=`Web`|`iOS`|`Android`] -  Platform device is running on. `Web` is a browser (including mobile browsers). `iOS` and `Android` are relevant only for react-native apps.
+       * @property {number} [savedMaxCount=`1000`] -  Maximum number of events to save in localStorage. If more events are logged while offline, then old events are removed.
+       * @property {boolean} [saveEvents=`true`] -  If `true`, saves events to localStorage and removes them upon successful upload. *Note: Without saving events, events may be lost if the user navigates to another page before the events are uploaded.*
+       * @property {boolean} [saveParamsReferrerOncePerSession=`true`] -  If `true`, then includeGclid, includeFbclid, includeReferrer, and includeUtm will only track their respective properties once per session. New values that come in during the middle of the user's session will be ignored. Set to false to always capture new values.
+       * @property {boolean} [secureCookie=`false`] -  If `true`, the amplitude cookie will be set with the Secure flag.
+       * @property {number} [sessionTimeout=`30*60*1000` (30 min)] -  The time between logged events before a new session starts in milliseconds.
+       * @property {Object} [trackingOptions=`{ city: true, country: true, carrier: true, device_manufacturer: true, device_model: true, dma: true, ip_address: true, language: true, os_name: true, os_version: true, platform: true, region: true, version_name: true}`] - Type of data associated with a user.
+       * @property {boolean} [unsetParamsReferrerOnNewSession=`false`] -  If `false`, the existing `referrer` and `utm_parameter` values will be carried through each new session. If set to `true`, the `referrer` and `utm_parameter` user properties, which include `referrer`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, and `utm_content`, will be set to `null` upon instantiating a new session. Note: This only works if `includeReferrer` or `includeUtm` is set to `true`.
+       * @property {string} [unsentKey=`amplitude_unsent`] - localStorage key that stores unsent events.
+       * @property {string} [unsentIdentifyKey=`amplitude_unsent_identify`] - localStorage key that stores unsent identifies.
+       * @property {number} [uploadBatchSize=`100`] -  The maximum number of events to send to the server per request.
+       */
+
+      var DEFAULT_OPTIONS = {
+        apiEndpoint: 'api.amplitude.com',
+        batchEvents: false,
+        cookieExpiration: 365,
+        // 12 months is for GDPR compliance
+        cookieName: 'amplitude_id',
+        // this is a deprecated option
+        sameSiteCookie: 'Lax',
+        // cookie privacy policy
+        cookieForceUpgrade: false,
+        deferInitialization: false,
+        disableCookies: false,
+        // this is a deprecated option
+        deviceIdFromUrlParam: false,
+        domain: '',
+        eventUploadPeriodMillis: 30 * 1000,
+        // 30s
+        eventUploadThreshold: 30,
+        forceHttps: true,
+        includeFbclid: false,
+        includeGclid: false,
+        includeReferrer: false,
+        includeUtm: false,
+        language: language.getLanguage(),
+        logLevel: 'WARN',
+        logAttributionCapturedEvent: false,
+        optOut: false,
+        onError: function onError() {},
+        platform: platform,
+        savedMaxCount: 1000,
+        saveEvents: true,
+        saveParamsReferrerOncePerSession: true,
+        secureCookie: false,
+        sessionTimeout: 30 * 60 * 1000,
+        storage: Constants.STORAGE_DEFAULT,
+        trackingOptions: {
+          city: true,
+          country: true,
+          carrier: true,
+          device_manufacturer: true,
+          device_model: true,
+          dma: true,
+          ip_address: true,
+          language: true,
+          os_name: true,
+          os_version: true,
+          platform: true,
+          region: true,
+          version_name: true
+        },
+        unsetParamsReferrerOnNewSession: false,
+        unsentKey: 'amplitude_unsent',
+        unsentIdentifyKey: 'amplitude_unsent_identify',
+        uploadBatchSize: 100
+      };
+      var AsyncStorage;
+      var DeviceInfo;
+      /**
+       * AmplitudeClient SDK API - instance constructor.
+       * The Amplitude class handles creation of client instances, all you need to do is call amplitude.getInstance()
+       * @constructor AmplitudeClient
+       * @public
+       * @example var amplitudeClient = new AmplitudeClient();
+       */
+
+      var AmplitudeClient = function AmplitudeClient(instanceName) {
+        if (!isBrowserEnv()) {
+          utils.log.warn('amplitude-js will not work in a non-browser environment. If you are planning to add Amplitude to a node environment, please use @amplitude/node');
+        }
+
+        this._instanceName = utils.isEmptyString(instanceName) ? Constants.DEFAULT_INSTANCE : instanceName.toLowerCase();
+        this._unsentEvents = [];
+        this._unsentIdentifys = [];
+        this._ua = new uaParser(navigator.userAgent).getResult();
+        this.options = _objectSpread({}, DEFAULT_OPTIONS, {
+          trackingOptions: _objectSpread({}, DEFAULT_OPTIONS.trackingOptions)
+        });
+        this.cookieStorage = new cookieStorage().getStorage();
+        this._q = []; // queue for proxied functions before script load
+
+        this._sending = false;
+        this._updateScheduled = false;
+        this._onInit = []; // event meta data
+
+        this._eventId = 0;
+        this._identifyId = 0;
+        this._lastEventTime = null;
+        this._newSession = false; // sequence used for by frontend for prioritizing event send retries
+
+        this._sequenceNumber = 0;
+        this._sessionId = null;
+        this._isInitialized = false;
+        this._userAgent = navigator && navigator.userAgent || null;
+      };
+
+      AmplitudeClient.prototype.Identify = Identify;
+      AmplitudeClient.prototype.Revenue = Revenue;
+      /**
+       * Initializes the Amplitude Javascript SDK with your apiKey and any optional configurations.
+       * This is required before any other methods can be called.
+       * @public
+       * @param {string} apiKey - The API key for your app.
+       * @param {string} opt_userId - (optional) An identifier for this user.
+       * @param {object} opt_config - (optional) Configuration options.
+       * See [options.js](https://amplitude.github.io/Amplitude-JavaScript/Options) for a list of options and default values.
+       * @param {function} opt_callback - (optional) Provide a callback function to run after initialization is complete.
+       * @example amplitudeClient.init('API_KEY', 'USER_ID', {includeReferrer: true, includeUtm: true}, function() { alert('init complete'); });
+       */
+
+      AmplitudeClient.prototype.init = function init(apiKey, opt_userId, opt_config, opt_callback) {
+        var _this = this;
+
+        if (type(apiKey) !== 'string' || utils.isEmptyString(apiKey)) {
+          utils.log.error('Invalid apiKey. Please re-initialize with a valid apiKey');
+          return;
+        }
+
+        try {
+          _parseConfig(this.options, opt_config);
+
+          if (isBrowserEnv() && window.Prototype !== undefined && Array.prototype.toJSON) {
+            prototypeJsFix();
+            utils.log.warn('Prototype.js injected Array.prototype.toJSON. Deleting Array.prototype.toJSON to prevent double-stringify');
+          }
+
+          if (this.options.cookieName !== DEFAULT_OPTIONS.cookieName) {
+            utils.log.warn('The cookieName option is deprecated. We will be ignoring it for newer cookies');
+          }
+
+          this.options.apiKey = apiKey;
+          this._storageSuffix = '_' + apiKey + (this._instanceName === Constants.DEFAULT_INSTANCE ? '' : '_' + this._instanceName);
+          this._storageSuffixV5 = apiKey.slice(0, 6);
+          this._oldCookiename = this.options.cookieName + this._storageSuffix;
+          this._unsentKey = this.options.unsentKey + this._storageSuffix;
+          this._unsentIdentifyKey = this.options.unsentIdentifyKey + this._storageSuffix;
+          this._cookieName = Constants.COOKIE_PREFIX + '_' + this._storageSuffixV5;
+          this.cookieStorage.options({
+            expirationDays: this.options.cookieExpiration,
+            domain: this.options.domain,
+            secure: this.options.secureCookie,
+            sameSite: this.options.sameSiteCookie
+          });
+          this._metadataStorage = new MetadataStorage({
+            storageKey: this._cookieName,
+            disableCookies: this.options.disableCookies,
+            expirationDays: this.options.cookieExpiration,
+            domain: this.options.domain,
+            secure: this.options.secureCookie,
+            sameSite: this.options.sameSiteCookie,
+            storage: this.options.storage
+          });
+          var hasOldCookie = !!this.cookieStorage.get(this._oldCookiename);
+          var hasNewCookie = !!this._metadataStorage.load();
+          this._useOldCookie = !hasNewCookie && hasOldCookie && !this.options.cookieForceUpgrade;
+          var hasCookie = hasNewCookie || hasOldCookie;
+          this.options.domain = this.cookieStorage.options().domain;
+
+          if (this.options.deferInitialization && !hasCookie) {
+            this._deferInitialization(apiKey, opt_userId, opt_config, opt_callback);
+
+            return;
+          }
+
+          if (type(this.options.logLevel) === 'string') {
+            utils.setLogLevel(this.options.logLevel);
+          }
+
+          var trackingOptions = _generateApiPropertiesTrackingConfig(this);
+
+          this._apiPropertiesTrackingOptions = Object.keys(trackingOptions).length > 0 ? {
+            tracking_options: trackingOptions
+          } : {};
+
+          if (this.options.cookieForceUpgrade && hasOldCookie) {
+            if (!hasNewCookie) {
+              _upgradeCookieData(this);
+            }
+
+            this.cookieStorage.remove(this._oldCookiename);
+          }
+
+          _loadCookieData(this);
+
+          this._pendingReadStorage = true;
+
+          var initFromStorage = function initFromStorage(storedDeviceId) {
+            _this.options.deviceId = _this._getInitialDeviceId(opt_config && opt_config.deviceId, storedDeviceId);
+            _this.options.userId = type(opt_userId) === 'string' && !utils.isEmptyString(opt_userId) && opt_userId || type(opt_userId) === 'number' && opt_userId.toString() || _this.options.userId || null;
+            var now = new Date().getTime();
+
+            if (!_this._sessionId || !_this._lastEventTime || now - _this._lastEventTime > _this.options.sessionTimeout) {
+              if (_this.options.unsetParamsReferrerOnNewSession) {
+                _this._unsetUTMParams();
+              }
+
+              _this._newSession = true;
+              _this._sessionId = now; // only capture UTM params and referrer if new session
+
+              if (_this.options.saveParamsReferrerOncePerSession) {
+                _this._trackParamsAndReferrer();
+              }
+            }
+
+            if (!_this.options.saveParamsReferrerOncePerSession) {
+              _this._trackParamsAndReferrer();
+            } // load unsent events and identifies before any attempt to log new ones
+
+
+            if (_this.options.saveEvents) {
+              _validateUnsentEventQueue(_this._unsentEvents);
+
+              _validateUnsentEventQueue(_this._unsentIdentifys);
+            }
+
+            _this._lastEventTime = now;
+
+            _saveCookieData(_this);
+
+            _this._pendingReadStorage = false;
+
+            _this._sendEventsIfReady(); // try sending unsent events
+
+
+            for (var i = 0; i < _this._onInit.length; i++) {
+              _this._onInit[i](_this);
+            }
+
+            _this._onInit = [];
+            _this._isInitialized = true;
+          };
+
+          if (AsyncStorage) {
+            this._migrateUnsentEvents(function () {
+              Promise.all([AsyncStorage.getItem(_this._storageSuffix), AsyncStorage.getItem(_this.options.unsentKey + _this._storageSuffix), AsyncStorage.getItem(_this.options.unsentIdentifyKey + _this._storageSuffix)]).then(function (values) {
+                if (values[0]) {
+                  var cookieData = JSON.parse(values[0]);
+
+                  if (cookieData) {
+                    _loadCookieDataProps(_this, cookieData);
+                  }
+                }
+
+                if (_this.options.saveEvents) {
+                  _this._unsentEvents = _this._parseSavedUnsentEventsString(values[1]).map(function (event) {
+                    return {
+                      event: event
+                    };
+                  }).concat(_this._unsentEvents);
+                  _this._unsentIdentifys = _this._parseSavedUnsentEventsString(values[2]).map(function (event) {
+                    return {
+                      event: event
+                    };
+                  }).concat(_this._unsentIdentifys);
+                }
+
+                if (DeviceInfo) {
+                  Promise.all([DeviceInfo.getCarrier(), DeviceInfo.getModel(), DeviceInfo.getManufacturer(), DeviceInfo.getVersion(), DeviceInfo.getUniqueId()]).then(function (values) {
+                    _this.deviceInfo = {
+                      carrier: values[0],
+                      model: values[1],
+                      manufacturer: values[2],
+                      version: values[3]
+                    };
+                    initFromStorage(values[4]);
+
+                    _this.runQueuedFunctions();
+
+                    if (type(opt_callback) === 'function') {
+                      opt_callback(_this);
+                    }
+                  })["catch"](function (err) {
+                    _this.options.onError(err);
+                  });
+                } else {
+                  initFromStorage();
+
+                  _this.runQueuedFunctions();
+                }
+              })["catch"](function (err) {
+                _this.options.onError(err);
+              });
+            });
+          } else {
+            if (this.options.saveEvents) {
+              this._unsentEvents = this._loadSavedUnsentEvents(this.options.unsentKey).map(function (event) {
+                return {
+                  event: event
+                };
+              }).concat(this._unsentEvents);
+              this._unsentIdentifys = this._loadSavedUnsentEvents(this.options.unsentIdentifyKey).map(function (event) {
+                return {
+                  event: event
+                };
+              }).concat(this._unsentIdentifys);
+            }
+
+            initFromStorage();
+            this.runQueuedFunctions();
+
+            if (type(opt_callback) === 'function') {
+              opt_callback(this);
+            }
+          }
+        } catch (err) {
+          utils.log.error(err);
+          this.options.onError(err);
+        }
+      };
+
+      AmplitudeClient.prototype.deleteLowerLevelDomainCookies = function () {
+        var host = getHost();
+        var cookieHost = this.options.domain && this.options.domain[0] === '.' ? this.options.domain.slice(1) : this.options.domain;
+
+        if (!cookieHost) {
+          return;
+        }
+
+        if (host !== cookieHost) {
+          if (new RegExp(cookieHost + '$').test(host)) {
+            var hostParts = host.split('.');
+            var cookieHostParts = cookieHost.split('.');
+
+            for (var i = hostParts.length; i > cookieHostParts.length; --i) {
+              var deleteDomain = hostParts.slice(hostParts.length - i).join('.');
+              baseCookie.set(this._cookieName, null, {
+                domain: '.' + deleteDomain
+              });
+            }
+
+            baseCookie.set(this._cookieName, null, {});
+          }
+        }
+      };
+
+      AmplitudeClient.prototype._getInitialDeviceId = function (configDeviceId, storedDeviceId) {
+        if (configDeviceId) {
+          return configDeviceId;
+        }
+
+        if (this.options.deviceIdFromUrlParam) {
+          var deviceIdFromUrlParam = this._getDeviceIdFromUrlParam(this._getUrlParams());
+
+          if (deviceIdFromUrlParam) {
+            return deviceIdFromUrlParam;
+          }
+        }
+
+        if (this.options.deviceId) {
+          return this.options.deviceId;
+        }
+
+        if (storedDeviceId) {
+          return storedDeviceId;
+        }
+
+        return base64Id();
+      }; // validate properties for unsent events
+
+
+      var _validateUnsentEventQueue = function _validateUnsentEventQueue(queue) {
+        for (var i = 0; i < queue.length; i++) {
+          var userProperties = queue[i].event.user_properties;
+          var eventProperties = queue[i].event.event_properties;
+          var groups = queue[i].event.groups;
+          queue[i].event.user_properties = utils.validateProperties(userProperties);
+          queue[i].event.event_properties = utils.validateProperties(eventProperties);
+          queue[i].event.groups = utils.validateGroups(groups);
+        }
+      };
+      /**
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._migrateUnsentEvents = function _migrateUnsentEvents(cb) {
+        var _this2 = this;
+
+        Promise.all([AsyncStorage.getItem(this.options.unsentKey), AsyncStorage.getItem(this.options.unsentIdentifyKey)]).then(function (values) {
+          if (_this2.options.saveEvents) {
+            var unsentEventsString = values[0];
+            var unsentIdentifyKey = values[1];
+            var itemsToSet = [];
+            var itemsToRemove = [];
+
+            if (unsentEventsString) {
+              itemsToSet.push(AsyncStorage.setItem(_this2.options.unsentKey + _this2._storageSuffix, JSON.stringify(unsentEventsString)));
+              itemsToRemove.push(AsyncStorage.removeItem(_this2.options.unsentKey));
+            }
+
+            if (unsentIdentifyKey) {
+              itemsToSet.push(AsyncStorage.setItem(_this2.options.unsentIdentifyKey + _this2._storageSuffix, JSON.stringify(unsentIdentifyKey)));
+              itemsToRemove.push(AsyncStorage.removeItem(_this2.options.unsentIdentifyKey));
+            }
+
+            if (itemsToSet.length > 0) {
+              Promise.all(itemsToSet).then(function () {})["catch"](function (err) {
+                _this2.options.onError(err);
+              });
+            }
+          }
+        }).then(cb)["catch"](function (err) {
+          _this2.options.onError(err);
+        });
+      };
+      /**
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._trackParamsAndReferrer = function _trackParamsAndReferrer() {
+        var utmProperties;
+        var referrerProperties;
+        var gclidProperties;
+        var fbclidProperties;
+
+        if (this.options.includeUtm) {
+          utmProperties = this._initUtmData();
+        }
+
+        if (this.options.includeReferrer) {
+          referrerProperties = this._saveReferrer(this._getReferrer());
+        }
+
+        if (this.options.includeGclid) {
+          gclidProperties = this._saveGclid(this._getUrlParams());
+        }
+
+        if (this.options.includeFbclid) {
+          fbclidProperties = this._saveFbclid(this._getUrlParams());
+        }
+
+        if (this.options.logAttributionCapturedEvent) {
+          var attributionProperties = _objectSpread({}, utmProperties, referrerProperties, gclidProperties, fbclidProperties);
+
+          if (Object.keys(attributionProperties).length > 0) {
+            this.logEvent(Constants.ATTRIBUTION_EVENT, attributionProperties);
+          }
+        }
+      };
+      /**
+       * Parse and validate user specified config values and overwrite existing option value
+       * DEFAULT_OPTIONS provides list of all config keys that are modifiable, as well as expected types for values
+       * @private
+       */
+
+
+      var _parseConfig = function _parseConfig(options, config) {
+        if (type(config) !== 'object') {
+          return;
+        } // validates config value is defined, is the correct type, and some additional value sanity checks
+
+
+        var parseValidateAndLoad = function parseValidateAndLoad(key) {
+          if (!options.hasOwnProperty(key)) {
+            return; // skip bogus config values
+          }
+
+          var inputValue = config[key];
+          var expectedType = type(options[key]);
+
+          if (!utils.validateInput(inputValue, key + ' option', expectedType)) {
+            return;
+          }
+
+          if (expectedType === 'boolean') {
+            options[key] = !!inputValue;
+          } else if (expectedType === 'string' && !utils.isEmptyString(inputValue) || expectedType === 'number' && inputValue > 0) {
+            options[key] = inputValue;
+          } else if (expectedType === 'object') {
+            _parseConfig(options[key], inputValue);
+          }
+        };
+
+        for (var key in config) {
+          if (config.hasOwnProperty(key)) {
+            parseValidateAndLoad(key);
+          }
+        }
+      };
+      /**
+       * Run functions queued up by proxy loading snippet
+       * @private
+       */
+
+
+      AmplitudeClient.prototype.runQueuedFunctions = function () {
+        var queue = this._q;
+        this._q = [];
+
+        for (var i = 0; i < queue.length; i++) {
+          var fn = this[queue[i][0]];
+
+          if (type(fn) === 'function') {
+            fn.apply(this, queue[i].slice(1));
+          }
+        }
+      };
+      /**
+       * Check that the apiKey is set before calling a function. Logs a warning message if not set.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._apiKeySet = function _apiKeySet(methodName) {
+        if (utils.isEmptyString(this.options.apiKey)) {
+          utils.log.error('Invalid apiKey. Please set a valid apiKey with init() before calling ' + methodName);
+          return false;
+        }
+
+        return true;
+      };
+      /**
+       * Load saved events from localStorage. JSON deserializes event array. Handles case where string is corrupted.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._loadSavedUnsentEvents = function _loadSavedUnsentEvents(unsentKey) {
+        var savedUnsentEventsString = this._getFromStorage(localStorage$1, unsentKey);
+
+        var unsentEvents = this._parseSavedUnsentEventsString(savedUnsentEventsString, unsentKey);
+
+        this._setInStorage(localStorage$1, unsentKey, JSON.stringify(unsentEvents));
+
+        return unsentEvents;
+      };
+      /**
+       * Load saved events from localStorage. JSON deserializes event array. Handles case where string is corrupted.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._parseSavedUnsentEventsString = function _parseSavedUnsentEventsString(savedUnsentEventsString, unsentKey) {
+        if (utils.isEmptyString(savedUnsentEventsString)) {
+          return []; // new app, does not have any saved events
+        }
+
+        if (type(savedUnsentEventsString) === 'string') {
+          try {
+            var events = JSON.parse(savedUnsentEventsString);
+
+            if (type(events) === 'array') {
+              // handle case where JSON dumping of unsent events is corrupted
+              return events;
+            }
+          } catch (e) {}
+          /* eslint-disable-line no-empty */
+
+        }
+
+        utils.log.error('Unable to load ' + unsentKey + ' events. Restart with a new empty queue.');
+        return [];
+      };
+      /**
+       * Returns true if a new session was created during initialization, otherwise false.
+       * @public
+       * @return {boolean} Whether a new session was created during initialization.
+       */
+
+
+      AmplitudeClient.prototype.isNewSession = function isNewSession() {
+        return this._newSession;
+      };
+      /**
+       * Add callbacks to call after init. Useful for users who load Amplitude through a snippet.
+       * @public
+       */
+
+
+      AmplitudeClient.prototype.onInit = function (callback) {
+        if (this._isInitialized) {
+          callback(this);
+        } else {
+          this._onInit.push(callback);
+        }
+      };
+      /**
+       * Returns the id of the current session.
+       * @public
+       * @return {number} Id of the current session.
+       */
+
+
+      AmplitudeClient.prototype.getSessionId = function getSessionId() {
+        return this._sessionId;
+      };
+      /**
+       * Increments the eventId and returns it.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype.nextEventId = function nextEventId() {
+        this._eventId++;
+        return this._eventId;
+      };
+      /**
+       * Increments the identifyId and returns it.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype.nextIdentifyId = function nextIdentifyId() {
+        this._identifyId++;
+        return this._identifyId;
+      };
+      /**
+       * Increments the sequenceNumber and returns it.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype.nextSequenceNumber = function nextSequenceNumber() {
+        this._sequenceNumber++;
+        return this._sequenceNumber;
+      };
+      /**
+       * Returns the total count of unsent events and identifys
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._unsentCount = function _unsentCount() {
+        return this._unsentEvents.length + this._unsentIdentifys.length;
+      };
+      /**
+       * Send events if ready. Returns true if events are sent.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._sendEventsIfReady = function _sendEventsIfReady() {
+        if (this._unsentCount() === 0) {
+          return false;
+        } // if batching disabled, send any unsent events immediately
+
+
+        if (!this.options.batchEvents) {
+          this.sendEvents();
+          return true;
+        } // if batching enabled, check if min threshold met for batch size
+
+
+        if (this._unsentCount() >= this.options.eventUploadThreshold) {
+          this.sendEvents();
+          return true;
+        } // otherwise schedule an upload after 30s
+
+
+        if (!this._updateScheduled) {
+          // make sure we only schedule 1 upload
+          this._updateScheduled = true;
+          setTimeout(function () {
+            this._updateScheduled = false;
+            this.sendEvents();
+          }.bind(this), this.options.eventUploadPeriodMillis);
+        }
+
+        return false; // an upload was scheduled, no events were uploaded
+      };
+      /**
+       * Helper function to fetch values from storage
+       * Storage argument allows for localStoraoge and sessionStoraoge
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._getFromStorage = function _getFromStorage(storage, key) {
+        return storage.getItem(key + this._storageSuffix);
+      };
+      /**
+       * Helper function to set values in storage
+       * Storage argument allows for localStoraoge and sessionStoraoge
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._setInStorage = function _setInStorage(storage, key, value) {
+        storage.setItem(key + this._storageSuffix, value);
+      };
+      /**
+       * Fetches deviceId, userId, event meta data from amplitude cookie
+       * @private
+       */
+
+
+      var _loadCookieData = function _loadCookieData(scope) {
+        if (!scope._useOldCookie) {
+          var props = scope._metadataStorage.load();
+
+          if (type(props) === 'object') {
+            _loadCookieDataProps(scope, props);
+          }
+
+          return;
+        }
+
+        var cookieData = scope.cookieStorage.get(scope._oldCookiename);
+
+        if (type(cookieData) === 'object') {
+          _loadCookieDataProps(scope, cookieData);
+
+          return;
+        }
+      };
+
+      var _upgradeCookieData = function _upgradeCookieData(scope) {
+        var cookieData = scope.cookieStorage.get(scope._oldCookiename);
+
+        if (type(cookieData) === 'object') {
+          _loadCookieDataProps(scope, cookieData);
+
+          _saveCookieData(scope);
+        }
+      };
+
+      var _loadCookieDataProps = function _loadCookieDataProps(scope, cookieData) {
+        if (cookieData.deviceId) {
+          scope.options.deviceId = cookieData.deviceId;
+        }
+
+        if (cookieData.userId) {
+          scope.options.userId = cookieData.userId;
+        }
+
+        if (cookieData.optOut !== null && cookieData.optOut !== undefined) {
+          // Do not clobber config opt out value if cookieData has optOut as false
+          if (cookieData.optOut !== false) {
+            scope.options.optOut = cookieData.optOut;
+          }
+        }
+
+        if (cookieData.sessionId) {
+          scope._sessionId = parseInt(cookieData.sessionId, 10);
+        }
+
+        if (cookieData.lastEventTime) {
+          scope._lastEventTime = parseInt(cookieData.lastEventTime, 10);
+        }
+
+        if (cookieData.eventId) {
+          scope._eventId = parseInt(cookieData.eventId, 10);
+        }
+
+        if (cookieData.identifyId) {
+          scope._identifyId = parseInt(cookieData.identifyId, 10);
+        }
+
+        if (cookieData.sequenceNumber) {
+          scope._sequenceNumber = parseInt(cookieData.sequenceNumber, 10);
+        }
+      };
+      /**
+       * Saves deviceId, userId, event meta data to amplitude cookie
+       * @private
+       */
+
+
+      var _saveCookieData = function _saveCookieData(scope) {
+        var cookieData = {
+          deviceId: scope.options.deviceId,
+          userId: scope.options.userId,
+          optOut: scope.options.optOut,
+          sessionId: scope._sessionId,
+          lastEventTime: scope._lastEventTime,
+          eventId: scope._eventId,
+          identifyId: scope._identifyId,
+          sequenceNumber: scope._sequenceNumber
+        };
+
+        if (scope._useOldCookie) {
+          scope.cookieStorage.set(scope.options.cookieName + scope._storageSuffix, cookieData);
+        } else {
+          scope._metadataStorage.save(cookieData);
+        }
+      };
+      /**
+       * Parse the utm properties out of cookies and query for adding to user properties.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._initUtmData = function _initUtmData(queryParams, cookieParams) {
+        queryParams = queryParams || this._getUrlParams();
+        cookieParams = cookieParams || this.cookieStorage.get('__utmz');
+        var utmProperties = getUtmData(cookieParams, queryParams);
+
+        _sendParamsReferrerUserProperties(this, utmProperties);
+
+        return utmProperties;
+      };
+      /**
+       * Unset the utm params from the Amplitude instance and update the identify.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._unsetUTMParams = function _unsetUTMParams() {
+        var identify = new Identify();
+        identify.unset(Constants.REFERRER);
+        identify.unset(Constants.UTM_SOURCE);
+        identify.unset(Constants.UTM_MEDIUM);
+        identify.unset(Constants.UTM_CAMPAIGN);
+        identify.unset(Constants.UTM_TERM);
+        identify.unset(Constants.UTM_CONTENT);
+        this.identify(identify);
+      };
+      /**
+       * The calling function should determine when it is appropriate to send these user properties. This function
+       * will no longer contain any session storage checking logic.
+       * @private
+       */
+
+
+      var _sendParamsReferrerUserProperties = function _sendParamsReferrerUserProperties(scope, userProperties) {
+        if (type(userProperties) !== 'object' || Object.keys(userProperties).length === 0) {
+          return;
+        } // setOnce the initial user properties
+
+
+        var identify = new Identify();
+
+        for (var key in userProperties) {
+          if (userProperties.hasOwnProperty(key)) {
+            identify.setOnce('initial_' + key, userProperties[key]);
+            identify.set(key, userProperties[key]);
+          }
+        }
+
+        scope.identify(identify);
+      };
+      /**
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._getReferrer = function _getReferrer() {
+        return document.referrer;
+      };
+      /**
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._getUrlParams = function _getUrlParams() {
+        return location.search;
+      };
+      /**
+       * Try to fetch Google Gclid from url params.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._saveGclid = function _saveGclid(urlParams) {
+        var gclid = utils.getQueryParam('gclid', urlParams);
+
+        if (utils.isEmptyString(gclid)) {
+          return;
+        }
+
+        var gclidProperties = {
+          gclid: gclid
+        };
+
+        _sendParamsReferrerUserProperties(this, gclidProperties);
+
+        return gclidProperties;
+      };
+      /**
+       * Try to fetch Facebook Fbclid from url params.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._saveFbclid = function _saveFbclid(urlParams) {
+        var fbclid = utils.getQueryParam('fbclid', urlParams);
+
+        if (utils.isEmptyString(fbclid)) {
+          return;
+        }
+
+        var fbclidProperties = {
+          fbclid: fbclid
+        };
+
+        _sendParamsReferrerUserProperties(this, fbclidProperties);
+
+        return fbclidProperties;
+      };
+      /**
+       * Try to fetch Amplitude device id from url params.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._getDeviceIdFromUrlParam = function _getDeviceIdFromUrlParam(urlParams) {
+        return utils.getQueryParam(Constants.AMP_DEVICE_ID_PARAM, urlParams);
+      };
+      /**
+       * Parse the domain from referrer info
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._getReferringDomain = function _getReferringDomain(referrer) {
+        if (utils.isEmptyString(referrer)) {
+          return null;
+        }
+
+        var parts = referrer.split('/');
+
+        if (parts.length >= 3) {
+          return parts[2];
+        }
+
+        return null;
+      };
+      /**
+       * Fetch the referrer information, parse the domain and send.
+       * Since user properties are propagated on the server, only send once per session, don't need to send with every event
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._saveReferrer = function _saveReferrer(referrer) {
+        if (utils.isEmptyString(referrer)) {
+          return;
+        }
+
+        var referrerInfo = {
+          referrer: referrer,
+          referring_domain: this._getReferringDomain(referrer)
+        };
+
+        _sendParamsReferrerUserProperties(this, referrerInfo);
+
+        return referrerInfo;
+      };
+      /**
+       * Saves unsent events and identifies to localStorage. JSON stringifies event queues before saving.
+       * Note: this is called automatically every time events are logged, unless you explicitly set option saveEvents to false.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype.saveEvents = function saveEvents() {
+        try {
+          var serializedUnsentEvents = JSON.stringify(this._unsentEvents.map(function (_ref) {
+            var event = _ref.event;
+            return event;
+          }));
+
+          if (AsyncStorage) {
+            AsyncStorage.setItem(this.options.unsentKey + this._storageSuffix, serializedUnsentEvents);
+          } else {
+            this._setInStorage(localStorage$1, this.options.unsentKey, serializedUnsentEvents);
+          }
+        } catch (e) {}
+        /* eslint-disable-line no-empty */
+
+
+        try {
+          var serializedIdentifys = JSON.stringify(this._unsentIdentifys.map(function (unsentIdentify) {
+            return unsentIdentify.event;
+          }));
+
+          if (AsyncStorage) {
+            AsyncStorage.setItem(this.options.unsentIdentifyKey + this._storageSuffix, serializedIdentifys);
+          } else {
+            this._setInStorage(localStorage$1, this.options.unsentIdentifyKey, serializedIdentifys);
+          }
+        } catch (e) {}
+        /* eslint-disable-line no-empty */
+
+      };
+      /**
+       * Sets a customer domain for the amplitude cookie. Useful if you want to support cross-subdomain tracking.
+       * @public
+       * @param {string} domain to set.
+       * @example amplitudeClient.setDomain('.amplitude.com');
+       */
+
+
+      AmplitudeClient.prototype.setDomain = function setDomain(domain) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setDomain'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!utils.validateInput(domain, 'domain', 'string')) {
+          return;
+        }
+
+        try {
+          this.cookieStorage.options({
+            expirationDays: this.options.cookieExpiration,
+            secure: this.options.secureCookie,
+            domain: domain,
+            sameSite: this.options.sameSiteCookie
+          });
+          this.options.domain = this.cookieStorage.options().domain;
+
+          _loadCookieData(this);
+
+          _saveCookieData(this);
+        } catch (e) {
+          utils.log.error(e);
+        }
+      };
+      /**
+       * Sets an identifier for the current user.
+       * @public
+       * @param {string} userId - identifier to set. Can be null.
+       * @example amplitudeClient.setUserId('joe@gmail.com');
+       */
+
+
+      AmplitudeClient.prototype.setUserId = function setUserId(userId) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setUserId'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        try {
+          this.options.userId = userId !== undefined && userId !== null && '' + userId || null;
+
+          _saveCookieData(this);
+        } catch (e) {
+          utils.log.error(e);
+        }
+      };
+      /**
+       * Add user to a group or groups. You need to specify a groupType and groupName(s).
+       *
+       * For example you can group people by their organization.
+       * In that case, groupType is "orgId" and groupName would be the actual ID(s).
+       * groupName can be a string or an array of strings to indicate a user in multiple gruups.
+       * You can also call setGroup multiple times with different groupTypes to track multiple types of groups (up to 5 per app).
+       *
+       * Note: this will also set groupType: groupName as a user property.
+       * See the [advanced topics article](https://developers.amplitude.com/docs/setting-user-groups) for more information.
+       * @public
+       * @param {string} groupType - the group type (ex: orgId)
+       * @param {string|list} groupName - the name of the group (ex: 15), or a list of names of the groups
+       * @example amplitudeClient.setGroup('orgId', 15); // this adds the current user to orgId 15.
+       */
+
+
+      AmplitudeClient.prototype.setGroup = function (groupType, groupName) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setGroup'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('setGroup()') || !utils.validateInput(groupType, 'groupType', 'string') || utils.isEmptyString(groupType)) {
+          return;
+        }
+
+        var groups = {};
+        groups[groupType] = groupName;
+        var identify = new Identify().set(groupType, groupName);
+
+        this._logEvent(Constants.IDENTIFY_EVENT, null, null, identify.userPropertiesOperations, groups, null, null, null);
+      };
+      /**
+       * Sets whether to opt current user out of tracking.
+       * @public
+       * @param {boolean} enable - if true then no events will be logged or sent.
+       * @example: amplitude.setOptOut(true);
+       */
+
+
+      AmplitudeClient.prototype.setOptOut = function setOptOut(enable) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setOptOut'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!utils.validateInput(enable, 'enable', 'boolean')) {
+          return;
+        }
+
+        try {
+          this.options.optOut = enable;
+
+          _saveCookieData(this);
+        } catch (e) {
+          utils.log.error(e);
+        }
+      };
+
+      AmplitudeClient.prototype.setSessionId = function setSessionId(sessionId) {
+        if (!utils.validateInput(sessionId, 'sessionId', 'number')) {
+          return;
+        }
+
+        try {
+          this._sessionId = sessionId;
+
+          _saveCookieData(this);
+        } catch (e) {
+          utils.log.error(e);
+        }
+      };
+
+      AmplitudeClient.prototype.resetSessionId = function resetSessionId() {
+        this.setSessionId(new Date().getTime());
+      };
+      /**
+       * Regenerates a new random deviceId for current user. Note: this is not recommended unless you know what you
+       * are doing. This can be used in conjunction with `setUserId(null)` to anonymize users after they log out.
+       * With a null userId and a completely new deviceId, the current user would appear as a brand new user in dashboard.
+       * This uses src/uuid.js to regenerate the deviceId.
+       * @public
+       */
+
+
+      AmplitudeClient.prototype.regenerateDeviceId = function regenerateDeviceId() {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['regenerateDeviceId'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        this.setDeviceId(base64Id());
+      };
+      /**
+       * Sets a custom deviceId for current user. Note: this is not recommended unless you know what you are doing
+       * (like if you have your own system for managing deviceIds). Make sure the deviceId you set is sufficiently unique
+       * (we recommend something like a UUID - see src/uuid.js for an example of how to generate) to prevent conflicts with other devices in our system.
+       * @public
+       * @param {string} deviceId - custom deviceId for current user.
+       * @example amplitudeClient.setDeviceId('45f0954f-eb79-4463-ac8a-233a6f45a8f0');
+       */
+
+
+      AmplitudeClient.prototype.setDeviceId = function setDeviceId(deviceId) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setDeviceId'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!utils.validateInput(deviceId, 'deviceId', 'string')) {
+          return;
+        }
+
+        try {
+          if (!utils.isEmptyString(deviceId)) {
+            this.options.deviceId = '' + deviceId;
+
+            _saveCookieData(this);
+          }
+        } catch (e) {
+          utils.log.error(e);
+        }
+      };
+      /**
+       * Sets user properties for the current user.
+       * @public
+       * @param {object} - object with string keys and values for the user properties to set.
+       * @param {boolean} - DEPRECATED opt_replace: in earlier versions of the JS SDK the user properties object was kept in
+       * memory and replace = true would replace the object in memory. Now the properties are no longer stored in memory, so replace is deprecated.
+       * @example amplitudeClient.setUserProperties({'gender': 'female', 'sign_up_complete': true})
+       */
+
+
+      AmplitudeClient.prototype.setUserProperties = function setUserProperties(userProperties) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setUserProperties'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('setUserProperties()') || !utils.validateInput(userProperties, 'userProperties', 'object')) {
+          return;
+        } // sanitize the userProperties dict before converting into identify
+
+
+        var sanitized = utils.truncate(utils.validateProperties(userProperties));
+
+        if (Object.keys(sanitized).length === 0) {
+          return;
+        } // convert userProperties into an identify call
+
+
+        var identify = new Identify();
+
+        for (var property in sanitized) {
+          if (sanitized.hasOwnProperty(property)) {
+            identify.set(property, sanitized[property]);
+          }
+        }
+
+        this.identify(identify);
+      };
+      /**
+       * Clear all of the user properties for the current user. Note: clearing user properties is irreversible!
+       * @public
+       * @example amplitudeClient.clearUserProperties();
+       */
+
+
+      AmplitudeClient.prototype.clearUserProperties = function clearUserProperties() {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['clearUserProperties'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('clearUserProperties()')) {
+          return;
+        }
+
+        var identify = new Identify();
+        identify.clearAll();
+        this.identify(identify);
+      };
+      /**
+       * Applies the proxied functions on the proxied object to an instance of the real object.
+       * Used to convert proxied Identify and Revenue objects.
+       * @private
+       */
+
+
+      var _convertProxyObjectToRealObject = function _convertProxyObjectToRealObject(instance, proxy) {
+        for (var i = 0; i < proxy._q.length; i++) {
+          var fn = instance[proxy._q[i][0]];
+
+          if (type(fn) === 'function') {
+            fn.apply(instance, proxy._q[i].slice(1));
+          }
+        }
+
+        return instance;
+      };
+      /**
+       * Send an identify call containing user property operations to Amplitude servers.
+       * See the [Identify](https://amplitude.github.io/Amplitude-JavaScript/Identify/)
+       * reference page for more information on the Identify API and user property operations.
+       * @param {Identify} identify_obj - the Identify object containing the user property operations to send.
+       * @param {Amplitude~eventCallback} opt_callback - (optional) callback function to run when the identify event has been sent.
+       * Note: the server response code and response body from the identify event upload are passed to the callback function.
+       * @example
+       * var identify = new amplitude.Identify().set('colors', ['rose', 'gold']).add('karma', 1).setOnce('sign_up_date', '2016-03-31');
+       * amplitude.identify(identify);
+       */
+
+
+      AmplitudeClient.prototype.identify = function (identify_obj, opt_callback) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['identify'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('identify()')) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'API key is not set'
+            });
+          }
+
+          return;
+        } // if identify input is a proxied object created by the async loading snippet, convert it into an identify object
+
+
+        if (type(identify_obj) === 'object' && identify_obj.hasOwnProperty('_q')) {
+          identify_obj = _convertProxyObjectToRealObject(new Identify(), identify_obj);
+        }
+
+        if (identify_obj instanceof Identify) {
+          // only send if there are operations
+          if (Object.keys(identify_obj.userPropertiesOperations).length > 0) {
+            return this._logEvent(Constants.IDENTIFY_EVENT, null, null, identify_obj.userPropertiesOperations, null, null, null, opt_callback);
+          } else {
+            if (type(opt_callback) === 'function') {
+              opt_callback(0, 'No request sent', {
+                reason: 'No user property operations'
+              });
+            }
+          }
+        } else {
+          utils.log.error('Invalid identify input type. Expected Identify object but saw ' + type(identify_obj));
+
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Invalid identify input type'
+            });
+          }
+        }
+      };
+
+      AmplitudeClient.prototype.groupIdentify = function (group_type, group_name, identify_obj, opt_callback) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['groupIdentify'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('groupIdentify()')) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'API key is not set'
+            });
+          }
+
+          return;
+        }
+
+        if (!utils.validateInput(group_type, 'group_type', 'string') || utils.isEmptyString(group_type)) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Invalid group type'
+            });
+          }
+
+          return;
+        }
+
+        if (group_name === null || group_name === undefined) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Invalid group name'
+            });
+          }
+
+          return;
+        } // if identify input is a proxied object created by the async loading snippet, convert it into an identify object
+
+
+        if (type(identify_obj) === 'object' && identify_obj.hasOwnProperty('_q')) {
+          identify_obj = _convertProxyObjectToRealObject(new Identify(), identify_obj);
+        }
+
+        if (identify_obj instanceof Identify) {
+          // only send if there are operations
+          if (Object.keys(identify_obj.userPropertiesOperations).length > 0) {
+            return this._logEvent(Constants.GROUP_IDENTIFY_EVENT, null, null, null, _defineProperty({}, group_type, group_name), identify_obj.userPropertiesOperations, null, opt_callback);
+          } else {
+            if (type(opt_callback) === 'function') {
+              opt_callback(0, 'No request sent', {
+                reason: 'No group property operations'
+              });
+            }
+          }
+        } else {
+          utils.log.error('Invalid identify input type. Expected Identify object but saw ' + type(identify_obj));
+
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Invalid identify input type'
+            });
+          }
+        }
+      };
+      /**
+       * Set a versionName for your application.
+       * @public
+       * @param {string} versionName - The version to set for your application.
+       * @example amplitudeClient.setVersionName('1.12.3');
+       */
+
+
+      AmplitudeClient.prototype.setVersionName = function setVersionName(versionName) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['setVersionName'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!utils.validateInput(versionName, 'versionName', 'string')) {
+          return;
+        }
+
+        this.options.versionName = versionName;
+      };
+      /**
+       * Private logEvent method. Keeps apiProperties from being publicly exposed.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._logEvent = function _logEvent(eventType, eventProperties, apiProperties, userProperties, groups, groupProperties, timestamp, callback) {
+        {
+          _loadCookieData(this); // reload cookie before each log event to sync event meta-data between windows and tabs
+
+        }
+
+        if (!eventType) {
+          if (type(callback) === 'function') {
+            callback(0, 'No request sent', {
+              reason: 'Missing eventType'
+            });
+          }
+
+          return;
+        }
+
+        if (this.options.optOut) {
+          if (type(callback) === 'function') {
+            callback(0, 'No request sent', {
+              reason: 'optOut is set to true'
+            });
+          }
+
+          return;
+        }
+
+        try {
+          var eventId;
+
+          if (eventType === Constants.IDENTIFY_EVENT || eventType === Constants.GROUP_IDENTIFY_EVENT) {
+            eventId = this.nextIdentifyId();
+          } else {
+            eventId = this.nextEventId();
+          }
+
+          var sequenceNumber = this.nextSequenceNumber();
+          var eventTime = type(timestamp) === 'number' ? timestamp : new Date().getTime();
+
+          if (!this._sessionId || !this._lastEventTime || eventTime - this._lastEventTime > this.options.sessionTimeout) {
+            this._sessionId = eventTime;
+          }
+
+          this._lastEventTime = eventTime;
+
+          _saveCookieData(this);
+
+          var osName = this._ua.browser.name;
+          var osVersion = this._ua.browser.major;
+          var deviceModel = this._ua.os.name;
+          var deviceManufacturer;
+          var versionName;
+          var carrier;
+          userProperties = userProperties || {};
+
+          var trackingOptions = _objectSpread({}, this._apiPropertiesTrackingOptions);
+
+          apiProperties = _objectSpread({}, apiProperties || {}, trackingOptions);
+          eventProperties = eventProperties || {};
+          groups = groups || {};
+          groupProperties = groupProperties || {};
+          var event = {
+            device_id: this.options.deviceId,
+            user_id: this.options.userId,
+            timestamp: eventTime,
+            event_id: eventId,
+            session_id: this._sessionId || -1,
+            event_type: eventType,
+            version_name: _shouldTrackField(this, 'version_name') ? this.options.versionName || versionName || null : null,
+            platform: _shouldTrackField(this, 'platform') ? this.options.platform : null,
+            os_name: _shouldTrackField(this, 'os_name') ? osName || null : null,
+            os_version: _shouldTrackField(this, 'os_version') ? osVersion || null : null,
+            device_model: _shouldTrackField(this, 'device_model') ? deviceModel || null : null,
+            device_manufacturer: _shouldTrackField(this, 'device_manufacturer') ? deviceManufacturer || null : null,
+            language: _shouldTrackField(this, 'language') ? this.options.language : null,
+            carrier: _shouldTrackField(this, 'carrier') ? carrier || null : null,
+            api_properties: apiProperties,
+            event_properties: utils.truncate(utils.validateProperties(eventProperties)),
+            user_properties: utils.truncate(utils.validateProperties(userProperties)),
+            uuid: uuid(),
+            library: {
+              name: 'amplitude-js',
+              version: version
+            },
+            sequence_number: sequenceNumber,
+            // for ordering events and identifys
+            groups: utils.truncate(utils.validateGroups(groups)),
+            group_properties: utils.truncate(utils.validateProperties(groupProperties)),
+            user_agent: this._userAgent
+          };
+
+          if (eventType === Constants.IDENTIFY_EVENT || eventType === Constants.GROUP_IDENTIFY_EVENT) {
+            this._unsentIdentifys.push({
+              event: event,
+              callback: callback
+            });
+
+            this._limitEventsQueued(this._unsentIdentifys);
+          } else {
+            this._unsentEvents.push({
+              event: event,
+              callback: callback
+            });
+
+            this._limitEventsQueued(this._unsentEvents);
+          }
+
+          if (this.options.saveEvents) {
+            this.saveEvents();
+          }
+
+          this._sendEventsIfReady(callback);
+
+          return eventId;
+        } catch (e) {
+          utils.log.error(e);
+        }
+      };
+
+      var _shouldTrackField = function _shouldTrackField(scope, field) {
+        return !!scope.options.trackingOptions[field];
+      };
+
+      var _generateApiPropertiesTrackingConfig = function _generateApiPropertiesTrackingConfig(scope) {
+        // to limit size of config payload, only send fields that have been disabled
+        var fields = ['city', 'country', 'dma', 'ip_address', 'region'];
+        var config = {};
+
+        for (var i = 0; i < fields.length; i++) {
+          var field = fields[i];
+
+          if (!_shouldTrackField(scope, field)) {
+            config[field] = false;
+          }
+        }
+
+        return config;
+      };
+      /**
+       * Remove old events from the beginning of the array if too many have accumulated. Default limit is 1000 events.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._limitEventsQueued = function _limitEventsQueued(queue) {
+        if (queue.length > this.options.savedMaxCount) {
+          queue.splice(0, queue.length - this.options.savedMaxCount);
+        }
+      };
+      /**
+       * This is the callback for logEvent and identify calls. It gets called after the event/identify is uploaded,
+       * and the server response code and response body from the upload request are passed to the callback function.
+       * @callback Amplitude~eventCallback
+       * @param {number} responseCode - Server response code for the event / identify upload request.
+       * @param {string} responseBody - Server response body for the event / identify upload request.
+       */
+
+      /**
+       * Log an event with eventType and eventProperties
+       * @public
+       * @param {string} eventType - name of event
+       * @param {object} eventProperties - (optional) an object with string keys and values for the event properties.
+       * @param {Amplitude~eventCallback} opt_callback - (optional) a callback function to run after the event is logged.
+       * Note: the server response code and response body from the event upload are passed to the callback function.
+       * @example amplitudeClient.logEvent('Clicked Homepage Button', {'finished_flow': false, 'clicks': 15});
+       */
+
+
+      AmplitudeClient.prototype.logEvent = function logEvent(eventType, eventProperties, opt_callback) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['logEvent'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        return this.logEventWithTimestamp(eventType, eventProperties, null, opt_callback);
+      };
+      /**
+       * Log an event with eventType and eventProperties and a custom timestamp
+       * @public
+       * @param {string} eventType - name of event
+       * @param {object} eventProperties - (optional) an object with string keys and values for the event properties.
+       * @param {number} timestamp - (optional) the custom timestamp as milliseconds since epoch.
+       * @param {Amplitude~eventCallback} opt_callback - (optional) a callback function to run after the event is logged.
+       * Note: the server response code and response body from the event upload are passed to the callback function.
+       * @example amplitudeClient.logEvent('Clicked Homepage Button', {'finished_flow': false, 'clicks': 15});
+       */
+
+
+      AmplitudeClient.prototype.logEventWithTimestamp = function logEvent(eventType, eventProperties, timestamp, opt_callback) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['logEventWithTimestamp'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('logEvent()')) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'API key not set'
+            });
+          }
+
+          return -1;
+        }
+
+        if (!utils.validateInput(eventType, 'eventType', 'string')) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Invalid type for eventType'
+            });
+          }
+
+          return -1;
+        }
+
+        if (utils.isEmptyString(eventType)) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Missing eventType'
+            });
+          }
+
+          return -1;
+        }
+
+        return this._logEvent(eventType, eventProperties, null, null, null, null, timestamp, opt_callback);
+      };
+      /**
+       * Log an event with eventType, eventProperties, and groups. Use this to set event-level groups.
+       * Note: the group(s) set only apply for the specific event type being logged and does not persist on the user
+       * (unless you explicitly set it with setGroup).
+       *
+       * See the [advanced topics article](https://developers.amplitude.com/docs/setting-user-groups) for more information.
+       * about groups and Count by Distinct on the Amplitude platform.
+       * @public
+       * @param {string} eventType - name of event
+       * @param {object} eventProperties - (optional) an object with string keys and values for the event properties.
+       * @param {object} groups - (optional) an object with string groupType: groupName values for the event being logged.
+       * groupName can be a string or an array of strings.
+       * @param {Amplitude~eventCallback} opt_callback - (optional) a callback function to run after the event is logged.
+       * Note: the server response code and response body from the event upload are passed to the callback function.
+       * @example amplitudeClient.logEventWithGroups('Clicked Button', null, {'orgId': 24});
+       */
+
+
+      AmplitudeClient.prototype.logEventWithGroups = function (eventType, eventProperties, groups, opt_callback) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['logEventWithGroups'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('logEventWithGroups()')) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'API key not set'
+            });
+          }
+
+          return -1;
+        }
+
+        if (!utils.validateInput(eventType, 'eventType', 'string')) {
+          if (type(opt_callback) === 'function') {
+            opt_callback(0, 'No request sent', {
+              reason: 'Invalid type for eventType'
+            });
+          }
+
+          return -1;
+        }
+
+        return this._logEvent(eventType, eventProperties, null, null, groups, null, null, opt_callback);
+      };
+      /**
+       * Test that n is a number or a numeric value.
+       * @private
+       */
+
+
+      var _isNumber = function _isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      };
+      /**
+       * Log revenue with Revenue interface. The new revenue interface allows for more revenue fields like
+       * revenueType and event properties.
+       *
+       * See the [Revenue](https://amplitude.github.io/Amplitude-JavaScript/Revenue/)
+       * reference page for more information on the Revenue interface and logging revenue.
+       * @public
+       * @param {Revenue} revenue_obj - the revenue object containing the revenue data being logged.
+       * @example var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99);
+       * amplitude.logRevenueV2(revenue);
+       */
+
+
+      AmplitudeClient.prototype.logRevenueV2 = function logRevenueV2(revenue_obj) {
+        if (this._shouldDeferCall()) {
+          return this._q.push(['logRevenueV2'].concat(Array.prototype.slice.call(arguments, 0)));
+        }
+
+        if (!this._apiKeySet('logRevenueV2()')) {
+          return;
+        } // if revenue input is a proxied object created by the async loading snippet, convert it into an revenue object
+
+
+        if (type(revenue_obj) === 'object' && revenue_obj.hasOwnProperty('_q')) {
+          revenue_obj = _convertProxyObjectToRealObject(new Revenue(), revenue_obj);
+        }
+
+        if (revenue_obj instanceof Revenue) {
+          // only send if revenue is valid
+          if (revenue_obj && revenue_obj._isValidRevenue()) {
+            return this.logEvent(Constants.REVENUE_EVENT, revenue_obj._toJSONObject());
+          }
+        } else {
+          utils.log.error('Invalid revenue input type. Expected Revenue object but saw ' + type(revenue_obj));
+        }
+      };
+
+      {
+        /**
+         * Log revenue event with a price, quantity, and product identifier. DEPRECATED - use logRevenueV2
+         * @public
+         * @deprecated
+         * @param {number} price - price of revenue event
+         * @param {number} quantity - (optional) quantity of products in revenue event. If no quantity specified default to 1.
+         * @param {string} product - (optional) product identifier
+         * @example amplitudeClient.logRevenue(3.99, 1, 'product_1234');
+         */
+        AmplitudeClient.prototype.logRevenue = function logRevenue(price, quantity, product) {
+          if (this._shouldDeferCall()) {
+            return this._q.push(['logRevenue'].concat(Array.prototype.slice.call(arguments, 0)));
+          } // Test that the parameters are of the right type.
+
+
+          if (!this._apiKeySet('logRevenue()') || !_isNumber(price) || quantity !== undefined && !_isNumber(quantity)) {
+            // utils.log('Price and quantity arguments to logRevenue must be numbers');
+            return -1;
+          }
+
+          return this._logEvent(Constants.REVENUE_EVENT, {}, {
+            productId: product,
+            special: 'revenue_amount',
+            quantity: quantity || 1,
+            price: price
+          }, null, null, null, null, null);
+        };
+      }
+      /**
+       * Remove events in storage with event ids up to and including maxEventId.
+       * @private
+       */
+
+      AmplitudeClient.prototype.removeEvents = function removeEvents(maxEventId, maxIdentifyId, status, response) {
+        _removeEvents(this, '_unsentEvents', maxEventId, status, response);
+
+        _removeEvents(this, '_unsentIdentifys', maxIdentifyId, status, response);
+      };
+      /**
+       * Helper function to remove events up to maxId from a single queue.
+       * Does a true filter in case events get out of order or old events are removed.
+       * @private
+       */
+
+
+      var _removeEvents = function _removeEvents(scope, eventQueue, maxId, status, response) {
+        if (maxId < 0) {
+          return;
+        }
+
+        var filteredEvents = [];
+
+        for (var i = 0; i < scope[eventQueue].length || 0; i++) {
+          var unsentEvent = scope[eventQueue][i];
+
+          if (unsentEvent.event.event_id > maxId) {
+            filteredEvents.push(unsentEvent);
+          } else {
+            if (unsentEvent.callback) {
+              unsentEvent.callback(status, response);
+            }
+          }
+        }
+
+        scope[eventQueue] = filteredEvents;
+      };
+      /**
+       * Send unsent events. Note: this is called automatically after events are logged if option batchEvents is false.
+       * If batchEvents is true, then events are only sent when batch criterias are met.
+       * @private
+       */
+
+
+      AmplitudeClient.prototype.sendEvents = function sendEvents() {
+        if (!this._apiKeySet('sendEvents()')) {
+          this.removeEvents(Infinity, Infinity, 0, 'No request sent', {
+            reason: 'API key not set'
+          });
+          return;
+        }
+
+        if (this.options.optOut) {
+          this.removeEvents(Infinity, Infinity, 0, 'No request sent', {
+            reason: 'Opt out is set to true'
+          });
+          return;
+        } // How is it possible to get into this state?
+
+
+        if (this._unsentCount() === 0) {
+          return;
+        } // We only make one request at a time. sendEvents will be invoked again once
+        // the last request completes.
+
+
+        if (this._sending) {
+          return;
+        }
+
+        this._sending = true;
+        var protocol = this.options.forceHttps ? 'https' : 'https:' === window.location.protocol ? 'https' : 'http';
+        var url = protocol + '://' + this.options.apiEndpoint; // fetch events to send
+
+        var numEvents = Math.min(this._unsentCount(), this.options.uploadBatchSize);
+
+        var mergedEvents = this._mergeEventsAndIdentifys(numEvents);
+
+        var maxEventId = mergedEvents.maxEventId;
+        var maxIdentifyId = mergedEvents.maxIdentifyId;
+        var events = JSON.stringify(mergedEvents.eventsToSend.map(function (_ref2) {
+          var event = _ref2.event;
+          return event;
+        }));
+        var uploadTime = new Date().getTime();
+        var data = {
+          client: this.options.apiKey,
+          e: events,
+          v: Constants.API_VERSION,
+          upload_time: uploadTime,
+          checksum: md5(Constants.API_VERSION + this.options.apiKey + events + uploadTime)
+        };
+        var scope = this;
+        new Request(url, data).send(function (status, response) {
+          scope._sending = false;
+
+          try {
+            if (status === 200 && response === 'success') {
+              scope.removeEvents(maxEventId, maxIdentifyId, status, response); // Update the event cache after the removal of sent events.
+
+              if (scope.options.saveEvents) {
+                scope.saveEvents();
+              } // Send more events if any queued during previous send.
+
+
+              scope._sendEventsIfReady(); // handle payload too large
+
+            } else if (status === 413) {
+              // utils.log('request too large');
+              // Can't even get this one massive event through. Drop it, even if it is an identify.
+              if (scope.options.uploadBatchSize === 1) {
+                scope.removeEvents(maxEventId, maxIdentifyId, status, response);
+              } // The server complained about the length of the request. Backoff and try again.
+
+
+              scope.options.uploadBatchSize = Math.ceil(numEvents / 2);
+              scope.sendEvents();
+            } // else {
+            //  all the events are still queued, and will be retried when the next
+            //  event is sent In the interest of debugging, it would be nice to have
+            //  something like an event emitter for a better debugging experince
+            //  here.
+            // }
+
+          } catch (e) {// utils.log('failed upload');
+          }
+        });
+      };
+      /**
+       * Merge unsent events and identifys together in sequential order based on their sequence number, for uploading.
+       * Identifys given higher priority than Events. Also earlier sequence given priority
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._mergeEventsAndIdentifys = function _mergeEventsAndIdentifys(numEvents) {
+        // coalesce events from both queues
+        var eventsToSend = [];
+        var eventIndex = 0;
+        var maxEventId = -1;
+        var identifyIndex = 0;
+        var maxIdentifyId = -1;
+
+        while (eventsToSend.length < numEvents) {
+          var unsentEvent = void 0;
+          var noIdentifys = identifyIndex >= this._unsentIdentifys.length;
+          var noEvents = eventIndex >= this._unsentEvents.length; // case 0: no events or identifys left
+          // note this should not happen, this means we have less events and identifys than expected
+
+          if (noEvents && noIdentifys) {
+            utils.log.error('Merging Events and Identifys, less events and identifys than expected');
+            break;
+          } // case 1: no identifys - grab from events
+          else if (noIdentifys) {
+              unsentEvent = this._unsentEvents[eventIndex++];
+              maxEventId = unsentEvent.event.event_id; // case 2: no events - grab from identifys
+            } else if (noEvents) {
+              unsentEvent = this._unsentIdentifys[identifyIndex++];
+              maxIdentifyId = unsentEvent.event.event_id; // case 3: need to compare sequence numbers
+            } else {
+              // events logged before v2.5.0 won't have a sequence number, put those first
+              if (!('sequence_number' in this._unsentEvents[eventIndex].event) || this._unsentEvents[eventIndex].event.sequence_number < this._unsentIdentifys[identifyIndex].event.sequence_number) {
+                unsentEvent = this._unsentEvents[eventIndex++];
+                maxEventId = unsentEvent.event.event_id;
+              } else {
+                unsentEvent = this._unsentIdentifys[identifyIndex++];
+                maxIdentifyId = unsentEvent.event.event_id;
+              }
+            }
+
+          eventsToSend.push(unsentEvent);
+        }
+
+        return {
+          eventsToSend: eventsToSend,
+          maxEventId: maxEventId,
+          maxIdentifyId: maxIdentifyId
+        };
+      };
+
+      {
+        /**
+         * Set global user properties. Note this is deprecated, and we recommend using setUserProperties
+         * @public
+         * @deprecated
+         */
+        AmplitudeClient.prototype.setGlobalUserProperties = function setGlobalUserProperties(userProperties) {
+          this.setUserProperties(userProperties);
+        };
+      }
+      /**
+       * Get the current version of Amplitude's Javascript SDK.
+       * @public
+       * @returns {number} version number
+       * @example var amplitudeVersion = amplitude.__VERSION__;
+       */
+
+      AmplitudeClient.prototype.__VERSION__ = version;
+      /**
+       * Determines whether or not to push call to this._q or invoke it
+       * @private
+       */
+
+      AmplitudeClient.prototype._shouldDeferCall = function _shouldDeferCall() {
+        return this._pendingReadStorage || this._initializationDeferred;
+      };
+      /**
+       * Defers Initialization by putting all functions into storage until users
+       * have accepted terms for tracking
+       * @private
+       */
+
+
+      AmplitudeClient.prototype._deferInitialization = function _deferInitialization() {
+        this._initializationDeferred = true;
+
+        this._q.push(['init'].concat(Array.prototype.slice.call(arguments, 0)));
+      };
+      /**
+       * Enable tracking via logging events and dropping a cookie
+       * Intended to be used with the deferInitialization configuration flag
+       * This will drop a cookie and reset initialization deferred
+       * @public
+       */
+
+
+      AmplitudeClient.prototype.enableTracking = function enableTracking() {
+        // This will call init (which drops the cookie) and will run any pending tasks
+        this._initializationDeferred = false;
+
+        _saveCookieData(this);
+
+        this.runQueuedFunctions();
+      };
+      /**
+       * Deprecated legacy API of the Amplitude JS SDK - instance manager.
+       *
+       * Wraps around the current [AmplitudeClient](https://amplitude.github.io/Amplitude-JavaScript/) which provides more features
+       * Function calls directly on amplitude have been deprecated. Please call methods on the default shared instance: amplitude.getInstance() instead.
+       *
+       * See the [3.0.0 changelog](https://github.com/amplitude/Amplitude-JavaScript/blob/ed405afb5f06d5cf5b72539a5d09179abcf7e1fe/README.md#300-update-and-logging-events-to-multiple-amplitude-apps) for more information about this change.
+       * @constructor Amplitude
+       * @public
+       * @deprecated
+       * @example var amplitude = new Amplitude();
+       */
+
+
+      var Amplitude = function Amplitude() {
+        this.options = _objectSpread({}, DEFAULT_OPTIONS);
+        this._q = [];
+        this._instances = {}; // mapping of instance names to instances
+      };
+
+      Amplitude.prototype.Identify = Identify;
+      Amplitude.prototype.Revenue = Revenue;
+
+      Amplitude.prototype.getInstance = function getInstance(instance) {
+        instance = utils.isEmptyString(instance) ? Constants.DEFAULT_INSTANCE : instance.toLowerCase();
+        var client = this._instances[instance];
+
+        if (client === undefined) {
+          client = new AmplitudeClient(instance);
+          this._instances[instance] = client;
+        }
+
+        return client;
+      };
+
+      {
+        /**
+         * Run functions queued up by proxy loading snippet
+         * @private
+         */
+        Amplitude.prototype.runQueuedFunctions = function () {
+          // run queued up old versions of functions
+          for (var i = 0; i < this._q.length; i++) {
+            var fn = this[this._q[i][0]];
+
+            if (type(fn) === 'function') {
+              fn.apply(this, this._q[i].slice(1));
+            }
+          }
+
+          this._q = []; // clear function queue after running
+          // run queued up functions on instances
+
+          for (var instance in this._instances) {
+            if (this._instances.hasOwnProperty(instance)) {
+              this._instances[instance].runQueuedFunctions();
+            }
+          }
+        };
+      }
+      {
+        /**
+         * Initializes the Amplitude Javascript SDK with your apiKey and any optional configurations.
+         * This is required before any other methods can be called.
+         * @public
+         * @param {string} apiKey - The API key for your app.
+         * @param {string} opt_userId - (optional) An identifier for this user.
+         * @param {object} opt_config - (optional) Configuration options.
+         * See [options.js](https://github.com/amplitude/Amplitude-JavaScript/blob/master/src/options.js#L14) for list of options and default values.
+         * @param {function} opt_callback - (optional) Provide a callback function to run after initialization is complete.
+         * @deprecated Please use amplitude.getInstance().init(apiKey, opt_userId, opt_config, opt_callback);
+         * @example amplitude.init('API_KEY', 'USER_ID', {includeReferrer: true, includeUtm: true}, function() { alert('init complete'); });
+         */
+        Amplitude.prototype.init = function init(apiKey, opt_userId, opt_config, opt_callback) {
+          this.getInstance().init(apiKey, opt_userId, opt_config, function (instance) {
+            // make options such as deviceId available for callback functions
+            this.options = instance.options;
+
+            if (type(opt_callback) === 'function') {
+              opt_callback(instance);
+            }
+          }.bind(this));
+        };
+        /**
+         * Returns true if a new session was created during initialization, otherwise false.
+         * @public
+         * @return {boolean} Whether a new session was created during initialization.
+         * @deprecated Please use amplitude.getInstance().isNewSession();
+         */
+
+
+        Amplitude.prototype.isNewSession = function isNewSession() {
+          return this.getInstance().isNewSession();
+        };
+        /**
+         * Returns the id of the current session.
+         * @public
+         * @return {number} Id of the current session.
+         * @deprecated Please use amplitude.getInstance().getSessionId();
+         */
+
+
+        Amplitude.prototype.getSessionId = function getSessionId() {
+          return this.getInstance().getSessionId();
+        };
+        /**
+         * Increments the eventId and returns it.
+         * @private
+         */
+
+
+        Amplitude.prototype.nextEventId = function nextEventId() {
+          return this.getInstance().nextEventId();
+        };
+        /**
+         * Increments the identifyId and returns it.
+         * @private
+         */
+
+
+        Amplitude.prototype.nextIdentifyId = function nextIdentifyId() {
+          return this.getInstance().nextIdentifyId();
+        };
+        /**
+         * Increments the sequenceNumber and returns it.
+         * @private
+         */
+
+
+        Amplitude.prototype.nextSequenceNumber = function nextSequenceNumber() {
+          return this.getInstance().nextSequenceNumber();
+        };
+        /**
+         * Saves unsent events and identifies to localStorage. JSON stringifies event queues before saving.
+         * Note: this is called automatically every time events are logged, unless you explicitly set option saveEvents to false.
+         * @private
+         */
+
+
+        Amplitude.prototype.saveEvents = function saveEvents() {
+          this.getInstance().saveEvents();
+        };
+        /**
+         * Sets a customer domain for the amplitude cookie. Useful if you want to support cross-subdomain tracking.
+         * @public
+         * @param {string} domain to set.
+         * @deprecated Please use amplitude.getInstance().setDomain(domain);
+         * @example amplitude.setDomain('.amplitude.com');
+         */
+
+
+        Amplitude.prototype.setDomain = function setDomain(domain) {
+          this.getInstance().setDomain(domain);
+        };
+        /**
+         * Sets an identifier for the current user.
+         * @public
+         * @param {string} userId - identifier to set. Can be null.
+         * @deprecated Please use amplitude.getInstance().setUserId(userId);
+         * @example amplitude.setUserId('joe@gmail.com');
+         */
+
+
+        Amplitude.prototype.setUserId = function setUserId(userId) {
+          this.getInstance().setUserId(userId);
+        };
+        /**
+         * Add user to a group or groups. You need to specify a groupType and groupName(s).
+         * For example you can group people by their organization.
+         * In that case groupType is "orgId" and groupName would be the actual ID(s).
+         * groupName can be a string or an array of strings to indicate a user in multiple gruups.
+         * You can also call setGroup multiple times with different groupTypes to track multiple types of groups (up to 5 per app).
+         * Note: this will also set groupType: groupName as a user property.
+         * See the [advanced topics article](https://developers.amplitude.com/docs/setting-user-groups) for more information.
+         * @public
+         * @param {string} groupType - the group type (ex: orgId)
+         * @param {string|list} groupName - the name of the group (ex: 15), or a list of names of the groups
+         * @deprecated Please use amplitude.getInstance().setGroup(groupType, groupName);
+         * @example amplitude.setGroup('orgId', 15); // this adds the current user to orgId 15.
+         */
+
+
+        Amplitude.prototype.setGroup = function (groupType, groupName) {
+          this.getInstance().setGroup(groupType, groupName);
+        };
+        /**
+         * Sets whether to opt current user out of tracking.
+         * @public
+         * @param {boolean} enable - if true then no events will be logged or sent.
+         * @deprecated Please use amplitude.getInstance().setOptOut(enable);
+         * @example: amplitude.setOptOut(true);
+         */
+
+
+        Amplitude.prototype.setOptOut = function setOptOut(enable) {
+          this.getInstance().setOptOut(enable);
+        };
+        /**
+         * Regenerates a new random deviceId for current user. Note: this is not recommended unless you know what you
+         * are doing. This can be used in conjunction with `setUserId(null)` to anonymize users after they log out.
+         * With a null userId and a completely new deviceId, the current user would appear as a brand new user in dashboard.
+         * This uses src/uuid.js to regenerate the deviceId.
+         * @public
+         * @deprecated Please use amplitude.getInstance().regenerateDeviceId();
+         */
+
+
+        Amplitude.prototype.regenerateDeviceId = function regenerateDeviceId() {
+          this.getInstance().regenerateDeviceId();
+        };
+        /**
+         * Sets a custom deviceId for current user. Note: this is not recommended unless you know what you are doing
+         * (like if you have your own system for managing deviceIds).
+         *
+         * Make sure the deviceId you set is sufficiently unique
+         * (we recommend something like a UUID - see src/uuid.js for an example of how to generate) to prevent conflicts with other devices in our system.
+         * @public
+         * @param {string} deviceId - custom deviceId for current user.
+         * @deprecated Please use amplitude.getInstance().setDeviceId(deviceId);
+         * @example amplitude.setDeviceId('45f0954f-eb79-4463-ac8a-233a6f45a8f0');
+         */
+
+
+        Amplitude.prototype.setDeviceId = function setDeviceId(deviceId) {
+          this.getInstance().setDeviceId(deviceId);
+        };
+        /**
+         * Sets user properties for the current user.
+         * @public
+         * @param {object} userProperties - object with string keys and values for the user properties to set.
+         * @param {boolean} opt_replace - Deprecated. In earlier versions of the JS SDK the user properties object was kept in
+         * memory and replace = true would replace the object in memory. Now the properties are no longer stored in memory, so replace is deprecated.
+         * @deprecated Please use amplitude.getInstance().setUserProperties(userProperties);
+         * @example amplitude.setUserProperties({'gender': 'female', 'sign_up_complete': true})
+         */
+
+
+        Amplitude.prototype.setUserProperties = function setUserProperties(userProperties) {
+          this.getInstance().setUserProperties(userProperties);
+        };
+        /**
+         * Clear all of the user properties for the current user. Note: clearing user properties is irreversible!
+         * @public
+         * @deprecated Please use amplitude.getInstance().clearUserProperties();
+         * @example amplitude.clearUserProperties();
+         */
+
+
+        Amplitude.prototype.clearUserProperties = function clearUserProperties() {
+          this.getInstance().clearUserProperties();
+        };
+        /**
+         * Send an identify call containing user property operations to Amplitude servers.
+         * See the [Identify](https://amplitude.github.io/Amplitude-JavaScript/Identify/)
+         * reference page for more information on the Identify API and user property operations.
+         * @param {Identify} identify_obj - the Identify object containing the user property operations to send.
+         * @param {Amplitude~eventCallback} opt_callback - (optional) callback function to run when the identify event has been sent.
+         * Note: the server response code and response body from the identify event upload are passed to the callback function.
+         * @deprecated Please use amplitude.getInstance().identify(identify);
+         * @example
+         * var identify = new amplitude.Identify().set('colors', ['rose', 'gold']).add('karma', 1).setOnce('sign_up_date', '2016-03-31');
+         * amplitude.identify(identify);
+         */
+
+
+        Amplitude.prototype.identify = function (identify_obj, opt_callback) {
+          this.getInstance().identify(identify_obj, opt_callback);
+        };
+        /**
+         * Set a versionName for your application.
+         * @public
+         * @param {string} versionName - The version to set for your application.
+         * @deprecated Please use amplitude.getInstance().setVersionName(versionName);
+         * @example amplitude.setVersionName('1.12.3');
+         */
+
+
+        Amplitude.prototype.setVersionName = function setVersionName(versionName) {
+          this.getInstance().setVersionName(versionName);
+        };
+        /**
+         * This is the callback for logEvent and identify calls. It gets called after the event/identify is uploaded,
+         * and the server response code and response body from the upload request are passed to the callback function.
+         * @callback Amplitude~eventCallback
+         * @param {number} responseCode - Server response code for the event / identify upload request.
+         * @param {string} responseBody - Server response body for the event / identify upload request.
+         */
+
+        /**
+         * Log an event with eventType and eventProperties
+         * @public
+         * @param {string} eventType - name of event
+         * @param {object} eventProperties - (optional) an object with string keys and values for the event properties.
+         * @param {Amplitude~eventCallback} opt_callback - (optional) a callback function to run after the event is logged.
+         * Note: the server response code and response body from the event upload are passed to the callback function.
+         * @deprecated Please use amplitude.getInstance().logEvent(eventType, eventProperties, opt_callback);
+         * @example amplitude.logEvent('Clicked Homepage Button', {'finished_flow': false, 'clicks': 15});
+         */
+
+
+        Amplitude.prototype.logEvent = function logEvent(eventType, eventProperties, opt_callback) {
+          return this.getInstance().logEvent(eventType, eventProperties, opt_callback);
+        };
+        /**
+         * Log an event with eventType, eventProperties, and groups. Use this to set event-level groups.
+         *
+         * Note: the group(s) set only apply for the specific event type being logged and does not persist on the user
+         * (unless you explicitly set it with setGroup).
+         *
+         * See the [advanced topics article](https://developers.amplitude.com/docs/setting-user-groups) for more information.
+         * about groups and Count by Distinct on the Amplitude platform.
+         * @public
+         * @param {string} eventType - name of event
+         * @param {object} eventProperties - (optional) an object with string keys and values for the event properties.
+         * @param {object} groups - (optional) an object with string groupType: groupName values for the event being logged.
+         * groupName can be a string or an array of strings.
+         * @param {Amplitude~eventCallback} opt_callback - (optional) a callback function to run after the event is logged.
+         * Note: the server response code and response body from the event upload are passed to the callback function.
+         * @deprecated Please use amplitude.getInstance().logEventWithGroups(eventType, eventProperties, groups, opt_callback);
+         * @example amplitude.logEventWithGroups('Clicked Button', null, {'orgId': 24});
+         */
+
+
+        Amplitude.prototype.logEventWithGroups = function (eventType, eventProperties, groups, opt_callback) {
+          return this.getInstance().logEventWithGroups(eventType, eventProperties, groups, opt_callback);
+        };
+        /**
+         * Log revenue with Revenue interface. The new revenue interface allows for more revenue fields like
+         * revenueType and event properties.
+         *
+         * See the [Revenue](https://amplitude.github.io/Amplitude-JavaScript/Revenue/)
+         * reference page for more information on the Revenue interface and logging revenue.
+         * @public
+         * @param {Revenue} revenue_obj - the revenue object containing the revenue data being logged.
+         * @deprecated Please use amplitude.getInstance().logRevenueV2(revenue_obj);
+         * @example var revenue = new amplitude.Revenue().setProductId('productIdentifier').setPrice(10.99);
+         * amplitude.logRevenueV2(revenue);
+         */
+
+
+        Amplitude.prototype.logRevenueV2 = function logRevenueV2(revenue_obj) {
+          return this.getInstance().logRevenueV2(revenue_obj);
+        };
+        /**
+         * Log revenue event with a price, quantity, and product identifier.
+         * @public
+         * @param {number} price - price of revenue event
+         * @param {number} quantity - (optional) quantity of products in revenue event. If no quantity specified default to 1.
+         * @param {string} product - (optional) product identifier
+         * @deprecated Please use amplitude.getInstance().logRevenueV2(revenue_obj);
+         * @example amplitude.logRevenue(3.99, 1, 'product_1234');
+         */
+
+
+        Amplitude.prototype.logRevenue = function logRevenue(price, quantity, product) {
+          return this.getInstance().logRevenue(price, quantity, product);
+        };
+        /**
+         * Remove events in storage with event ids up to and including maxEventId.
+         * @private
+         */
+
+
+        Amplitude.prototype.removeEvents = function removeEvents(maxEventId, maxIdentifyId) {
+          this.getInstance().removeEvents(maxEventId, maxIdentifyId);
+        };
+        /**
+         * Send unsent events. Note: this is called automatically after events are logged if option batchEvents is false.
+         * If batchEvents is true, then events are only sent when batch criterias are met.
+         * @private
+         * @param {Amplitude~eventCallback} callback - (optional) callback to run after events are sent.
+         * Note the server response code and response body are passed to the callback as input arguments.
+         */
+
+
+        Amplitude.prototype.sendEvents = function sendEvents(callback) {
+          this.getInstance().sendEvents(callback);
+        };
+        /**
+         * Set global user properties.
+         * @public
+         * @deprecated Please use amplitudeClient.setUserProperties
+         */
+
+
+        Amplitude.prototype.setGlobalUserProperties = function setGlobalUserProperties(userProperties) {
+          this.getInstance().setUserProperties(userProperties);
+        };
+      }
+      /**
+       * Get the current version of Amplitude's Javascript SDK.
+       * @public
+       * @returns {number} version number
+       * @example var amplitudeVersion = amplitude.__VERSION__;
+       */
+
+      Amplitude.prototype.__VERSION__ = version; // Entry point
+
+      var old = window.amplitude || {};
+      var newInstance = new Amplitude();
+      newInstance._q = old._q || [];
+      /**
+       * Instantiates Amplitude object and runs all queued function logged by stubbed methods provided by snippets
+       * Event queue allows async loading of SDK to not blocking client's app
+       */
+
+      for (var instance in old._iq) {
+        // migrate each instance's queue
+        if (old._iq.hasOwnProperty(instance)) {
+          newInstance.getInstance(instance)._q = old._iq[instance]._q || [];
+        }
+      } // If SDK is enabled as snippet, process the events queued by stubbed function
+
+
+      {
+        newInstance.runQueuedFunctions();
+      } // export the instance
+
+      return newInstance;
+    });
+  });
+
+  var Amplitude = /*#__PURE__*/function () {
     function Amplitude(config, analytics) {
       var _this = this;
 
@@ -16078,92 +23723,7 @@
     _createClass(Amplitude, [{
       key: "init",
       value: function init() {
-        (function (e, t) {
-          var n = e.amplitude || {
-            _q: [],
-            _iq: {}
-          };
-          var r = t.createElement("script");
-          r.type = "text/javascript";
-          r.integrity = "sha384-girahbTbYZ9tT03PWWj0mEVgyxtZoyDF9KVZdL+R53PP5wCY0PiVUKq0jeRlMx9M";
-          r.crossOrigin = "anonymous";
-          r.async = true;
-          r.src = "https://cdn.amplitude.com/libs/amplitude-7.2.1-min.gz.js";
-
-          r.onload = function () {
-            if (!e.amplitude.runQueuedFunctions) {
-              console.log("[Amplitude] Error: could not load SDK");
-            }
-          };
-
-          var i = t.getElementsByTagName("script")[0];
-          i.parentNode.insertBefore(r, i);
-
-          function s(e, t) {
-            e.prototype[t] = function () {
-              this._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
-
-              return this;
-            };
-          }
-
-          var o = function o() {
-            this._q = [];
-            return this;
-          };
-
-          var a = ["add", "append", "clearAll", "prepend", "set", "setOnce", "unset"];
-
-          for (var c = 0; c < a.length; c++) {
-            s(o, a[c]);
-          }
-
-          n.Identify = o;
-
-          var u = function u() {
-            this._q = [];
-            return this;
-          };
-
-          var l = ["setProductId", "setQuantity", "setPrice", "setRevenueType", "setEventProperties"];
-
-          for (var p = 0; p < l.length; p++) {
-            s(u, l[p]);
-          }
-
-          n.Revenue = u;
-          var d = ["init", "logEvent", "logRevenue", "setUserId", "setUserProperties", "setOptOut", "setVersionName", "setDomain", "setDeviceId", "enableTracking", "setGlobalUserProperties", "identify", "clearUserProperties", "setGroup", "logRevenueV2", "regenerateDeviceId", "groupIdentify", "onInit", "logEventWithTimestamp", "logEventWithGroups", "setSessionId", "resetSessionId"];
-
-          function v(e) {
-            function t(t) {
-              e[t] = function () {
-                e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
-              };
-            }
-
-            for (var _n = 0; _n < d.length; _n++) {
-              t(d[_n]);
-            }
-          }
-
-          v(n);
-
-          n.getInstance = function (e) {
-            e = (!e || e.length === 0 ? "$default_instance" : e).toLowerCase();
-
-            if (!n._iq.hasOwnProperty(e)) {
-              n._iq[e] = {
-                _q: []
-              };
-              v(n._iq[e]);
-            }
-
-            return n._iq[e];
-          };
-
-          e.amplitude = n;
-        })(window, document);
-
+        window.amplitude = amplitude_umd;
         var initOptions = {
           includeUtm: this.trackUtmProperties,
           batchEvents: this.batchEvents,
@@ -16341,21 +23901,21 @@
 
         if (this.trackAllPages) {
           var event = "Loaded a page";
-          amplitude.getInstance().logEvent(event, properties);
+          amplitude_umd.getInstance().logEvent(event, properties);
         } // categorized pages
 
 
         if (category && this.trackCategorizedPages) {
           var _event = "Viewed page ".concat(category);
 
-          amplitude.getInstance().logEvent(_event, properties);
+          amplitude_umd.getInstance().logEvent(_event, properties);
         } // named pages
 
 
         if (name && this.trackNamedPages) {
           var _event2 = "Viewed page ".concat(name);
 
-          amplitude.getInstance().logEvent(_event2, properties);
+          amplitude_umd.getInstance().logEvent(_event2, properties);
         }
       }
     }, {
@@ -16477,9 +24037,7 @@
     return Amplitude;
   }();
 
-  var Pendo =
-  /*#__PURE__*/
-  function () {
+  var Pendo = /*#__PURE__*/function () {
     function Pendo(config, analytics) {
       _classCallCheck(this, Pendo);
 
@@ -16601,7 +24159,7 @@
             userId = _rudderElement$messag.userId,
             traits = _rudderElement$messag.traits;
         accountObj.id = this.analytics.groupId || this.analytics.anonymousId;
-        accountObj = _objectSpread2({}, accountObj, {}, traits);
+        accountObj = _objectSpread2(_objectSpread2({}, accountObj), traits);
 
         if (userId) {
           visitorObj = _objectSpread2({
@@ -16634,9 +24192,7 @@
     return Pendo;
   }();
 
-  var Lytics =
-  /*#__PURE__*/
-  function () {
+  var Lytics = /*#__PURE__*/function () {
     function Lytics(config) {
       _classCallCheck(this, Lytics);
 
@@ -16761,9 +24317,7 @@
     return Lytics;
   }();
 
-  var Appcues =
-  /*#__PURE__*/
-  function () {
+  var Appcues = /*#__PURE__*/function () {
     function Appcues(config) {
       _classCallCheck(this, Appcues);
 
@@ -16879,7 +24433,7 @@
     this.build = "1.0.0";
     this.name = "RudderLabs JavaScript SDK";
     this.namespace = "com.rudderlabs.javascript";
-    this.version = "1.0.13";
+    this.version = "1.0.12";
   };
 
   // Library information class
@@ -16887,7 +24441,7 @@
     _classCallCheck(this, RudderLibraryInfo);
 
     this.name = "RudderLabs JavaScript SDK";
-    this.version = "1.0.13";
+    this.version = "1.0.12";
   }; // Operating System information class
 
 
@@ -16938,9 +24492,7 @@
     this.network = null;
   };
 
-  var RudderMessage =
-  /*#__PURE__*/
-  function () {
+  var RudderMessage = /*#__PURE__*/function () {
     function RudderMessage() {
       _classCallCheck(this, RudderMessage);
 
@@ -17007,8 +24559,6 @@
                 case ECommerceEvents.ORDER_REFUNDED:
                   this.checkForKey("order_id");
                   break;
-
-                default:
               }
             } else if (!this.properties.category) {
               // if category is not there, set to event
@@ -17041,9 +24591,7 @@
     return RudderMessage;
   }();
 
-  var RudderElement =
-  /*#__PURE__*/
-  function () {
+  var RudderElement = /*#__PURE__*/function () {
     function RudderElement() {
       _classCallCheck(this, RudderElement);
 
@@ -17091,9 +24639,7 @@
     return RudderElement;
   }();
 
-  var RudderElementBuilder =
-  /*#__PURE__*/
-  function () {
+  var RudderElementBuilder = /*#__PURE__*/function () {
     function RudderElementBuilder() {
       _classCallCheck(this, RudderElementBuilder);
 
@@ -17237,7 +24783,7 @@
 
 
   var _lastMSecs = 0;
-  var _lastNSecs = 0; // See https://github.com/broofa/node-uuid for API details
+  var _lastNSecs = 0; // See https://github.com/uuidjs/uuid for API details
 
   function v1(options, buf, offset) {
     var i = buf && offset || 0;
@@ -17428,6 +24974,7 @@
     this.name = name;
     this.keys = keys || {};
     this.engine = optionalEngine || defaultEngine$1;
+    this.originalEngine = this.engine;
   }
   /**
   * Set value by key.
@@ -17468,6 +25015,14 @@
     } catch (err) {
       return null;
     }
+  };
+  /**
+   * Get original engine
+   */
+
+
+  Store$1.prototype.getOriginalEngine = function () {
+    return this.originalEngine;
   };
   /**
   * Remove by Key.
@@ -17530,9 +25085,6 @@
             quotaExceeded = true;
           }
 
-          break;
-
-        default:
           break;
       }
     } else if (e.number === -2147024882) {
@@ -17724,177 +25276,6 @@
     if (window.localStorage) debug$2.enable(localStorage.debug);
   } catch (e) {}
 
-  var componentEmitter$1 = createCommonjsModule(function (module) {
-    /**
-     * Expose `Emitter`.
-     */
-    {
-      module.exports = Emitter;
-    }
-    /**
-     * Initialize a new `Emitter`.
-     *
-     * @api public
-     */
-
-
-    function Emitter(obj) {
-      if (obj) return mixin(obj);
-    }
-    /**
-     * Mixin the emitter properties.
-     *
-     * @param {Object} obj
-     * @return {Object}
-     * @api private
-     */
-
-    function mixin(obj) {
-      for (var key in Emitter.prototype) {
-        obj[key] = Emitter.prototype[key];
-      }
-
-      return obj;
-    }
-    /**
-     * Listen on the given `event` with `fn`.
-     *
-     * @param {String} event
-     * @param {Function} fn
-     * @return {Emitter}
-     * @api public
-     */
-
-
-    Emitter.prototype.on = Emitter.prototype.addEventListener = function (event, fn) {
-      this._callbacks = this._callbacks || {};
-      (this._callbacks['$' + event] = this._callbacks['$' + event] || []).push(fn);
-      return this;
-    };
-    /**
-     * Adds an `event` listener that will be invoked a single
-     * time then automatically removed.
-     *
-     * @param {String} event
-     * @param {Function} fn
-     * @return {Emitter}
-     * @api public
-     */
-
-
-    Emitter.prototype.once = function (event, fn) {
-      function on() {
-        this.off(event, on);
-        fn.apply(this, arguments);
-      }
-
-      on.fn = fn;
-      this.on(event, on);
-      return this;
-    };
-    /**
-     * Remove the given callback for `event` or all
-     * registered callbacks.
-     *
-     * @param {String} event
-     * @param {Function} fn
-     * @return {Emitter}
-     * @api public
-     */
-
-
-    Emitter.prototype.off = Emitter.prototype.removeListener = Emitter.prototype.removeAllListeners = Emitter.prototype.removeEventListener = function (event, fn) {
-      this._callbacks = this._callbacks || {}; // all
-
-      if (0 == arguments.length) {
-        this._callbacks = {};
-        return this;
-      } // specific event
-
-
-      var callbacks = this._callbacks['$' + event];
-      if (!callbacks) return this; // remove all handlers
-
-      if (1 == arguments.length) {
-        delete this._callbacks['$' + event];
-        return this;
-      } // remove specific handler
-
-
-      var cb;
-
-      for (var i = 0; i < callbacks.length; i++) {
-        cb = callbacks[i];
-
-        if (cb === fn || cb.fn === fn) {
-          callbacks.splice(i, 1);
-          break;
-        }
-      } // Remove event specific arrays for event types that no
-      // one is subscribed for to avoid memory leak.
-
-
-      if (callbacks.length === 0) {
-        delete this._callbacks['$' + event];
-      }
-
-      return this;
-    };
-    /**
-     * Emit `event` with the given args.
-     *
-     * @param {String} event
-     * @param {Mixed} ...
-     * @return {Emitter}
-     */
-
-
-    Emitter.prototype.emit = function (event) {
-      this._callbacks = this._callbacks || {};
-      var args = new Array(arguments.length - 1),
-          callbacks = this._callbacks['$' + event];
-
-      for (var i = 1; i < arguments.length; i++) {
-        args[i - 1] = arguments[i];
-      }
-
-      if (callbacks) {
-        callbacks = callbacks.slice(0);
-
-        for (var i = 0, len = callbacks.length; i < len; ++i) {
-          callbacks[i].apply(this, args);
-        }
-      }
-
-      return this;
-    };
-    /**
-     * Return array of callbacks for `event`.
-     *
-     * @param {String} event
-     * @return {Array}
-     * @api public
-     */
-
-
-    Emitter.prototype.listeners = function (event) {
-      this._callbacks = this._callbacks || {};
-      return this._callbacks['$' + event] || [];
-    };
-    /**
-     * Check if this emitter has `event` handlers.
-     *
-     * @param {String} event
-     * @return {Boolean}
-     * @api public
-     */
-
-
-    Emitter.prototype.hasListeners = function (event) {
-      return !!this.listeners(event).length;
-    };
-  });
-
   var uuid$2 = uuid_1.v4;
   var debug$3 = debug_1$2('localstorage-retry'); // Some browsers don't support Function.prototype.bind, so just including a simplified version here
 
@@ -17943,9 +25324,9 @@
     this.keys = {
       IN_PROGRESS: 'inProgress',
       QUEUE: 'queue',
-      ACK: 'ack',
       RECLAIM_START: 'reclaimStart',
-      RECLAIM_END: 'reclaimEnd'
+      RECLAIM_END: 'reclaimEnd',
+      ACK: 'ack'
     };
     this._schedule = new schedule();
     this._processId = 0; // Set up our empty queues
@@ -17967,7 +25348,7 @@
    */
 
 
-  componentEmitter$1(Queue.prototype);
+  componentEmitter(Queue.prototype);
   /**
    * Starts processing the queue
    */
@@ -18180,7 +25561,8 @@
 
     function findOtherQueues(name) {
       var res = [];
-      var storage = self._store.engine;
+
+      var storage = self._store.getOriginalEngine();
 
       for (var i = 0; i < storage.length; i++) {
         var k = storage.key(i);
@@ -18236,11 +25618,11 @@
     this._store.set(this.keys.QUEUE, our.queue); // remove all keys
 
 
-    other.remove(this.keys.ACK);
+    other.remove(this.keys.IN_PROGRESS);
+    other.remove(this.keys.QUEUE);
     other.remove(this.keys.RECLAIM_START);
     other.remove(this.keys.RECLAIM_END);
-    other.remove(this.keys.IN_PROGRESS);
-    other.remove(this.keys.QUEUE); // process the new items we claimed
+    other.remove(this.keys.ACK); // process the new items we claimed
 
     this._processHead();
   };
@@ -18271,9 +25653,7 @@
    * in batch and maintains order of the event.
    */
 
-  var EventRepository =
-  /*#__PURE__*/
-  function () {
+  var EventRepository = /*#__PURE__*/function () {
     /**
      *Creates an instance of EventRepository.
      * @memberof EventRepository
@@ -18482,9 +25862,7 @@
    */
 
 
-  var Analytics =
-  /*#__PURE__*/
-  function () {
+  var Analytics = /*#__PURE__*/function () {
     /**
      * Creates an instance of Analytics.
      * @memberof Analytics
@@ -19500,4 +26878,4 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));

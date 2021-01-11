@@ -16,6 +16,10 @@ import * as npmPackage from "./dist/rudder-sdk-js/package.json";
 let distFileName = "";
 let { version } = webPackage;
 let moduleType = "web";
+let inputFileName = "analytics.js";
+if(process.env.PACKAGE_INTG == "true"){
+  inputFileName = "analyticsNpm.js";
+}
 switch (process.env.ENV) {
   case "prod":
     switch (process.env.ENC) {
@@ -69,7 +73,7 @@ if (process.env.NPM == "true") {
 }
 
 export default {
-  input: "analytics.js",
+  input: inputFileName,
   external: ["Xmlhttprequest", "universal-analytics"],
   output: outputFiles,
   plugins: [
@@ -79,6 +83,7 @@ export default {
       "process.prod": process.env.ENV == "prod",
       "process.package_version": version,
       "process.module_type": moduleType,
+      "process.packageInteration": process.env.PACKAGE_INTG == "true"
     }),
     resolve({
       jsnext: true,
