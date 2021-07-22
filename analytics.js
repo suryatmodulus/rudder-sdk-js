@@ -26,12 +26,12 @@ import {
   transformToServerNames,
   checkReservedKeywords,
   getReferrer,
-  getReferringDomain
+  getReferringDomain,
 } from "./utils/utils";
 import {
   CONFIG_URL,
   MAX_WAIT_FOR_INTEGRATION_LOAD,
-  INTEGRATION_LOAD_CHECK_INTERVAL
+  INTEGRATION_LOAD_CHECK_INTERVAL,
 } from "./utils/constants";
 import { integrations } from "./integrations";
 import RudderElementBuilder from "./utils/RudderElementBuilder";
@@ -42,9 +42,15 @@ import { addDomEventHandlers } from "./utils/autotrack.js";
 import ScriptLoader from "./integrations/ScriptLoader";
 import parseLinker from "./utils/linker";
 
+console.log(
+  "===========  3  ===========",
+  "Inside the Rudder min.js: 1st line",
+  new Date().getTime()
+);
+
 const queryDefaults = {
   trait: "ajs_trait_",
-  prop: "ajs_prop_"
+  prop: "ajs_prop_",
 };
 
 // https://unpkg.com/test-rudder-sdk@1.0.5/dist/browser.js
@@ -89,10 +95,10 @@ class Analytics {
     this.sendAdblockPage = false;
     this.sendAdblockPageOptions = {};
     this.clientSuppliedCallbacks = {};
-    this.readyCallback = () => {};
+    this.readyCallback = () => { };
     this.executeReadyCallback = undefined;
     this.methodToCallbackMapping = {
-      syncPixel: "syncPixelCallback"
+      syncPixel: "syncPixelCallback",
     };
     this.loaded = false;
     this.loadIntegration = true;
@@ -150,6 +156,7 @@ class Analytics {
   processResponse(status, response) {
     try {
       logger.debug(`===in process response=== ${status}`);
+
       if (typeof response === "string") {
         response = JSON.parse(response);
       }
@@ -168,24 +175,33 @@ class Analytics {
         if (destination.enabled) {
           this.clientIntegrations.push({
             name: destination.destinationDefinition.name,
-            config: destination.config
+            config: destination.config,
           });
         }
       }, this);
 
       logger.debug("this.clientIntegrations: ", this.clientIntegrations);
+
       // intersection of config-plane native sdk destinations with sdk load time destination list
       this.clientIntegrations = findAllEnabledDestinations(
         this.loadOnlyIntegrations,
         this.clientIntegrations
       );
-
+      console.log(
+        "==============  7  ================",
+        "before integration initialization",
+        new Date().getTime()
+      );
       // remove from the list which don't have support yet in SDK
-      this.clientIntegrations = this.clientIntegrations.filter(intg => {
+      this.clientIntegrations = this.clientIntegrations.filter((intg) => {
         return integrations[intg.name] != undefined;
       });
-
       this.init(this.clientIntegrations);
+      console.log(
+        "==============  10  ================",
+        "after all integrations are initiated",
+        new Date().getTime()
+      );
     } catch (error) {
       handleError(error);
       logger.debug("===handling config BE response processing error===");
@@ -221,12 +237,18 @@ class Analytics {
       return;
     }
     let intgInstance;
-    intgArray.forEach(intg => {
+    intgArray.forEach((intg) => {
       try {
         logger.debug(
           "[Analytics] init :: trying to initialize integration name:: ",
           intg.name
         );
+        console.log(
+          "===========  8  ===========",
+          "integration started",
+          new Date().getTime()
+        );
+
         const intgClass = integrations[intg.name];
         const destConfig = intg.config;
         intgInstance = new intgClass(destConfig, self);
@@ -235,6 +257,11 @@ class Analytics {
         logger.debug("initializing destination: ", intg);
 
         this.isInitialized(intgInstance).then(this.replayEvents);
+        console.log(
+          "===========  9  ===========",
+          "integration finished",
+          new Date().getTime()
+        );
       } catch (e) {
         logger.error(
           "[Analytics] initialize integration (integration.init()) failed :: ",
@@ -249,8 +276,8 @@ class Analytics {
   replayEvents(object) {
     if (
       object.successfullyLoadedIntegration.length +
-        object.failedToBeLoadedIntegration.length ===
-        object.clientIntegrations.length &&
+      object.failedToBeLoadedIntegration.length ===
+      object.clientIntegrations.length &&
       !object.areEventsReplayed
     ) {
       logger.debug(
@@ -278,7 +305,7 @@ class Analytics {
       logger.debug("==registering ready callback===");
       object.on("ready", object.executeReadyCallback);
 
-      object.clientIntegrationObjects.forEach(intg => {
+      object.clientIntegrationObjects.forEach((intg) => {
         logger.debug("===looping over each successful integration====");
         if (!intg.isReady || intg.isReady()) {
           logger.debug("===letting know I am ready=====", intg.name);
@@ -288,7 +315,7 @@ class Analytics {
 
       if (object.toBeProcessedByIntegrationArray.length > 0) {
         // send the queued events to the fetched integration
-        object.toBeProcessedByIntegrationArray.forEach(event => {
+        object.toBeProcessedByIntegrationArray.forEach((event) => {
           const methodName = event[0];
           event.shift();
 
@@ -302,10 +329,11 @@ class Analytics {
 
           // get intersection between config plane native enabled destinations
           // (which were able to successfully load on the page) vs user supplied integrations
-          const succesfulLoadedIntersectClientSuppliedIntegrations = findAllEnabledDestinations(
-            clientSuppliedIntegrations,
-            object.clientIntegrationObjects
-          );
+          const succesfulLoadedIntersectClientSuppliedIntegrations =
+            findAllEnabledDestinations(
+              clientSuppliedIntegrations,
+              object.clientIntegrationObjects
+            );
 
           // send to all integrations now from the 'toBeProcessedByIntegrationArray' replay queue
           for (
@@ -323,7 +351,7 @@ class Analytics {
               ) {
                 if (
                   succesfulLoadedIntersectClientSuppliedIntegrations[i][
-                    methodName
+                  methodName
                   ]
                 ) {
                   succesfulLoadedIntersectClientSuppliedIntegrations[i][
@@ -343,13 +371,13 @@ class Analytics {
   }
 
   pause(time) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(resolve, time);
     });
   }
 
   isInitialized(instance, time = 0) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (instance.isLoaded()) {
         logger.debug("===integration loaded successfully====", instance.name);
         this.successfullyLoadedIntegration.push(instance);
@@ -576,6 +604,7 @@ class Analytics {
     const rudderElement = new RudderElementBuilder()
       .setType("identify")
       .build();
+
     if (traits) {
       for (const key in traits) {
         this.userTraits[key] = traits[key];
@@ -606,7 +635,7 @@ class Analytics {
       rudderElement.message.context.traits
     ) {
       this.userTraits = {
-        ...rudderElement.message.context.traits
+        ...rudderElement.message.context.traits,
       };
       this.storage.setUserTraits(this.userTraits);
     }
@@ -669,7 +698,7 @@ class Analytics {
       // rudderElement.message.context.page = getDefaultPageProperties();
 
       rudderElement.message.context.traits = {
-        ...this.userTraits
+        ...this.userTraits,
       };
 
       logger.debug("anonymousId: ", this.anonymousId);
@@ -684,7 +713,7 @@ class Analytics {
         }
         if (this.groupTraits) {
           rudderElement.message.traits = {
-            ...this.groupTraits
+            ...this.groupTraits,
           };
         }
       }
@@ -705,14 +734,15 @@ class Analytics {
 
       // get intersection between config plane native enabled destinations
       // (which were able to successfully load on the page) vs user supplied integrations
-      const succesfulLoadedIntersectClientSuppliedIntegrations = findAllEnabledDestinations(
-        clientSuppliedIntegrations,
-        this.clientIntegrationObjects
-      );
+      const succesfulLoadedIntersectClientSuppliedIntegrations =
+        findAllEnabledDestinations(
+          clientSuppliedIntegrations,
+          this.clientIntegrationObjects
+        );
 
       // try to first send to all integrations, if list populated from BE
       try {
-        succesfulLoadedIntersectClientSuppliedIntegrations.forEach(obj => {
+        succesfulLoadedIntersectClientSuppliedIntegrations.forEach((obj) => {
           if (!obj.isFailed || !obj.isFailed()) {
             if (obj[type]) {
               obj[type](rudderElement);
@@ -785,18 +815,18 @@ class Analytics {
     const toplevelElements = [
       "integrations",
       "anonymousId",
-      "originalTimestamp"
+      "originalTimestamp",
     ];
     for (const key in options) {
       if (toplevelElements.includes(key)) {
         rudderElement.message[key] = options[key];
       } else if (key !== "context") {
         rudderElement.message.context = merge(rudderElement.message.context, {
-          [key]: options[key]
+          [key]: options[key],
         });
       } else if (typeof options[key] === "object" && options[key] != null) {
         rudderElement.message.context = merge(rudderElement.message.context, {
-          ...options[key]
+          ...options[key],
         });
       } else {
         logger.error(
@@ -913,12 +943,13 @@ class Analytics {
    */
   load(writeKey, serverUrl, options) {
     logger.debug("inside load ");
+
     if (this.loaded) return;
     let configUrl = CONFIG_URL;
     if (!this.isValidWriteKey(writeKey) || !this.isValidServerUrl(serverUrl)) {
       handleError({
         message:
-          "[Analytics] load:: Unable to load due to wrong writeKey or serverUrl"
+          "[Analytics] load:: Unable to load due to wrong writeKey or serverUrl",
       });
       throw Error("failed to initialize");
     }
@@ -946,16 +977,16 @@ class Analytics {
     if (options && options.clientSuppliedCallbacks) {
       // convert to rudder recognised method names
       const tranformedCallbackMapping = {};
-      Object.keys(this.methodToCallbackMapping).forEach(methodName => {
+      Object.keys(this.methodToCallbackMapping).forEach((methodName) => {
         if (this.methodToCallbackMapping.hasOwnProperty(methodName)) {
           if (
             options.clientSuppliedCallbacks[
-              this.methodToCallbackMapping[methodName]
+            this.methodToCallbackMapping[methodName]
             ]
           ) {
             tranformedCallbackMapping[methodName] =
               options.clientSuppliedCallbacks[
-                this.methodToCallbackMapping[methodName]
+              this.methodToCallbackMapping[methodName]
               ];
           }
         }
@@ -1011,7 +1042,11 @@ class Analytics {
         addDomEventHandlers(this);
       }
     }
-
+    // console.log(
+    //   "==============  4  ================",
+    //   "Just before fetching source config",
+    //   new Date().getTime()
+    // );
     if (options && options.getSourceConfig) {
       if (typeof options.getSourceConfig !== "function") {
         handleError('option "getSourceConfig" must be a function');
@@ -1019,7 +1054,7 @@ class Analytics {
         const res = options.getSourceConfig();
 
         if (res instanceof Promise) {
-          res.then(res => this.processResponse(200, res)).catch(errorHandler);
+          res.then((res) => this.processResponse(200, res)).catch(errorHandler);
         } else {
           this.processResponse(200, res);
         }
@@ -1031,6 +1066,7 @@ class Analytics {
 
     try {
       getJSONTrimmed(this, configUrl, writeKey, this.processResponse);
+      // console.log("==============  14  ================",'', new Date().getTime());
     } catch (error) {
       errorHandler(error);
     }
@@ -1047,26 +1083,26 @@ class Analytics {
   }
 
   initializeCallbacks() {
-    Object.keys(this.methodToCallbackMapping).forEach(methodName => {
+    Object.keys(this.methodToCallbackMapping).forEach((methodName) => {
       if (this.methodToCallbackMapping.hasOwnProperty(methodName)) {
-        this.on(methodName, () => {});
+        this.on(methodName, () => { });
       }
     });
   }
 
   registerCallbacks(calledFromLoad) {
     if (!calledFromLoad) {
-      Object.keys(this.methodToCallbackMapping).forEach(methodName => {
+      Object.keys(this.methodToCallbackMapping).forEach((methodName) => {
         if (this.methodToCallbackMapping.hasOwnProperty(methodName)) {
           if (window.rudderanalytics) {
             if (
               typeof window.rudderanalytics[
-                this.methodToCallbackMapping[methodName]
+              this.methodToCallbackMapping[methodName]
               ] === "function"
             ) {
               this.clientSuppliedCallbacks[methodName] =
                 window.rudderanalytics[
-                  this.methodToCallbackMapping[methodName]
+                this.methodToCallbackMapping[methodName]
                 ];
             }
           }
@@ -1085,7 +1121,7 @@ class Analytics {
       });
     }
 
-    Object.keys(this.clientSuppliedCallbacks).forEach(methodName => {
+    Object.keys(this.clientSuppliedCallbacks).forEach((methodName) => {
       if (this.clientSuppliedCallbacks.hasOwnProperty(methodName)) {
         logger.debug(
           "registerCallbacks",
@@ -1111,7 +1147,7 @@ class Analytics {
   parseQueryString(query) {
     function getTraitsFromQueryObject(qObj) {
       const traits = {};
-      Object.keys(qObj).forEach(key => {
+      Object.keys(qObj).forEach((key) => {
         if (key.substr(0, queryDefaults.trait.length) == queryDefaults.trait) {
           traits[key.substr(queryDefaults.trait.length)] = qObj[key];
         }
@@ -1122,7 +1158,7 @@ class Analytics {
 
     function getEventPropertiesFromQueryObject(qObj) {
       const props = {};
-      Object.keys(qObj).forEach(key => {
+      Object.keys(qObj).forEach((key) => {
         if (key.substr(0, queryDefaults.prop.length) == queryDefaults.prop) {
           props[key.substr(queryDefaults.prop.length)] = qObj[key];
         }
@@ -1177,6 +1213,7 @@ function processDataInAnalyticsArray(analytics) {
       const method = event[0];
       event.shift();
       logger.debug("=====from analytics array, calling method:: ", method);
+      console.log("=====from analytics array, calling method:: ", method);
       analytics[method](...event);
     }
 
@@ -1190,7 +1227,7 @@ Emitter(instance);
 
 window.addEventListener(
   "error",
-  e => {
+  (e) => {
     handleError(e, instance);
   },
   true
@@ -1205,6 +1242,7 @@ instance.initializeCallbacks();
 
 // register supported callbacks
 instance.registerCallbacks(false);
+
 const eventsPushedAlready =
   !!window.rudderanalytics &&
   window.rudderanalytics.push == Array.prototype.push;
@@ -1222,6 +1260,7 @@ if (
   const method = argumentsArray[0][0];
   argumentsArray[0].shift();
   logger.debug("=====from init, calling method:: ", method);
+
   instance[method](...argumentsArray[0]);
   argumentsArray.shift();
 }
@@ -1266,5 +1305,5 @@ export {
   group,
   getUserTraits,
   getAnonymousId,
-  setAnonymousId
+  setAnonymousId,
 };
