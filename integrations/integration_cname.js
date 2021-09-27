@@ -106,6 +106,10 @@ const commonNames = {
   Qualtrics: "QUALTRICS",
   qualtrics: "QUALTRICS",
   QUALTRICS: "QUALTRICS",
+  QuantumMetric: "QUANTUMMETRIC",
+  quantumMetric: "QUANTUMMETRIC",
+  quantummetric: "QUANTUMMETRIC",
+  Quantum_Metric: "QUANTUMMETRIC",
 };
 
 export { commonNames };
