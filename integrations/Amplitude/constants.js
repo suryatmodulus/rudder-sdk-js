@@ -1,8 +1,8 @@
-const NAME = "AM";
+const NAME = "Amplitude";
 const CNameMapping = {
   [NAME]: NAME,
   AMPLITUDE: NAME,
-  Amplitude: NAME,
+  AM: NAME,
 };
 
 export { NAME, CNameMapping };

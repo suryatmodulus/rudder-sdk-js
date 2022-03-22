@@ -1,9 +1,9 @@
-const NAME = "HEAP";
+const NAME = "Heap.io";
 const CNameMapping = {
   [NAME]: NAME,
   Heap: NAME,
+  HEAP: NAME,
   heap: NAME,
-  "Heap.io": NAME,
 };
 
 export { NAME, CNameMapping };

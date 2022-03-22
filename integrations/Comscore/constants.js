@@ -1,7 +1,7 @@
-const NAME = "COMSCORE";
+const NAME = "Comscore";
 const CNameMapping = {
   [NAME]: NAME,
-  Comscore: NAME,
+  COMSCORE: NAME,
 };
 
 export { NAME, CNameMapping };

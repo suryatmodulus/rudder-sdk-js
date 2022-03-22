@@ -172,7 +172,7 @@ class Analytics {
         );
         if (destination.enabled) {
           this.clientIntegrations.push({
-            name: destination.destinationDefinition.name,
+            name: destination.destinationDefinition.displayName,
             config: destination.config,
           });
         }

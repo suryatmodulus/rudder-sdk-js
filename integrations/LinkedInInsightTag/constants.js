@@ -1,7 +1,7 @@
-const NAME = "LINKEDIN_INSIGHT_TAG";
+const NAME = "LinkedIn Insight Tag";
 const CNameMapping = {
   [NAME]: NAME,
-  "LinkedIn Insight Tag": NAME,
+  LINKEDIN_INSIGHT_TAG: NAME,
   Linkedin_insight_tag: NAME,
   LinkedinInsighttag: NAME,
   LinkedinInsightTag: NAME,

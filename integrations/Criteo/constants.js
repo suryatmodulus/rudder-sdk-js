@@ -1,7 +1,7 @@
-const NAME = "CRITEO";
+const NAME = "Criteo";
 const CNameMapping = {
   [NAME]: NAME,
-  Criteo: NAME,
+  CRITEO: NAME,
   criteo: NAME,
 };
 

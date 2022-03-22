@@ -1,7 +1,7 @@
-const NAME = "GOOGLEADS";
+const NAME = "Google Ads";
 const CNameMapping = {
   [NAME]: NAME,
-  "Google Ads": NAME,
+  GOOGLEADS: NAME,
   GoogleAds: NAME,
 };
 

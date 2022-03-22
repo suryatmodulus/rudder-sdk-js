@@ -1,7 +1,7 @@
-const NAME = "GTM";
+const NAME = "Google Tag Manager";
 const CNameMapping = {
   [NAME]: NAME,
-  "Google Tag Manager": NAME,
+  GTM: NAME,
 };
 
 export { NAME, CNameMapping };

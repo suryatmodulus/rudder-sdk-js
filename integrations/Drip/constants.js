@@ -1,7 +1,7 @@
-const NAME = "DRIP";
+const NAME = "Drip";
 const CNameMapping = {
   [NAME]: NAME,
-  Drip: NAME,
+  DRIP: NAME,
   drip: NAME,
 };
 

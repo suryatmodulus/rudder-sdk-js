@@ -1,8 +1,8 @@
-const NAME = "MP";
+const NAME = "Mixpanel";
 const CNameMapping = {
   [NAME]: NAME,
   MIXPANEL: NAME,
-  Mixpanel: NAME,
+  MP: NAME,
 };
 
 export { NAME, CNameMapping };

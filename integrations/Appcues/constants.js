@@ -1,7 +1,7 @@
-const NAME = "APPCUES";
+const NAME = "Appcues";
 const CNameMapping = {
   [NAME]: NAME,
-  Appcues: NAME,
+  APPCUES: NAME,
 };
 
 export { NAME, CNameMapping };

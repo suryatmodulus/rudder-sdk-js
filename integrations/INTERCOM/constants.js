@@ -1,7 +1,7 @@
-const NAME = "INTERCOM";
+const NAME = "Intercom";
 const CNameMapping = {
   [NAME]: NAME,
-  Intercom: NAME,
+  INTERCOM: NAME,
 };
 
 export { NAME, CNameMapping };

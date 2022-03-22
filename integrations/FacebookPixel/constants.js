@@ -1,9 +1,10 @@
-const NAME = "FACEBOOK_PIXEL";
+const NAME = "Facebook Pixel";
 const CNameMapping = {
   [NAME]: NAME,
   "FB Pixel": NAME,
   "Facebook Pixel": NAME,
   FB_PIXEL: NAME,
+  FACEBOOK_PIXEL: NAME,
 };
 
 const traitsMapper = [

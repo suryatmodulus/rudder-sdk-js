@@ -1,7 +1,7 @@
-const NAME = "CHARTBEAT";
+const NAME = "Chartbeat";
 const CNameMapping = {
   [NAME]: NAME,
-  Chartbeat: NAME,
+  CHARTBEAT: NAME,
 };
 
 export { NAME, CNameMapping };

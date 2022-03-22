@@ -1,7 +1,7 @@
-const NAME = "HOTJAR";
+const NAME = "Hotjar";
 const CNameMapping = {
   [NAME]: NAME,
-  Hotjar: NAME,
+  HOTJAR: NAME,
   hotjar: NAME,
 };
 

@@ -1,7 +1,7 @@
-const NAME = "LAUNCHDARKLY";
+const NAME = "LaunchDarkly";
 const CNameMapping = {
   [NAME]: NAME,
-  LaunchDarkly: NAME,
+  LAUNCHDARKLY: NAME,
   Launch_Darkly: NAME,
   "Launch Darkly": NAME,
   launchDarkly: NAME,

@@ -1,7 +1,7 @@
-const NAME = "BRAZE";
+const NAME = "Braze";
 const CNameMapping = {
   [NAME]: NAME,
-  Braze: NAME,
+  BRAZE: NAME,
 };
 
 export { NAME, CNameMapping };

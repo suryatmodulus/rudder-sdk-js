@@ -1,7 +1,7 @@
-const NAME = "FULLSTORY";
+const NAME = "Fullstory";
 const CNameMapping = {
   [NAME]: NAME,
-  Fullstory: NAME,
+  FULLSTORY: NAME,
   FullStory: NAME,
 };
 

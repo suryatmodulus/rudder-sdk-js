@@ -1,7 +1,7 @@
-const NAME = "KEEN";
+const NAME = "Keen";
 const CNameMapping = {
   [NAME]: NAME,
-  Keen: NAME,
+  KEEN: NAME,
   "Keen.io": NAME,
 };
 

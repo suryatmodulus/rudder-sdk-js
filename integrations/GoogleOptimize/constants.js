@@ -1,10 +1,10 @@
-const NAME = "GOOGLE_OPTIMIZE";
+const NAME = "Google Optimize";
 const CNameMapping = {
   [NAME]: NAME,
-  "Google Optimize": NAME,
   GoogleOptimize: NAME,
   Googleoptimize: NAME,
   GOOGLEOPTIMIZE: NAME,
+  GOOGLE_OPTIMIZE: NAME,
 };
 
 export { NAME, CNameMapping };

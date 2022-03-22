@@ -1,7 +1,7 @@
-const NAME = "GA4";
+const NAME = "Google Analytics 4";
 const CNameMapping = {
   [NAME]: NAME,
-  "Google Analytics 4": NAME,
+  GA4: NAME,
   GoogleAnalytics4: NAME,
 };
 
